@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="humanResourceTab" th:remove="tag">
+
+		<div id="humanResourceTab" class="tab-pane">
+			<form id="epHumanResourceTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+					<div class="row">
+						<div class="col-md-3">
+							<h4 style="display: inline-block">Resource</h4>					
+							<span id="__igdev_humanResourceTableLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style=" font-size: 85%">&nbsp;--humanResourceTab-- &nbsp;table:humanResourceTable</span>
+							</span>											
+						</div>
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Remuneration</h4>				
+							<span id="__igdev_resourceRemunerationTableLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style=" font-size: 85%">&nbsp;table:resourceRemunerationTable</span>
+							</span>								
+						</div>
+						<div class="col-md-4">
+							<h4 style="display: inline-block">Competency</h4>				
+							<span id="__igdev_resourceCompetencyTableLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style=" font-size: 85%">&nbsp;table:resourceCompetencyTable</span>
+								<span style="font-size: 90%; height: 16px;background-color: #ffffff">&nbsp;&nbsp;selectedIndividualId</span><input readonly id="selectedIndividualId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+							</span>								
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<table id="humanResourceTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<th>Id</th>								<!--0  -->			
+										<th>ParticipantIdPayer</th>				<!--1  -->					
+										<th>Payer</th>							<!--2  -->				
+										<th>ParticipantIdBeneficiary</th>		<!--3  -->							
+										<th>Resource</th>						<!--4  -->						
+										<th>Resource Type Code</th>				<!--5  -->						
+										<th>Resource Type</th>					<!--6  -->						
+										<th>Description</th>					<!--7  -->				
+										<th>Start Date</th>						<!--8  -->					
+										<th>End Date</th>						<!--9  -->		
+										<th>IndividualId</th>					<!--10 -->			
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="col-md-5">
+							<div id="resourceRemunerationEmptyPanel"
+								style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a	Resource.
+								</p>
+							</div>
+
+							<div id="resourceRemunerationPanel" style="display: none">
+								<table id="resourceRemunerationTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>Resource Remuneration Id</th>
+											<th>Human Resource Id</th>
+											<th>Description</th>
+											<th>Remun Type Code</th>
+											<th>Remuneration Type</th>
+											<th>Start Date</th>
+											<th>End Date</th>
+											<th>Amount</th>
+											<th>Allow Expense Deductions</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<div id="resourceCompetencyEmptyPanel"
+								style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Resource.
+								</p>
+							</div>
+
+							<div id="resourceCompetencyPanel" style="display: none">
+								<table id="resourceCompetencyTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>individualSdRoleId</th>          <!--  0 -->
+											<th>individualId</th>                <!--  1 -->
+											<th>sdRoleId</th>                    <!--  2 -->
+											<th>competencyLevelId</th>         <!--  3 -->
+											<th>participantId</th>               <!--  4 -->
+											<th>Service Discipline and Role</th> <!--  5 -->
+											<th>Competency</th>         		 <!--  6 -->
+											<th>Years</th>         		 		<!--  7 -->
+																															
+												<th>ServiceDisciplineId</th>         <!--8  ServiceDisciplineId-->
+												<th>ServiceDisciplineCode</th>       <!--9  ServiceDisciplineCode-->
+												<th>Service Discipline Name</th>     <!--10  ServiceDisciplineName-->
+												<th>Role On A Project Name</th>      <!--11  RoleOnAProjectName-->
+												<th>sd Parent Name</th>              <!--12  sdParentName-->
+												<th>sd Grand Parent Name</th>        <!--13  sdGrandParentName-->
+												<th>sd Industry Name</th>            <!--14  sdIndustryName-->
+											
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>											
+						
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
+		<!-- humanResourceDialog: Start -->
+		<div class="modal fade" id="humanResourceDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Human Resource Detail</h4>
+						<span id="__igdev_humanResourceDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--humanResourceDialog--</span>
+						</span>						
+
+						<button type="button" class="close"
+							onclick="closeHumanResourceDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="erDlgErrorDiv" style="display: none"></div>
+	
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="erParticipantNamePayer">Contracting Participant *</label>
+										<div class="col-md-9">
+											<input type="text" id="erParticipantNamePayer"
+												name="erParticipantNamePayer" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="erIndividualNameBeneficiary">Contracted (Beneficiary) *</label>
+										<div class="col-md-9">
+											<div class="input-group">
+	
+												<input	type="text" id="erIndividualNameBeneficiary" readonly
+													class="form-control"> 
+												<span
+													id="erBeneficiarySearchBtn"
+													class="input-group-addon pointer"
+													onclick="editSelectBeneficiary()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="erDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="erDescription" name="erDescription"
+												class="form-control" placeholder="description"
+												onkeyup="humanResourceDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="erResourceTypeId">Resource Type *</label>
+										<div class="col-md-7">
+											<select id="erResourceTypeId" class="form-control"
+												onchange="humanResourceDialogChanged()"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="erStartDate">Start Date</label>
+										<div class="col-md-7">
+											<div class="input-group">
+												<input id="erStartDate" name="erStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="humanResourceDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#erStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="erEndDate">End Date</label>
+										<div class="col-md-7">
+											<div class="input-group">
+												<input id="erEndDate" name="erEndDate" class="form-control"
+													placeholder="yyyy-mm-dd" data-provide="datepicker"
+													data-date-format="yyyy-mm-dd" data-date-autoclose=true
+													data-date-show-on-focus=false data-date-today-btn="linked"
+													onchange="humanResourceDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#erEndDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<span id="__igdev_humanResourceDialogIdsFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;erNonProjectRelatedAgreementId</span><input readonly id="erNonProjectRelatedAgreementId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;erParticipantIdPayer</span><input readonly id="erParticipantIdPayer" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;erParticipantIdBeneficiary</span><input readonly id="erParticipantIdBeneficiary" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>
+									</div>			
+							
+									
+								</fieldset>
+							</form>
+						</section>
+	
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeHumanResourceDialog()">Cancel</button>
+						<button id="saveHumanResourceButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveHumanResourceDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- humanResourceDialog: End -->
+		
+		<!-- resourceRemunerationDialog: Start -->
+		<div class="modal fade" id="resourceRemunerationDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Resource Relationship Remuneration Detail</h4>
+						
+
+													
+						<button type="button" class="close"
+							onclick="closeResourceRemunerationDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="rrDlgErrorDiv" style="display: none"></div>
+									<input type="hidden" id="rrResourceRemunerationId"> <input
+										type="hidden" id="rrNonProjectRelatedAgreementId">
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rrDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="rrDescription" name="rrDescription"
+												class="form-control" placeholder="description"
+												onkeyup="resourceRemunerationDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="rrResourceRemunTypeId">Remuneration Type *</label>
+										<div class="col-md-9">
+											<select id="rrResourceRemunTypeId" class="form-control"
+												onchange="resourceRemunerationDialogChanged()"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rrStartDate">Start Date</label>
+										<div class="col-md-7">
+											<div class="input-group">
+												<input id="rrStartDate" name="rrStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="resourceRemunerationDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#rrStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rrEndDate">End Date</label>
+										<div class="col-md-7">
+											<div class="input-group">
+												<input id="rrEndDate" name="rrEndDate" class="form-control"
+													placeholder="yyyy-mm-dd" data-provide="datepicker"
+													data-date-format="yyyy-mm-dd" data-date-autoclose=true
+													data-date-show-on-focus=false data-date-today-btn="linked"
+													onchange="resourceRemunerationDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#rrEndDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+																
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rrAmount">Amount *</label>
+										<div class="col-md-5">
+											<input type="text" id="rrAmount" onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control" placeholder="" maxlength=10
+												onkeyup="resourceRemunerationDialogChanged()">
+										</div>
+										<span id="__igdev_resourceRemunerationDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+											<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--resourceRemunerationDialog--</span>
+										</span>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeResourceRemunerationDialog()">Cancel</button>
+						<button id="saveResourceRemunerationBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveResourceRemunerationDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- resourceRemunerationDialog: End -->
+		
+		<!-- resourceCompetencyDialog: Start -->
+		<div class="modal fade" id="resourceCompetencyDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Resource Competency</h4>
+						<span id="__igdev_resourceCompetencyDialogLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--resourceCompetencyDialog--</span>
+						</span>
+	
+						<button type="button" class="close"
+							onclick="closeResourceCompetencyDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="rcDlgErrorDiv" style="display: none"></div>
+
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdrSdIndustryName">Industry</label> <!-- GrandParent -->
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input type="text" id="isdrSdIndustryName" readonly class="form-control" > 
+											</div>
+										</div>		
+									</div>															
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdrSdGrandParentName"></label> <!-- GrandParent -->
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input type="text" id="isdrSdGrandParentName" readonly class="form-control" > 
+											</div>
+										</div>		
+									</div>	
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdrSdParentName"></label> <!-- Parent -->
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input type="text" id="isdrSdParentName" readonly class="form-control" > 
+											</div>
+										</div>		
+									</div>	
+
+
+														
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="isdrSdRoleId">Marketing *</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input
+													type="text" id="isdrSdRoleName" readonly
+													class="form-control"> <span
+													class="input-group-addon pointer"
+													onclick="editSelectSdRole()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>		
+									</div>							
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="isdrCompetencyLevel">Competency Level *</label>
+										<div class="col-md-9">
+											<select id="isdrCompetencyLevel" class="form-control"
+												onchange="resourceCompetencyDialogChanged()"></select>
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdrYearExperience">Years Experience</label>
+										<div class="col-md-3">
+											<input type="text" id="isdrYearExperience"  onkeypress="return onlyNumberKey(event)"
+												class="form-control" 
+												onkeyup="resourceCompetencyDialogChanged()">
+										</div>
+									</div>
+
+									<span id="__igdev_resourceCompetencyIdsLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> isdrIndividualSdRoleId</span><input readonly id="isdrIndividualSdRoleId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;isdrIndividualId</span><input readonly id="isdrIndividualId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;isdrSdRoleId</span><input readonly id="isdrSdRoleId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+									</span>	
+	
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeResourceCompetencyDialog()">Cancel</button>
+						<button id="saveResourceCompetencyBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveResourceCompetencyDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- resourceCompetencyDialog: End -->
+
+		
+
+		<script type="text/javascript" th:src="@{ignite/js/participant/humanResourceTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

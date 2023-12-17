@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+<meta name="_csrf_header"
+	th:content="${_csrf == null ? '' : _csrf.headerName}" />
+
+<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+<title>Ignite: Service Disciplines</title>
+<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+
+<!-- bootstrap datatables -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+
+<!-- bootstrap theme -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap-theme.css}">
+
+<!-- font icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/elegant-icons-style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{font-awesome/6.4.2/css/all.min.css}">
+
+<!-- full calendar css-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+
+<!-- easy pie chart-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}"
+	media="screen">
+
+<!-- owl carousel -->
+<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-jvectormap-1.2.2.css}">
+
+<!-- jqTree css -->
+<link rel="stylesheet" type="text/css" th:href="@{css/jqtree.css}">
+
+<!-- Custom styles -->
+<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/style-responsive.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-ui-1.10.4.min.css}">
+
+<!-- Ignite -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{ignite/css/ignite.css}">
+
+</head>
+
+<body>
+
+	
+	<script th:inline="text">
+		var _igModel = {
+			username : "[[${igUsername}]]",
+			avatar : "[[${igUserAvatar}]]"
+		};
+	</script>
+
+	<!-- container section start -->
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav">
+				<div class="icon-reorder tooltips"
+					data-original-title="Toggle Navigation" data-placement="bottom"
+					onclick="toggleSidebar()">
+					<i class="icon_menu"></i>
+				</div>
+			</div>
+
+			<!--logo start-->
+			<div id="headerLogo" style="display: inline"></div>
+			<!--logo end-->
+
+			<div class="top-nav notification-row">
+				<profile-menu th:replace="fragments/profile-menu :: profile-menu"></profile-menu>
+			</div>
+		</header>
+		<!--header end-->
+
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<sidebar-menu th:replace="fragments/sidebar-menu :: sidebar-menu"></sidebar-menu>
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!--overview start-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h4 style="display: inline-block">
+							<i class="fas fa-project-diagram"></i> Service Discipline Setup
+						</h4>
+						<span id="__igdev_sdTreeLabel2hsa"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden"> <span
+							style="font-size: 90%; height: 16px">--sd-tree--</span> <span
+							style="font-size: 90%; height: 16px; background-color: #ffffff">&nbsp;sdServiceDisciplineIdIndustry</span><input
+							readonly id="sdServiceDisciplineIdIndustry"
+							style="background-color: #ffff99 !important; color: Black; width: 45px; height: 16px;">
+						</span>
+
+						<section class="panel">
+							<div class="panel-body">
+
+								<div class="row">
+									<div class="col-md-4">
+										<h4 style="display: inline-block">
+											Service Disciplines
+											<button id="addServiceDisciplineButton"
+												class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+												type="button" title="Add new Industry"
+												style="display: inline-block"
+												onclick="newServiceDiscipline()">
+												<i class='fas fa-plus'></i>
+											</button>
+											<button id="deleteServiceDisciplineButton"
+												class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+												type="button" title="Delete this node"
+												style="display: inline-block"
+												onclick="promptDeleteServiceDiscipline()">
+												<i class='fas fa-minus'></i>
+											</button>
+										</h4>
+
+										<span id="__igdev_sdTreeLabel6545d"	style="display: inline-block; background-color: #ffff99 !important; color: Black" hidden="hidden"> 
+											<span style="font-size: 85%">&nbsp;tree:sdTree</span>
+											<span style="font-size: 90%; height: 16px; background-color: #ffffff">&nbsp;&nbsp;selectedSdId</span> <input readonly id="selectedSdId" style="background-color: #ffff99 !important; color: Black; width: 45px; height: 16px;">
+										</span>
+
+									</div>
+									
+									<div class="col-md-4">
+										<h4 id="headerRolesAssigned" style="display: block"></h4>
+										<span id="__igdev_headerRolesAssignedLabel123aoii"
+											style="display: inline-block; background-color: #ffff99 !important; color: Black"
+											hidden="hidden"> <span style="font-size: 85%">&nbsp;table:sdRoleTable</span>
+										</span>
+									</div>
+									<div class="col-md-4">
+										<h4 id="headerRolesAvailable" style="display: block"></h4>
+										<span id="__igdev_headerRolesAvailableLobel123ym"
+											style="display: inline-block; background-color: #ffff99 !important; color: Black"
+											hidden="hidden"> <span style="font-size: 85%">&nbsp;table:sdRolesAvailableTable or sdIndustryAllRolesTable</span>
+										</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div
+											style="display: flex; height: calc(100vh - 400px); width: 100%; overflow: hidden">
+											<div id="sdTreePanel" class="scroll-panel panel-body"
+												style="overflow: scroll !important; height: inherit; width: inherit; float: left">
+												<div id="sdTree"></div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div id="sdRolesAssignedEmptyPanel" style="display: block">
+											<p style="text-align: center; color: #777777"></p>
+										</div>
+										<div id="sdRolesAssignedPanel" style="display: none">
+											<table id="sdRolesAssignedTable"
+												class="table table-striped table-advance table-hover"
+												style="width: 100%">
+												<thead>
+													<tr>
+														<th>RoleOnAProjectId</th>
+														<th>SdIndustryId</th>
+														<th>Name</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div id="sdRolesAvailableEmptyPanel" style="display: none">
+											<p style="text-align: center; color: #777777"></p>
+										</div>
+										<div id="sdRolesAvailablePanel" style="display: none">
+											<table id="sdRolesAvailableTable"
+												class="table table-striped table-advance table-hover"
+												style="width: 100%">
+												<thead>
+													<tr>
+														<th>RoleOnAProjectId</th>
+														<th>SdIndustryId</th>
+														<th>Name</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+										<div id="sdRolesAvailableIndustryPanel" style="display: none">
+											<table id="sdRolesAvailableIndustryTable"
+												class="table table-striped table-advance table-hover"
+												style="width: 100%">
+												<thead>
+													<tr>
+														<th>RoleOnAProjectId</th>
+														<th>SdIndustryId</th>
+														<th>Name</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+								<div id="sdtreeTabDlgErrorDiv" style="display: none"></div>
+								<div class="row">
+									<!--  <input type="hidden" id="serviceDisciplineCodeParent" class="form-control" readonly >-->
+									<label class="col-md-2 col-form-label" for="sdParentCode">Parent:
+										Code *</label>
+									<div class="col-md-2">
+										<input type="text" id="sdParentCode" class="form-control"
+											readonly>
+									</div>
+									<label class="col-md-1 col-form-label" for="sdParentName">Parent
+										SD Name *</label>
+									<div class="col-md-4">
+										<input type="text" id="sdParentName" class="form-control"
+											readonly>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label"
+										for="serviceDisciplineCode"> Service Discipline: Code
+										*</label>
+									<div class="col-md-1">
+										<input type="text" id="serviceDisciplineCode"
+											class="form-control"
+											onkeyup="serviceDisciplineDialogChanged()" placeholder="code">
+									</div>
+									<label class="col-md-1 col-form-label"
+										for="serviceDisciplineName"> SD Name</label>
+									<div class="col-md-4">
+										<input type="text" id="serviceDisciplineName"
+											class="form-control"
+											onkeyup="serviceDisciplineDialogChanged()" placeholder="name">
+									</div>
+
+									<div class="offset-md-0 col-md-1 ">
+										<input type="checkbox" id="serviceDisciplineAllowRoles" disabled> 
+										<label class="col-form-label" for="serviceDisciplineAllowRoles">Allow Roles</label>
+									</div>
+
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="orderNumber">Display order *</label>
+									<div class="col-md-1">
+										<input type="text" id="orderNumber" class="form-control"
+											onkeyup="serviceDisciplineDialogChanged()"
+											placeholder="order number"
+											onkeypress="return onlyNumberKey(event)">
+									</div>
+									
+									<label class="col-md-1 col-form-label"
+										for="serviceDisciplineDescription">Description</label>
+									<div class="col-md-5">
+										<input type="text" id="serviceDisciplineDescription"
+											class="form-control"
+											onkeyup="serviceDisciplineDialogChanged()"
+											placeholder="description">
+									</div>
+
+
+									<button id="saveServiceDisciplineButton"
+										class="btn btn-sm btn-primary" type="button"
+										onclick="saveServiceDiscipline()">Save</button>
+								</div>
+								
+								<div class="row">
+									<span class="input-group" id="__igdev_editServiceDisciplineLabel12315c" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+										<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;svdServiceDisciplineId</span><input readonly id="svdServiceDisciplineId" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+										<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;svdServiceDisciplineIdParent</span><input readonly id="svdServiceDisciplineIdParent" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+										<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;svdServiceDisciplineIdIndustry</span><input readonly id="svdServiceDisciplineIdIndustry" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+									</span>
+								</div>								
+								
+							</div>
+						</section>
+					</div>
+				</div>
+
+			</section>
+			<div class="text-right"></div>
+		</section>
+		<!--main content end-->
+	</section>
+	<!-- container section start -->
+
+	<!-- roleOnAProjectDialog: Start -->
+	<div class="modal fade" id="roleOnAProjectDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="roleOnAProjectDialogLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Role on a Project</h4>
+					<div class="col-md-3" id="roleOnAProjectDialogLabel"
+						hidden="hidden">
+						<label
+							style="background-color: #ffff99 !important; color: Black; height: 20px;">--roleOnAProjectDialog--</label>
+					</div>
+					<button type="button" class="close"
+						onclick="closeRoleOnAProjectDialog()" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+						<form onsubmit="return false" class="form-horizontal">
+							<fieldset>
+								<div id="roleOnAProjectDlgErrorDiv" style="display: none"></div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="ropSDIdIndustry">Service
+										Discipline Code</label>
+									<div class="col-md-9">
+										<div class="form-group">
+											<input type="text" id="ropSdIdIndustry" class="form-control"
+												readonly>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="ropSDIndustry">Service
+										Discipline Industry</label>
+									<div class="col-md-9">
+										<div class="form-group">
+											<input type="text" id="ropSdIndustry" class="form-control"
+												readonly>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label"
+										for="ropRoleOnAProjectId">Code *</label>
+									<div class="col-md-3">
+										<div class="form-group">
+											<input type="text" id="ropRoleOnAProjectId"
+												class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="ropName">Name
+										*</label>
+									<div class="col-md-4">
+										<div class="form-group">
+											<input type="text" id="ropName" class="form-control"
+												placeholder="name">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="ropAbbreviation">Abbreviation</label>
+									<div class="col-md-2">
+										<div class="form-group">
+											<input type="text" id="ropAbbreviation" class="form-control"
+												placeholder="abbreviation">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="ropDescription">Description</label>
+									<div class="col-md-9">
+										<div class="form-group">
+											<input type="text" id="ropDescription" class="form-control"
+												placeholder="description">
+										</div>
+									</div>
+								</div>
+
+							</fieldset>
+						</form>
+					</section>
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-sm btn-default" type="button"
+						onclick="closeRoleOnAProjectDialog()">Cancel</button>
+					<button id="saveServiceDisciplineButton"
+						class="btn btn-sm btn-primary" type="button"
+						onclick="saveRoleOnAProject()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- roleOnAProjectDialog: End -->
+
+
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript"
+		th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript"
+		th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+
+	<!-- custom select -->
+	<script type="text/javascript"
+		th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{ignite/js/dirtyforms.js}"></script> -->
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<script type="text/javascript" th:src="@{js/tree.jquery.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/filemanager.js}"></script>
+
+	<!-- Start: temporary Javascript files for charts -->
+	<script type="text/javascript" th:src="@{js/sparkline-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/easy-pie-chart.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-jvectormap-1.2.2.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-jvectormap-world-mill-en.js}"></script>
+	<script type="text/javascript" th:src="@{js/xcharts.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.autosize.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.placeholder.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/gdp-data.js}"></script>
+	<script type="text/javascript" th:src="@{js/morris.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/sparklines.js}"></script>
+	<script type="text/javascript" th:src="@{js/charts.js}"></script>
+	<!-- End: temporary Javascript files for charts -->
+
+	<script type="text/javascript"
+		th:src="@{ignite/js/ignite-setup/sd-tree.js}"></script>
+
+
+</body>
+</html>

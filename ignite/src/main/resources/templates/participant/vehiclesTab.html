@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="vehiclesTab" th:remove="tag">
+
+		<div id="vehiclesTab" class="tab-pane">
+			<form id="epVehiclesTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+									
+				</fieldset>
+			</form>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<h4 style="display: inline-block">Vehicles</h4>
+						<span id="__igdev_vehiclesTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--vehiclesTab-- &nbsp;&nbsp;&nbsp;table:participantVehiclesTable</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vSelectedVehicleId</span><input readonly id="vSelectedVehicleId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>					
+					</div>	
+				</div>							
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<table id="participantVehiclesTable"
+						class="table table-striped table-advance table-hover"
+						style="width: 100%">
+						<thead>
+							<tr>
+
+								<th>VehicleId</th>  				<!--0  VehicleId			  -->
+								<th>VehicleModelId</th>  			<!--1  VehicleModelId         -->
+								<th>VehicleMakeId</th>  			<!--2     VehicleMakeId       -->
+								<th>Vehicle Make</th>  			<!--3     VehicleMakeName     -->
+								<th>Vehicle Model</th>  			<!--4     VehicleModelName    -->
+								<th>VehicleTyreAndRimTypeId</th>	<!--5  VehicleTyreAndRimType  -->
+								<th>Name</th>  						<!--6  Name                   -->
+								<th>Licence Number</th>  			<!--7  LicenceNumber          -->
+								<th>Year</th>  						<!--8  RegistrationYear       -->
+								<th>Licence Expiry Date</th>  		<!--9  LicenceExpiryDate      -->
+								<th>VehicleRegisterNumber</th>  	<!--10 VehicleRegisterNumber  -->
+								<th>VINNumber</th>  				<!--11 VINNumber              -->
+								<th>EnginNumber</th>  				<!--12 EnginNumber            -->
+								
+								<th>Next Service Date</th>  			<!--13 NextServiceDate        -->
+								<th>Next Service Odo Reading</th>  	<!--14 NextServiceOdoReading  -->
+								
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+
+			<br><br>
+			<div class="row">
+				<div class="col-md-3">
+					<h4 style="display: inline-block">Regular Driver</h4>
+					<span id="__igdev_vRegularUserTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; table:vRegularUserTable</span>
+					</span>						
+				</div>
+				
+				<div class="col-md-3">
+					<h4 style="display: inline-block">Maintenance</h4>
+					<span id="__igdev_vMaintenanceTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; table:vMaintenanceTable</span>
+					</span>						
+				</div>
+
+				<div class="col-md-3">
+					<h4 style="display: inline-block">Readings</h4>
+					<span id="__igdev_vReadingTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; table:vReadingTable</span>
+					</span>						
+				</div>
+
+				<div class="col-md-3">
+					<h4 style="display: inline-block">Items</h4>
+					<span id="__igdev_vItemTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; table:vItemTable</span>
+					</span>						
+				</div>
+			</div>			
+												
+				
+			<div class="row" id="vehicleInfoPanel">
+				<div class="col-md-12">
+					<div id="emptyVehicleInfoPanel" style="display: block">
+						<p style="text-align: center; color: #777777">
+							<br> <br> <br> <br> Please select a Vehicle.
+						</p>
+					</div>
+				
+					<div class="col-md-3">
+						<div id="vRegularUserPanel"> 
+							<table id="vRegularUserTable" class="table table-striped table-advance table-hover" style="width:100%">
+		                  		<thead>
+									<tr>
+										<th>Vehicle User ID</th>      					
+										<th>Vehicle ID</th>
+										<th>Participant ID</th>
+										<th>System Name</th>
+										<th>Description</th>
+										<th>Last Update Timestamp</th>
+										<th>Last Update Username</th> 		  				
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div id="vMaintenancePanel">  <!--  style="display:none" -->
+							<table id="vMaintenanceTable" class="table table-striped table-advance table-hover" style="width:100%">
+		                  		<thead>
+									<tr>
+										<th>VehicleMaintenanceId</th>
+										<th>VehicleId</th>
+										<th>MaintenanceTypeId</th>  	<!-- MaintenanceTypeId -->
+										<th>Type</th>  					<!-- MaintenanceTypeId -->
+										<th>Description</th>  			<!-- Description -->
+										<th>Date</th>  					<!-- MaintenanceDate -->
+										<th>Km</th>		  				<!-- KilometerReading -->
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div id="vReadingPanel">  <!--  style="display:none" -->
+							<table id="vReadingTable"
+								class="table table-striped table-advance table-hover" style="width: 100%">
+								<thead>
+									<tr>
+										<th>VehicleReadingId</th> 	<!-- VehicleReadingId -->
+										<th>VehicleId</th> 			<!-- VehicleId -->
+										<th>Description</th>  		<!-- Description -->
+										<th>Date</th>  			<!-- ReadingDate -->
+										<th>Odo</th> 			<!-- OdometerReading -->
+										<th>Thread</th> 		<!-- ThreadDepthmm -->
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>												
+	
+					<div class="col-md-3">
+						<div id="vItemPanel">  <!--  style="display:none" -->
+							<table id="vItemTable"
+								class="table table-striped table-advance table-hover" style="width: 100%">
+								<thead>
+									<tr>
+										<th>VehicleItemId</th> 	<!-- VehicleReadingId -->
+										<th>VehicleId</th> 			<!-- VehicleId -->
+										<th>ItemTypeId</th>  		<!-- ItemTypeId -->
+										<th>Item</th>  		<!-- ItemTypeId -->
+										<th>Description</th>  		<!-- Description -->
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>	
+				</div>
+			</div>			
+		</div>
+		
+		<!-- Vehicle User Dialog -- Start -->
+			<div class="modal fade" id="vehicleUserDialog" tabindex="-1"
+				role="dialog" data-backdrop="static"
+				aria-labelledby="parameterDialogLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" style="display: inline-block">Regular Driver</h4>
+							<span id="__igdev_vehicleUserDialogFormLabel"
+								style="display: inline-block; background-color: #ffff99 !important; color: Black"
+								hidden="hidden">
+								<span style="font-size: 90%; height: 16px">&nbsp;
+									--vehicleUserDialog--</span>
+								</span>
+								<button type="button" class="close"
+									onclick="closeVehicleUserDialog()" aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">
+							<section class="panel">
+								<form onsubmit="return false" class="form-horizontal">
+									<fieldset>
+										<div id="pvDlgErrorDiv" style="display: none"></div>
+										<div class="row col-md-12" id="pvIdRowLabels">
+											<label for="pvVehicleId" class="col-md-2 col-form-label">Vehicle ID</label>
+											<label for="pvVehicleUserId" class="col-md-2 col-form-label">Vehicle User ID</label>
+											<label for="pvParticipantId" class="col-md-2 col-form-label">Participant ID</label>
+										</div>
+										<div class="row col-md-12" id="pvIdRow">
+											<input id="pvVehicleId" readonly>
+											<input id="pvVehicleUserId" readonly>
+											<input id="pvParticipantId" readonly onchange="vehicleUserDialogChanged()">
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="pvRegularUser">System Name *</label><br>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input type="text"  id="pvRegularUser" readonly onchange="vehicleUserDialogChanged()" class="form-control">
+													<span class="input-group-addon pointer"
+														id="pvVehicleDescriptionBinos"
+														onclick="selectVehicleUser('pvParticipantId', 'pvRegularUser')">
+														<i class="fas fa-binoculars"></i>
+														</span>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="pvVehicleDescription">Description</label>
+											<div class="col-md-9">
+												<div class="input-group">
+													<input type="text" id="pvVehicleDescription" onkeyup="vehicleUserDialogChanged()" class="form-control">
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							</section>
+						</div>
+						<div class="modal-footer">
+							<button onclick="closeVehicleUserDialog()"
+								class="btn btn-sm btn-default" type="button">Cancel</button>
+							<button id="saveVehicleUserDialogButton"
+								class="btn btn-sm btn-primary" type="button"
+								onclick="saveVehicleUserDialog()">Save</button>
+						</div>
+					</div>
+				</div>
+			</div> 
+			<!-- Vehicle User Dialog -- End -->
+		
+				<!-- vehicleDialog: Start -->
+		<div class="modal fade" id="vehicleDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg80">
+	
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Vehicle details</h4>
+						
+						<span id="__igdev_vehicleDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--vehicleDialog--</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vVehicleId</span><input readonly id="vVehicleId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vAssetId</span><input readonly id="vAssetId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vParticipantIdCurrentOwner</span><input readonly id="vParticipantIdCurrentOwner" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>	
+													
+						<button type="button" class="close"
+							onclick="closeVehicleDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="vDlgErrorDiv" style="display: none"></div>
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="vVehicleMake">Vehicle Make</label>
+										<div class="col-md-4">
+											<select id="vVehicleMake" class="form-control"  onchange="populateVehicleModel()"></select>
+										</div>
+	
+										<label class="col-md-2 col-form-label"	for="vParticipantIdOriginalOwnerName">Original Owner *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="vParticipantIdOriginalOwnerName" readonly class="form-control" onchange="vDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdOriginalOwnerV()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+	
+									</div>	
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="vVehicleModel">Vehicle Model *</label>
+										<div class="col-md-4">
+											<select id="vVehicleModel" class="form-control"  onchange="vDialogChanged()"></select>
+										</div>
+										
+										<label class="col-md-2 col-form-label"	for="vParticipantIdCurrentOwnerName">Current Owner *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="vParticipantIdCurrentOwnerName" readonly class="form-control" onchange="vDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdCurrentOwnerV()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>								
+									</div>									
+	  
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="vVehicleTyreAndRimTypeId">Tyre Size *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="hidden" id="vVehicleTyreAndRimTypeId"
+													onkeyup="vDialogChanged()"> <input type="text"
+													id="vVehicleTyreAndRimTypeIdName" readonly
+													class="form-control"> <span
+													class="input-group-addon pointer"
+													onclick="editSelectVehicleTyreAndRimTypeId()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+	
+										<label class="col-md-2 col-form-label"	for="vParticipantIdSponsorName">Sponsor</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="vParticipantIdSponsorName" readonly class="form-control" onchange="vDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdSponsorV()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>									
+										
+									</div>
+	
+	
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="vName">Name</label>
+										<div class="col-md-4">
+											<input type="text" id="vName" maxlength=255
+												class="form-control" placeholder="Name"
+												onkeyup="vDialogChanged()">
+										</div>
+										
+										<label class="col-md-2 col-form-label"	for="vParticipantIdSoldToName">Sold To</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="vParticipantIdSoldToName" readonly class="form-control" onchange="vDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdSoldToV()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>									
+										
+										
+									</div>	
+									
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="vAssetConditionId">Asset Condition *</label>
+										<div class="col-md-4">
+											<select id="vAssetConditionId" class="form-control"
+												onchange="vDialogChanged()"></select>
+										</div>
+										
+	
+										<label class="col-md-2 col-form-label"
+											for="vAssetStatusId">Asset Status *</label>
+										<div class="col-md-4">
+											<select id="vAssetStatusId" class="form-control"
+												onchange="vDialogChanged()"></select>
+										</div>
+										
+									</div>									
+	  
+									
+									
+									
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="vLicenceNumber">Licence Number</label>
+										<div class="col-md-2">
+											<input type="text" id="vLicenceNumber" maxlength=9
+												class="form-control" placeholder="Licence Number"
+												onkeyup="vDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vRegistrationYear">Registration Year</label>
+										<div class="col-md-2">
+											<input type="text" id="vRegistrationYear" maxlength=4 onkeypress="return onlyNumberKey(event)"
+												class="form-control" placeholder="Registration Year"
+												onkeyup="vDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vLicenceExpiryDate">Licence Expiry Date</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="vLicenceExpiryDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vLicenceExpiryDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>									
+											
+																	
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="vVehicleRegisterNumber">Vehicle Register Number</label>
+										<div class="col-md-2">
+											<input type="text" id="vVehicleRegisterNumber" maxlength=100
+												class="form-control" placeholder="Vehicle Register Number"
+												onkeyup="vDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vVINNumber">VIN Number</label>
+										<div class="col-md-2">
+											<input type="text" id="vVINNumber" maxlength=100
+												class="form-control" placeholder="VIN Number"
+												onkeyup="vDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vEnginNumber">Engine Number</label>
+										<div class="col-md-2">
+											<input type="text" id="vEnginNumber" maxlength=100
+												class="form-control" placeholder="Engine Number"
+												onkeyup="vDialogChanged()">
+										</div>
+									</div>
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+																	
+									<div class="row">
+									
+										<label class="col-md-2 col-form-label"	for="vParticipantOfficeIdLocationName">Office Location</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input type="text" id="vParticipantOfficeIdLocationName" readonly class="form-control" onchange="vDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantOfficeIdLocationV()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>								
+									</div>																																
+	
+	
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="vAssetAquiredDate">Asset Acquired Date *</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="vAssetAquiredDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vAssetAquiredDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vOwnershipToSponsorDate">Ownership To Sponsor</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="vOwnershipToSponsorDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vOwnershipToSponsorDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vAssetRemovedDate">Asset Removed Date</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="vAssetRemovedDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vAssetRemovedDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+	
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="vPurchaseAmount">Purchase Amount *</label>
+										<div class="col-md-2">
+											<input type="text" id="vPurchaseAmount" maxlength=15 onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control" placeholder="Purchase Amount"
+												onkeyup="vDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vAssetSoldAmount">Asset Sold Amount</label>
+										<div class="col-md-2">
+											<input type="text" id="vAssetSoldAmount" maxlength=15 onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control" placeholder="Asset Sold Amount"
+												onkeyup="vDialogChanged()">
+										</div>
+	
+										<label class="col-md-1 col-form-label" for="vParticipantRightOfUse">Right of Use</label>
+										<div class="col-md-3">
+											<input type="text" id="vParticipantRightOfUse" maxlength=10
+												class="form-control" placeholder="Right of Use"
+												onkeyup="vDialogChanged()">
+										</div>
+									</div>									
+									
+					
+
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="vNextServiceDate">Next Service Date</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="vNextServiceDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vNextServiceDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="vNextServiceOdoReading">Next Service Odo Reading</label>
+										<div class="col-md-2">
+											<input type="text" id="vNextServiceOdoReading" maxlength=6 onkeypress="return onlyNumberKey(event)"
+												class="form-control" placeholder="Next Service Odo Reading"
+												onkeyup="vDialogChanged()">
+										</div>
+										
+										<label class="col-md-2 col-form-label" for="vGuaranteePeriodEnd">Guarantee Period End</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="vGuaranteePeriodEnd" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vGuaranteePeriodEnd').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>									
+
+									</div>	
+									
+									<div class="row">
+										<span id="__igdev_vehicleIdsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;&nbsp;vParticipantIdSponsor</span><input readonly id="vParticipantIdSponsor" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vParticipantIdSoldTo</span><input readonly id="vParticipantIdSoldTo" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vParticipantOfficeIdLocation</span><input readonly id="vParticipantOfficeIdLocation" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vParticipantIdOriginalOwner</span><input readonly id="vParticipantIdOriginalOwner" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>					
+									</div>	
+																		
+								</fieldset>
+							</form>
+						</section>
+	
+					</div>
+	
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeVehicleDialog()">Cancel</button>
+						<button id="saveVehicleButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="editSaveVehicle()">Save</button>
+					</div>				
+	
+				</div>
+			</div>
+		</div>
+		<!-- vehicleDialog: End -->
+		
+				<!-- vehicleMaintenanceDialog: Start -->
+		<div class="modal fade" id="vehicleMaintenanceDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg50">
+				<div class="modal-content">
+					<div class="modal-header">								
+							
+						<h4 class="modal-title" style="display: inline-block">Vehicle Maintenance</h4>
+						<span id="__igdev_vehicleMaintenanceDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--vehicleMaintenanceDialog-- </span>
+						</span>				
+					
+						<button type="button" class="close"
+							onclick="closeVehicleMaintenanceDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="vmDlgErrorDiv" style="display: none"></div>
+	
+									<div class="row">
+										<label class="col-md-4 col-form-label"
+											for="vmMaintenanceTypeId">Maintenance Type *</label>
+										<div class="col-md-8">
+											<select id="vmMaintenanceTypeId" class="form-control"
+												onchange="vmVehicleMaintenanceChanged()"></select>
+										</div>								
+									</div>	
+	
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vmDescription">Description</label>
+										<div class="col-md-8">
+											<input type="text" id="vmDescription" maxlength=255
+												class="form-control" placeholder="Description"
+												onkeyup="vmVehicleMaintenanceChanged()">
+										</div>
+									</div>								
+								
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vmMaintenanceDate">Maintenance Date *</label>
+										<div class="col-md-8">
+											<div class="input-group">
+												<input id="vmMaintenanceDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vmVehicleMaintenanceChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vmMaintenanceDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>	
+									
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vmKilometerReading">Kilometer Reading *</label>
+										<div class="col-md-4">
+											<input type="text" id="vmKilometerReading" maxlength=7 onkeypress="return onlyNumberKey(event)"
+												class="form-control" placeholder=""
+												onkeyup="vmVehicleMaintenanceChanged()">
+										</div>
+									</div>							
+
+									<div class="row">
+										<span id="__igdev_vmIdsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vmVehicleMaintenanceId</span><input readonly id="vmVehicleMaintenanceId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>					
+									</div>									
+	
+								</fieldset>
+							</form>
+						</section>
+					</div>
+						
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeVehicleMaintenanceDialog()">Cancel</button>
+						<button id="saveVehicleMaintenanceButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveVehicleMaintenance()">Save</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<!-- vehicleMaintenanceDialog: End -->
+				<!-- vehicleReadingDialog: Start -->
+		<div class="modal fade" id="vehicleReadingDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Vehicle Reading</h4>
+						<span id="__igdev_vehicleReadingDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--vehicleReadingDialog-- </span>
+						</span>											
+							
+					
+						<button type="button" class="close"
+							onclick="closeVehicleReadingDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="vrDlgErrorDiv" style="display: none"></div>
+	
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vrDescription">Description</label>
+										<div class="col-md-8">
+											<input type="text" id="vrDescription" maxlength=255
+												class="form-control" placeholder="Description"
+												onkeyup="vrVehicleReadingChanged()">
+										</div>
+									</div>								
+								
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vrReadingDate">Reading Date *</label>
+										<div class="col-md-8">
+											<div class="input-group">
+												<input id="vrReadingDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="vrVehicleReadingChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#vrReadingDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+	
+									</div>	
+									
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vrOdometerReading">Odometer Reading *</label>
+										<div class="col-md-4">
+											<input type="text" id="vrOdometerReading" maxlength=7 onkeypress="return onlyNumberKey(event)"
+												class="form-control" placeholder=""
+												onkeyup="vrVehicleReadingChanged()">
+										</div>
+	
+									</div>		
+	
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="vrThreadDepthmm">Thread Depth in mm</label>
+										<div class="col-md-4">
+											<input type="text" id="vrThreadDepthmm" maxlength=2 onkeypress="return onlyNumberKey(event)"
+												class="form-control" placeholder=""
+												onkeyup="vrVehicleReadingChanged()">
+										</div>
+	
+									</div>	
+									
+									<div class="row">
+										<span id="__igdev_vrIdsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;vrVehicleReadingId</span><input readonly id="vrVehicleReadingId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>					
+									</div>	
+
+	
+								</fieldset>
+							</form>
+						</section>
+					</div>
+						
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeVehicleReadingDialog()">Cancel</button>
+						<button id="saveVehicleReadingButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveVehicleReading()">Save</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<!-- vehicleReadingDialog: End -->
+		
+				<!-- vehicleItemDialog: Start -->
+		<div class="modal fade" id="vehicleItemDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Vehicle Item</h4>
+						<span id="__igdev_vehicleItemDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--vehicleItemDialog-- </span>
+						</span>											
+		
+						<button type="button" class="close"
+							onclick="closeVehicleItemDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="viDlgErrorDiv" style="display: none"></div>
+	
+									<div class="row">
+										<label class="col-md-4 col-form-label"
+											for="viItemTypeId">Item Type *</label>
+										<div class="col-md-8">
+											<select id="viItemTypeId" class="form-control"
+												onchange="viVehicleItemChanged()"></select>
+										</div>								
+									</div>	
+	
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="viDescription">Description</label>
+										<div class="col-md-8">
+											<input type="text" id="viDescription" maxlength=255
+												class="form-control" placeholder="Description"
+												onkeyup="viVehicleItemChanged()">
+										</div>
+									</div>								
+	
+									<div class="row">
+										<span id="__igdev_viIdsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;viVehicleItemId</span><input readonly id="viVehicleItemId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>					
+									</div>	
+
+								</fieldset>
+							</form>
+						</section>
+					</div>
+						
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeVehicleItemDialog()">Cancel</button>
+						<button id="saveVehicleItemButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveVehicleItem()">Save</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<!-- vehicleItemDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/participant/vehiclesTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

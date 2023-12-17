@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+<meta name="_csrf_header"
+	th:content="${_csrf == null ? '' : _csrf.headerName}" />
+
+<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+<title>Ignite: Setup Expense Types</title>
+<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+
+<!-- bootstrap datatables -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+
+<!-- bootstrap theme -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap-theme.css}">
+
+<!-- font icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/elegant-icons-style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{font-awesome/6.4.2/css/all.min.css}">
+
+<!-- full calendar css-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+
+<!-- easy pie chart-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}"
+	media="screen">
+
+<!-- owl carousel -->
+<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-jvectormap-1.2.2.css}">
+
+<!-- Custom styles -->
+<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/style-responsive.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-ui-1.10.4.min.css}">
+
+<!-- Ignite -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{ignite/css/ignite.css}">
+
+</head>
+
+
+<body>
+
+	<div class="row" style="padding: 10px">
+		<div class="col-lg-12">
+			<h4 id="pageHeader">
+				<i class="fa fa-coins"></i> Setup: Expense Type
+			</h4>
+			
+			<section class="panel">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-2">
+							<h4>Expense Types</h4>
+						</div>
+						<div class="col-md-10">
+							<h4 id="subTypesHeader">Sub Expense Types</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<table id="expenseTypeParentTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<th>ExpenseTypeParentId</th>
+										<th>Name</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-10">
+							<div id="subTypeEmptyPanel" style="display: block">
+								<p style="text-align: center; color: #777777;">
+									<br> <br> <br> <br> Please select an Expense Type
+								</p>
+							</div>
+							<div id="subTypePanel" style="display: none">
+								<table id="subTypeTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+
+											<th>ExpenseTypeId</th>				<!--0  MySql-TableName: ExpenseType-->
+											<th>Code</th>						<!--1  ExpenseTypeParentId-->
+											<th>Type</th>						<!--2  UnitTypeCode-->
+											<th>Unit</th>						<!--3  ExpenseTypeId-->
+
+											<th>Name</th>						<!--4  Name-->
+											<th>Description</th>				<!--5  Description-->
+											<th>Allowance</th>					<!--6  AllowanceFlag-->
+											<th>Allow Handling %</th>			<!--7  AllowHandlingPerc-->
+											<th>Allow MaxAmt PerUnit</th>		<!--8  AllowMaxAmtPerUnit-->
+
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+	<!-- expenseTypeParentDialog: Start -->
+	<div class="modal fade" id="expenseTypeParentDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="expenseTypeParentDialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Expense Type Parent</h4>
+					<button type="button" class="close"
+						onclick="closeExpenseTypeParent()" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+						<form onsubmit="return false" class="form-horizontal">
+							<fieldset>
+
+								<div class="row">   <!--  style="float: right" -->
+									<span class="input-group" id="__igdev_editCityDialogqj566543Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+										<label style="font-size: 90%; background-color: #ffff99 !important; color: Black; height: 20px;">&nbsp;&nbsp;--setup-expense-type---expenseTypeParentDialog--</label>
+									</span>
+								</div>
+								<div class="row">   <!--  style="float: right" -->
+									<span class="input-group" id="__igdev_editCityDialogqj563Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+										<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;etpDlgExpenseTypeParentId</span><input readonly id="etpDlgExpenseTypeParentId" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+									</span>
+								</div>			
+												
+								<div id="etpDlgErrorDiv" style="display: none"></div>
+
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="etpDlgName">Name *</label>
+									<div class="col-md-9">
+										<div class="form-group">
+											<input type="text" id="etpDlgName" class="form-control"
+												placeholder="Name" onkeyup="expenseTypeParentChanged()">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="etpDlgDescription">Description</label>
+									<div class="col-md-9">
+										<div class="form-group">
+											<input type="text" id="etpDlgDescription"
+												class="form-control" placeholder="Description"
+												onkeyup="expenseTypeParentChanged()">
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</section>
+
+				</div>
+				<div class="modal-footer">
+					<button onclick="closeExpenseTypeParent()"
+						class="btn btn-sm btn-default" type="button">Cancel</button>
+					<button id="saveExpenseTypeParentButton"
+						class="btn btn-sm btn-primary" type="button"
+						onclick="saveExpenseTypeParent()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- expenseTypeParentDialog: End -->
+
+
+
+	<!-- expenseTypeDialog: Start -->
+	<div class="modal fade" id="expenseTypeDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="expenseTypeDialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Expense Type</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true" onclick="closeExpenseSubType()" >&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+						<form onsubmit="return false" class="form-horizontal">
+							<fieldset>
+
+								<div class="row">   <!--  style="float: right" -->
+									<span class="input-group" id="__igdev_editCityDialogq11f5Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+										<label style="font-size: 90%; background-color: #ffff99 !important; color: Black; height: 20px;">&nbsp;&nbsp;--setup-expense-type---expenseTypeDialog--</label>
+									</span>
+								</div>
+								<div class="row">   <!--  style="float: right" -->
+									<span class="input-group" id="__igdev_editCityDialogq11f4Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+										<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;eDlgLevel</span><input readonly id="eDlgLevel" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+									</span>
+								</div>
+								<div class="row">   <!--  style="float: right" -->
+									<span class="input-group" id="__igdev_editCityDialogq11f3Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+										<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;eDlgExpenseTypeId</span><input readonly id="eDlgExpenseTypeId" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+									</span>
+								</div>								
+								<div id="eDlgErrorDiv" style="display: none"></div>
+
+								<div class="row">
+									<label class="col-md-3 col-form-label"
+										for="eDlgExpenseTypeParentId">Parent *</label>
+									<div class="col-md-8">
+										<div class="form-group">
+											<select id="eDlgExpenseTypeParentId" class="form-control"
+												onkeyup="expenseSubTypeChanged()"></select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="eDlgName">Name *</label>
+									<div class="col-md-9">
+										<div class="form-group">
+											<input type="text" id="eDlgName" class="form-control"
+												onkeyup="expenseSubTypeChanged()">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="eDlgDescription">Description</label>
+									<div class="col-md-8">
+										<div class="form-group">
+											<input type="text" id="eDlgDescription" class="form-control"
+												onkeyup="expenseSubTypeChanged()">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="eDlgUnitTypeCode">Unit Type *</label>
+									<div class="col-md-8">
+										<div class="form-group">
+											<select id="eDlgUnitTypeCode" class="form-control"
+												onkeyup="expenseSubTypeChanged()"></select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="offset-md-2 col-md-4">
+										<input type="checkbox" id="eDlgAllowanceFlag"
+											onclick="allowanceClicked()"
+											onkeyup="expenseSubTypeChanged()"> <label
+											class="col-form-label" for="eDlgAllowanceFlag">Allowance</label>
+									</div>
+								</div>
+								<div class="row" hidden="hidden">
+									<div class="offset-md-2 col-md-4">
+										<input type="checkbox" id="eDlgAllowHandlingPerc"> <label
+											class="col-form-label" for="eDlgAllowHandlingPerc"
+											onkeyup="expenseSubTypeChanged()">Allow Handling %</label>
+									</div>
+
+									<div class="offset-md-2 col-md-8">
+										<input type="checkbox" id="eDlgAllowMaxAmtPerUnit"> <label
+											class="col-form-label" for="eDlgAllowMaxAmtPerUnit"
+											onkeyup="expenseSubTypeChanged()">Allow Max Amount Per Unit</label>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</section>
+
+				</div>
+				<div class="modal-footer">
+					<button onclick="closeExpenseSubType()" class="btn btn-sm btn-default"
+						type="button">Cancel</button>
+					<button id="saveExpenseSubTypeButton"
+						class="btn btn-sm btn-primary" type="button"
+						onclick="saveExpenseType()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- expenseTypeDialog: End -->
+
+
+
+
+
+
+
+
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript"
+		th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript"
+		th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+
+	<!-- custom select -->
+	<script type="text/javascript"
+		th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<script type="text/javascript"
+		th:src="@{ignite/js/reference-data/setup-expense-type.js}"></script>
+
+</body>
+</html>

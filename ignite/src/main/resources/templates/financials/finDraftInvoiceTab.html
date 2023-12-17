@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="finDraftInvoiceTab" th:remove="tag">
+
+		<div id="finDraftInvoiceTab" class="tab-pane">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div id="diTabDlgErrorDiv" style="display: none"></div>
+					<div class="row">
+						<div class="col-md-4">
+							<h4 style="display: inline-block">Draft Invoices</h4>
+							<span id="__igdev_finDraftInvoiceTabFormLabel1" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp;--finDraftInvoiceTab-- &nbsp; table:draftTable1</span>
+							</span>
+						</div>
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Invoice Totals Per Project</h4>
+							<span id="__igdev_finDraftInvoiceTabFormLabel11" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; &nbsp; table: draftTable2</span>
+							</span>
+						</div>
+						<div class="col-md-3">
+							<h4 style="display: inline-block">Project Totals Per Expense Type</h4>
+							<span id="__igdev_finDraftInvoiceTabFormLabel3" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; table 3: table per project and expense type</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4">
+							<table id="draftTable1"
+								class="table table-striped table-advance table-hover" style="width: 100%">
+								<thead>
+									<tr>
+										<th>InvoiceId</th>                   
+										<th>Participant Id From</th>         
+										<th>Participant Id To</th>           
+										<th>Draft</th>                   
+										<th>Invoice Date</th>                
+										<th>Generated Until</th>       
+										<th>Invoice Number</th>              
+										<th>To</th>              
+										<th>Description</th>                 
+										<th>Invoice Amount</th>                            
+										<th></th>                            
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="col-md-5">
+							<div id="emptyDraftTable2Panel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Draft Invoice.
+								</p>
+							</div>
+							<div id="draftTable2Panel" style="display: none">
+								<table id="draftTable2"
+									class="table table-striped table-advance table-hover" style="width: 100%">
+									<thead>
+										<tr>
+											<th>Type </th>
+											<th>participantIdPayer</th>
+											<th>Payer</th>
+											<th>participantIdBeneficiary</th>
+											<th>Beneficiary</th>
+											<th>#</th>
+											<th>Total</th>
+											<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div id="emptyDraftTable3Panel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select an Invoice Line.
+								</p>
+							</div>
+							<div id="draftTable3Panel" style="display: none">
+								<table id="draftTable3"
+									class="table table-striped table-advance table-hover" style="width: 100%">
+									<thead>
+										<tr>
+											<th>Type </th>
+											<th>participantIdPayer</th>
+											<th>Payer</th>
+											<th>participantIdBeneficiary</th>
+											<th>Beneficiary</th>
+											<th>#</th>
+											<th>Total</th>
+											<th></th>
+											<th>projectId</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<div id="emptyDraftTable4aPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select an Expense Line.
+								</p>
+							</div>
+							<div id="draftTable4aTimeCostPanel" style="display: none">
+								<table id="draftTable4aTimeCost"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>ProjectId</th>
+										<th>Service Discipline</th>
+										<th>#</th>
+										<th>Amount</th>
+										<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div id="emptyDraftTable5aPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Line Total.
+								</p>
+							</div>
+							<div id="draftTable5aTimeCostPanel" style="display: none">
+								<table id="draftTable5aTimeCost"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>invoiceLineDetailId</th>
+										<th>invoiceLineId</th>
+										<th>lineType</th>
+										<th>Activity Date</th>
+										<th>projectName</th>
+										<th>Participant</th>
+										<th>SD and Role</th>
+										<th>Stage</th>
+										<th>Description</th>
+										<th>Recoverable Expense Type</th>
+										<th>#</th>
+										<th>Rate</th>
+										<th>Line Total</th>
+										<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div id="emptyDraftTable4bPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select an Expense Line.
+								</p>
+							</div>
+							<div id="draftTable4bExpenseClaimPanel" style="display: none">
+								<table id="draftTable4bExpenseClaim"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>ProjectId</th>
+										<th>Expense Type</th>
+										<th>#</th>
+										<th>Amount</th>
+										<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+
+						<div class="col-md-8">
+							<div id="emptyDraftTable5bPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Line Total.
+								</p>
+							</div>
+							<div id="draftTable5bExpenseClaimPanel" style="display: none">
+								<table id="draftTable5bExpenseClaim"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>invoiceLineDetailId</th>
+										<th>invoiceLineId</th>
+										<th>lineType</th>
+										<th>Activity Date</th>
+										<th>projectName</th>
+										<th>Participant</th>
+										<th>SD and Role</th>
+										<th>Stage</th>
+										<th>Description</th>
+										<th>Unit Type</th>
+										<th>#</th>
+										<th>Rate</th>
+										<th>Line Total</th>
+										<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+					
+					
+					<!-- 
+					<div class="row">
+						<div class="col-md-12">
+							<div id="emptyDraftReportDetailPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Line Total.
+								</p>
+							</div>
+							<div id="draftReportDetailPanel" style="display: none">
+								<div class="row">
+									<div class="col-md-12">
+										<h4 style="display: inline-block">Draft Report Detail Lines</h4>
+										<span id="__igdev_finDraftInvoiceTabFormLabel22" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+											<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; table:draftReportDetailTable</span>
+										</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<table id="draftReportDetailTable"
+											class="table table-striped table-advance table-hover"
+											style="width: 100%">
+											<thead>
+												<tr>
+												<th>DraftInvoiceDetailId</th>	  
+												<th>InvoiceLineId</th>
+												<th>LineType</th>
+												<th>Date</th>
+												<th>ProjectName</th>
+												<th>Individual</th>
+												<th>Sd And Role</th>
+												<th>Stage</th>
+												<th>Description</th>
+												<th></th>
+												<th>Units</th>
+												<th>Rate</th>
+												<th>Line Total</th>
+												<th></th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>					
+					
+				</fieldset>
+			</form>
+		</div>
+		 -->
+
+		<script type="text/javascript" th:src="@{ignite/js/financials/finDraftInvoiceTab.js}"></script>
+		 
+		 <!-- Dialogs: Start  -->
+		<dialog th:replace="financials/finInvoiceDraftToOutDialog :: finInvoiceDraftToOutDialog"></dialog>         
+
+		<!-- Dialogs: End -->
+		 
+		 
+	</div>
+
+</body>
+</html>		

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="soqItemDialog" th:remove="tag">
+		
+		<!-- soqItemDialog: Start -->
+		<div class="modal fade" id="soqItemDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="soqTemplateItemDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" style="display: inline-block">SOQ Item</h4>
+						<h5 id="nameFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">--soqItemDialog--</span>
+						</h5>
+		        <button type="button" class="close" onclick="closeSoqItemDialog()" aria-hidden="true">&times;</button>
+		      </div>
+		      <div class="modal-body">
+	
+				<section class="panel">
+					<form onsubmit="return false" class="form-horizontal">
+						<fieldset>
+						
+							<input type="hidden" id="soqDlgMode">
+							<div id="soqDlgErrorDiv" style="display: none"></div>
+					    					    						    	
+							<div class="row">
+								<span id="__igdev_hiddenFormLabel618889" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;soqItemId</span><input ReadOnly id="soqDlgId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								</span>											
+							</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siTemName">Template Name</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siTemName" class="form-control" placeholder="" readonly>
+									</div>
+								</div>
+					    	</div>														    	
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siSubName">Sub-Schedule Name</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siSubName" class="form-control" placeholder="" readonly>
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siParentItem">Parent Item Name</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siParentItem" class="form-control" readonly>
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siColumnOne">Column 1 Item Number *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siColumnOne" class="form-control">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siColumnTwo">Column 2 Item Number *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siColumnTwo" class="form-control">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siColumnThree">Column 3 Item Number *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siColumnThree" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgDescriptionColumn">Item Description *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgDescriptionColumn" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="siUnitType">Unit Type *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="siUnitType" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="offset-md-2 col-md-12 row">
+								<input type="checkbox" id="peFullyLinked"> <label
+									class="col-form-label offset-md-1" for="peFullyLinked">Define Sub Items</label>
+							</div>
+							<div class="offset-md-2 col-md-12 row">
+								<input type="checkbox" id="peFullyLinked"> <label
+									class="col-form-label offset-md-1" for="peFullyLinked">Tender Rate Allowed</label>
+							</div>
+							<div class="offset-md-2 col-md-12 row">
+								<input type="checkbox" id="peFullyLinked"> <label
+									class="col-form-label offset-md-1" for="peFullyLinked">Rate Only</label>
+							</div>
+					    </fieldset>
+				  	</form>
+		    	</section>
+
+		      </div>
+		      <div class="modal-footer">
+				<button onclick="closeSoqItemDialog()" class="btn btn-sm btn-default" type="button">Cancel</button>
+		        <button id="saveSoqItemButton" class="btn btn-sm btn-primary" type="button">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script type="text/javascript" th:src="@{ignite/js/soq/soqItemDialog.js}"></script>
+	</div>
+
+</body>
+</html>		

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="soqTemplateSubScheduleDialog" th:remove="tag">
+		
+		<!-- cardTypeDialog: Start -->
+		<div class="modal fade" id="soqTemplateSubScheduleDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="soqTemplateSubScheduleDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" style="display: inline-block">SOQ Template Sub Schedule</h4>
+						<h5 id="nameFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">--soqTemplateSubScheduleDialog--</span>
+						</h5>
+		        <button type="button" class="close" onclick="closeSoqTemplateSubScheduleDialog()" aria-hidden="true">&times;</button>
+		      </div>
+		      <div class="modal-body">
+	
+				<section class="panel">
+					<form onsubmit="return false" class="form-horizontal">
+						<fieldset>
+						
+							<input type="hidden" id="soqDlgMode">
+							<div id="soqDlgErrorDiv" style="display: none"></div>
+					    					    						    	
+							<div class="row">
+								<span id="__igdev_hiddenFormLabel618889" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;soqSubScheduleDlgId</span><input ReadOnly id="soqDlgId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								</span>											
+							</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgTempName">Template Name</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgName" class="form-control" placeholder="" readonly>
+									</div>
+								</div>
+					    	</div>														    	
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgName">Name *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgName" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgDescription">Description *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgDescription" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgSubHeader1">Sub Report Header 1 * *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgSubHeader1" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgSubHeader2">Sub Report Header 2 *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgSubHeader2" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgPageNumPrefix">Page Number Prefix</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgPageNumPrefix" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgPageNumPostfix">Page Number Postfix</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgPageNumPostfix" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqsDlgStartPageNum">Start Page Number</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqsDlgStartPageNum" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    </fieldset>
+				  	</form>
+		    	</section>
+
+		      </div>
+		      <div class="modal-footer">
+				<button onclick="closeSoqTemplateSubScheduleDialog()" class="btn btn-sm btn-default" type="button">Cancel</button>
+		        <button id="saveTemplateSubScheduleButton" class="btn btn-sm btn-primary" type="button" onclick="saveSoqTemplateSubSchedule()">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script type="text/javascript" th:src="@{ignite/js/soq/soqTemplateSubScheduleDialog.js}"></script>
+	</div>
+
+</body>
+</html>		

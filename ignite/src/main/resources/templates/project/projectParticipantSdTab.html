@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<!-- jqTree css -->
+<link rel="stylesheet" type="text/css" th:href="@{css/jqtree.css}">
+
+
+</head>
+
+<body>
+	<div th:fragment="projectParticipantSdTab" th:remove="tag">
+
+		<div id="projectParticipantSdTab" class="tab-pane">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div id="ppsdTabDlgErrorDiv" style="display: none"></div>
+
+					<div class="row">
+						<div class="col-md-3">
+							<h4 style="display: inline-block">Project Participant Tree</h4>
+							<span id="__igdev_projectParticipantSdTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; tree:ppTree</span>
+							</span>
+						</div>
+						<div class="col-md-5">
+							<h4 class="modal-title" id="ppsdHeader" style="display: inline-block">Service Disciplines / Resources</h4>
+							<span id="__igdev_projectParticipantSdTab2FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; table:ppsdRoleTable</span>
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; ppTheName</span><input readonly id="ppTheName" style="background-color: #ffff99 !important; color:Black; width: 110px; height: 20px;font-size: 85%">
+							</span>
+						</div>
+						<div class="col-md-4">
+							<h4 class="modal-title" id="ppsdrsHeader" style="display: inline-block">Role Stages</h4>
+							<span id="__igdev_projectParticipantSdTab3FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; table:ppsdRoleStageTable</span>
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3" style="overflow: hidden">
+							<div style="display: flex; height: calc(100vh - 160px); width: 100%; overflow: hidden">
+								<div id="ppTreePanel" class="scroll-panel panel-body" style="overflow: scroll; height: inherit; width: 850px; float: left">
+									<div id="ppTree"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div id="ppsdResourceMainPanel" style="display: block">
+								<div id="ppsdEmptyPanel" style="display: block">
+									<p style="text-align: center; color: #777777">
+										<br> <br> <br> <br>&nbsp; &nbsp;  Please select a Participant.
+									</p>
+								</div>
+								<div id="ppResourceSdsPanel" style="display: none">
+									<table id="ppsdRoleTable"
+										class="table table-striped table-advance table-hover"
+										style="width: 100%">
+										<thead>
+											<tr>
+											<th>projectParticipantSdRoleId</th>   
+											<th>projectParticipantId</th>
+											<th>participantIdBeneficiary</th>
+											<th>systemNameBeneficiary</th>
+											<th>Service Discipline Code</th>
+											<th>Service Discipline</th>
+											<th>roleOnAProjectId</th>
+											<th>Role</th>
+											<th>projectSdId</th>
+											<th>sdRoleId</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+
+								<div id="ppResourcesPanel" style="display: none"></div>
+									<div id="ppResourcesListDiv" style="display: none"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div id="ppsdRoleStageMainPanel" style="display: block">
+
+								<div id="ppsdRoleStageEmptyPanel" style="display: block">
+									<p style="text-align: center; color: #777777">
+										<br> <br> <br> <br>&nbsp; &nbsp;  Please select a Service Discipline.
+									</p>
+								</div>
+
+								<div id="ppsdRoleStageGridPanel" style="display: none">
+									<table id="ppsdRoleStageTable"
+										class="table table-striped table-advance table-hover"
+										style="width: 100%">
+										<thead>
+											<tr>
+												<th>PpSdRoleStageId</th>          <!--0  MySql-TableName: VPpSdRoleStage-->
+												<th>ProjectParticipantSdRoleId</th> <!--1  ProjectParticipantSdRoleId-->
+												<th>ProjectSdStageId</th>         <!--2  ProjectSdStageId-->
+												<th>ProjectParticipantId</th>     <!--3  ProjectParticipantId-->
+												<th>ProjectId</th>                <!--4  ProjectId-->
+												<th>ParticipantId</th>            <!--5  ParticipantId-->
+												<th>ProjectSdId</th>              <!--6  ProjectSdId-->
+												<th>ProjectStageId</th>           <!--7  ProjectStageId-->
+												<th>Stage Number</th>              <!--8  OrderNumber-->
+												<th>Stage Name</th>                <!--9  StageName-->
+												<th>Description</th>              <!--10  Description-->
+												<th>StartDate</th>                <!--11  StartDate-->
+												<th>EndDate</th>                  <!--12  EndDate-->
+											</tr>
+										</thead>
+									</table>
+								</div>
+
+							</div>
+						</div>						
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+
+		<!-- ppsdRoleDialog: Start -->
+		<div class="modal fade" id="ppsdRoleDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Participant Project Service Discipline and Role</h4>
+						<span id="__igdev_ppsdRoleDialogFormLabel"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden">
+							<span style="font-size: 90%; height: 16px">--ppsdRoleDialog--</span>
+						</span>
+						<button type="button" class="close"
+							onclick="closeppsdRoleDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+
+						<section class="panel">
+
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="ppsdDlgErrorDiv" style="display: none"></div>
+									<input type="hidden" id="ppsdProjectParticipantSdRoleId">
+									<input type="hidden" id="ppsdProjectParticipantId"> <input
+										type="hidden" id="ppsdCode"> <input type="hidden"
+										id="ppsdRoleId">
+
+									<div class="row">
+										<label class="col-md-4 col-form-label"
+											for="ppsdProjectParticipantName">Participant *</label>
+										<div class="col-md-8">
+											<input type="text" id="ppsdProjectParticipantName"
+												name="ppsdProjectParticipantName" class="form-control"
+												readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="ppsdProjectSdId">Project
+											Service Discipline *</label>
+										<div class="col-md-8">
+											<select class="form-control" id="ppsdProjectSdId"
+												onchange="showRolesForSelectedSd()"
+												oninput="ppsdRoleDialogChanged()"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-4 col-form-label"
+											for="ppsdRoleOnAProject">Role On Project *</label>
+										<div class="col-md-8">
+											<select class="form-control" id="ppsdRoleOnAProject"
+												oninput="ppsdRoleDialogChanged()"></select>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeppsdRoleDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="savePPSdRolenButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="savePPSdRole()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ppsdRoleDialog: End -->
+
+
+
+
+		<!-- ppSdRoleStageDialog: Start -->
+		<div class="modal fade" id="ppSdRoleStageDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Service Discipline Role Stages</h4>
+								
+						<span id="__igdev_ppSdRoleStageDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; --ppSdRoleStageDialog-- </span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; &nbsp; pPpSdRoleStageId</span><input readonly id="pPpSdRoleStageId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>								
+
+						<button type="button" class="close"
+							onclick="closeppSdRoleStageDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="ppSdRoleStageDlgErrorDiv" style="display: none"></div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="pParticipantName">Participant *</label>
+										<div class="col-md-5">		
+											<input type="text" id="pParticipantName" class="form-control" readonly>
+										</div>	
+										<div  class="col-md-8">
+											<span id="__igdev_ppSdRoleStageDialogServiceDisciplineRole2Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; psds2ProjectSdId</span><input readonly id="psds2ProjectSdId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+											</span>					
+										</div>	
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="ppSdRoleName">Service Discipline Role *</label>
+										<div class="col-md-8">		
+											<input type="text" id="ppSdRoleName" class="form-control" readonly>
+										</div>
+										<div  class="col-md-3">
+											<span id="__igdev_ppSdRoleStageDialogServiceDisciplineRoleLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; pProjectParticipantSdRoleId</span><input readonly id="pProjectParticipantSdRoleId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+											</span>					
+										</div>	
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label">Project SD Stage *</label>						
+										<div class="col-md-5">
+											<div class="input-group">
+												<input
+													type="text" id="pSdStageName" readonly
+													class="form-control" onchange="psdsDialogChanged()">
+												<span class="input-group-addon pointer"
+													id="psdstageBinos"
+													onclick="editSelectProjectStageForP()">
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+										
+										<div  class="col-md-3">
+											<span id="__igdev_ppSdRoleStageDialogProjectSdStageLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; pProjectSdStageId</span><input readonly id="pProjectSdStageId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+											</span>					
+										</div>										
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeppSdRoleStageDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="savePpSdRoleStageDialogButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveppSdRoleStageDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ppSdRoleStageDialog: End -->
+
+		<!-- custom script for this page --> 
+		<script type="text/javascript" th:src="@{js/tree.jquery.js}"></script>
+		
+		<script type="text/javascript" th:src="@{ignite/js/project/projectParticipantSdTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

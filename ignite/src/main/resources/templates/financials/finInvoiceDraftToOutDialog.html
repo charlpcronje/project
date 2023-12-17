@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	dir="ltr" style="--viewer-container-height: 444px;">
+
+<script class="jsbin"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<head></head>
+
+<body>
+	<div th:fragment="finInvoiceDraftToOutDialog" th:remove="tag">
+
+		<div class="modal fade" id="finInvoiceDraftToOutDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg70">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="invoiceOutTitle"
+							style="display: inline-block">Invoice Out</h4>
+						<span id="__igdev_invoiceOutFormLabel33"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden"> <span
+							style="display: inline-block; font-size: 90%; height: 16px">&nbsp;
+								--finInvoiceDraftToOutDialog-- </span> <span
+							style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+								&nbsp; ioInvoiceId</span> <input readonly id="ioInvoiceId"
+							style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+							<span
+							style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+								&nbsp; ioParticipantIdFrom</span> <input readonly id="ioParticipantIdFrom"
+							style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;ParticipantIdTo  </span><input ReadOnly id="ioParticipantIdTo" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>
+
+						<button type="button" class="close"
+							onclick="closeInvoiceOutDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="ioDraftInvoiceDlgErrorDiv" style="display: none"></div>
+
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioParticipantIdFrom">From</label>
+										<div class="col-md-5">
+											<input type="text"class="form-control"  id="ioParticipantIdFrom_Name" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioParticipantIdTo">To</label>
+										<div class="col-md-5">
+											<input type="text"class="form-control"  id="ioParticipantIdTo_Name" readonly>
+										</div>
+									</div>
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioInvoiceNumber">Invoice Number</label>
+										<div class="col-md-4">
+											<div class="input-group">
+ 
+										        <input type="text" class="form-control"  id="ioInvoiceNumber" ReadOnly placeholder="" />
+										         <span class="input-group-btn"  style="width:3px;"></span> <!-- reducing the gap between them to zero -->
+										        <button id="overrideButton" class="btn btn-sm btn-default" type="button" title="Override Invoice Number" onclick="overrideInvoiceNumber()">Override</button>
+										         <span class="input-group-btn"  style="width:3px;"></span> <!-- reducing the gap between them to zero -->
+										        <input type="text" class="form-control" maxlength=8 id="ioTheNumber" onkeypress="return onlyNumberKey(event)" style="display: none" placeholder="" onkeyup="ioDialogChanged()"/>	
+										                     												
+											</div>										
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-md-12">
+											<span id="__igdev_invoiceOutFormLabel33we2123" style="display: inline-block; background-color: #ffff99 !important; color: Black" hidden="hidden"> 
+												
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;ioTheFormat   &nbsp;</span><input ReadOnly id="ioTheFormat"   style="background-color: #ffff99 !important; color:Black; width: 120px; height: 20px;">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;&nbsp;&nbsp;ioThePrefix   &nbsp;</span><input ReadOnly id="ioThePrefix"   style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;&nbsp;&nbsp;ioYearMonth   &nbsp;</span><input ReadOnly id="ioYearMonth"   style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;&nbsp;&nbsp;ioLastNumber  &nbsp;</span><input ReadOnly id="ioLastNumber"  style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;&nbsp;&nbsp;ioDigitLength &nbsp;</span><input ReadOnly id="ioDigitLength" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+																					
+											</span>
+										</div>
+									</div>
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioInvoiceAmount">Amount</label>
+										<div class="col-md-2">
+											<input 
+												type="text"class="form-control" maxlength=12 id="ioInvoiceAmount" 
+												onkeypress="return onlyNumberAndDotKey(event)" 
+												readonly placeholder="" onkeyup="ioDialogChanged()">
+										</div>
+									</div>
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioInvoiceDate">Invoice Date</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input 
+													name="" id="ioInvoiceDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="ioDialogChanged()" readonly> 
+
+											</div>
+										</div>
+										<label class="col-md-1 col-form-label" for="ioUpUntilGenerateDate">Generated Up Until</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input 
+													name="" id="ioUpUntilGenerateDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="ioDialogChanged()"
+													readonly> 
+											</div>
+										</div>
+										<label class="col-md-1 col-form-label" for="ioDateSentOrReceived">Date Sent</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input 
+													name="" id="ioDateSentOrReceived"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="ioDialogChanged()"
+													readonly> 
+											</div>
+										</div>
+										<!-- 
+										<div class="col-md-2">
+											<input type="checkbox" onchange="ioDialogChanged()" id="ioFlagDraft">
+											<label class="col-md-0 col-form-label" for="ioFlagDraft">Pro Forma</label>
+										</div>
+										 -->
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioDescription">Attention</label>
+										<div class="col-md-4">
+											<input type="text"class="form-control" maxlength=255 id="ioToAttention"
+												placeholder="" onkeyup="ioDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="ioDescription">Description</label>
+										<div class="col-md-7">
+											<input type="text"class="form-control" maxlength=255 id="ioDescription"
+												placeholder="" onkeyup="ioDialogChanged()">
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default"
+							onclick="closeInvoiceOutDialog()" type="button">Cancel</button>
+						<button id="saveInvoiceOutButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveGeneratedInvoiceOut()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- finInvoiceDraftToOutDialog -->
+
+		<script type="text/javascript"
+			th:src="@{ignite/js/financials/finInvoiceDraftToOutDialog.js}"></script>
+
+
+	</div>
+
+</body>
+</html>

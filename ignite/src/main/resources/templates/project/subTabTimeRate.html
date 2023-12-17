@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="subTabTimeRate" th:remove="tag">
+
+		<div id="subTabTimeRate" class="tab-pane active">
+			<!-- ratesTimeRelatedTab: End -->
+			<div class="row">
+				<div class="col-md-3">
+					<h4 style="display: inline-block">Time Based Agreements</h4>
+					<span id="__igdev_prTimeRelatedTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; table:rAgreementTable</span>
+					</span>
+				</div>
+				<div class="col-md-3">
+					<h4 style="display: inline-block">Individuals</h4>
+					<span id="__igdev_prTimeRelatedTab2FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px"> &nbsp; table:rAgreementIndividualsTable</span>
+					</span>
+				</div>
+				<div class="col-md-6" >
+					<h4 style="display: inline-block" id = "rRemunerationRatesHeading">Current Remuneration Rates</h4>
+					<span id="__igdev_prTimeRelatedTab3FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px"> &nbsp; table:rRateTable</span>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<table id="rAgreementTable"
+						class="table table-striped table-advance table-hover"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>agreementBetweenParticipantsId</th>
+								<th>projectId</th>
+								<th>projectParticipantId</th>
+								<th>participantIdPayer</th>
+								<th>Contracting</th>
+								<th>participantIdBeneficiary</th>
+								<th>Contracted</th>
+								<th>Between</th>
+								<th>remunerationModelCode</th>
+								<th>Remuneration Model</th>
+								<th>field deleted</th>
+								<th>Description</th>
+								<th>level</th>
+								<th>agreementBudget</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="col-md-3">
+					<div id="agreementIndividualsEmptyPanel" style="display: block">
+						<p style="text-align: center; color: #777777">
+							<br> <br> <br> <br> Please select an Agreement.
+						</p>
+					</div>
+					<div id="agreementIndividualsPanel" style="display: none">
+						<table id="rAgreementIndividualsTable"
+							class="table table-striped table-advance table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+								<th>RowNumber</th>
+								<th>AgreementBetweenParticipantsId</th>
+								<th>RemunerationModelCode</th>
+								<th>AgreementDescription</th>
+								<th>ParticipantId</th>
+								<th>ContractingParticipant</th>
+								<th>ProjectId</th>
+								<th>ProjectParticipantId</th>
+								<th>Level</th>
+								<th>ParticipantIdBeneficiary Type</th>
+								<th>Individual</th>
+								<th>Description</th>
+								<th>AnyChildren</th>
+								<th>IsIndividual</th>
+								<th>ProjectParticipantIdAboveMe</th>
+								<th>ParticipantNameAboveMe</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div id="rateEmptyPanel" style="display: block">
+						<p style="text-align: center; color: #777777">
+							<br> <br> <br> <br> Please select an Individual.
+						</p>
+					</div>
+					<div id="ratePanel" style="display: none">
+						<table id="rRateTable"
+							class="table table-striped table-advance table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+								<th>remunerationRateUplineId</th>
+								<th>agreementBetweenParticipantsId</th>
+								<th>projectParticipantSdRoleIdIndividual</th>
+								<th>participantIdIndividual</th>
+								<th>Service</th>
+								<th>Role</th>
+								<th>projBasedRemunTypeId</th>
+								<th>Remun Type</th>
+								<th>unitTypeCode</th>
+								<th>Unit</th>
+								<th>Rate</th>
+								<th>description</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>RemunerationInterval</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ratesTimeRelatedTab: End -->  
+
+		<!-- remunRateDialog: Start -->
+		<div class="modal fade" id="remunRateDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="remunRateDialogHeader"
+							style="display: inline-block">Remuneration for Individual</h4>
+						<h5 id="__igdev_prExpenseRatesUplineTab3FormLabel1232"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden">
+							<span style="font-size: 90%; height: 16px">--remunRateDialog (subTabTimeRate.html)--</span>
+						</h5>
+						<button type="button" class="close"
+							onclick="closeRemunRateDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="rDlgErrorDiv" style="display: none"></div>
+									<span id="__igdev_prExpenseRatesUplineTab3FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> rRemunerationRateUplineId</span><input readonly id="rRemunerationRateUplineId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;rAgreementBetweenParticipantsId</span><input readonly id="rAgreementBetweenParticipantsId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;rProjectParticipantId</span><input readonly id="rProjectParticipantId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;rParticipantIdIndividual</span><input readonly id="rParticipantIdIndividual" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+
+
+									</span>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="rAgreementParticipants">Agreement between *</label>
+										<div class="col-md-4">
+											<input type="text" id="rAgreementParticipants"
+												name="rAgreementParticipants" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="rAgreementDescription">Agreement Description</label>
+										<div class="col-md-7">
+											<input type="text" id="rAgreementDescription"
+												name="rAgreementDescription" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rIndividualName">Individual *</label>
+										<div class="col-md-4">
+											<input type="text" id="rIndividualName"
+												name="rIndividualName" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rSdAndRole">Service
+											Discipline and Role *</label>
+										<div class="col-md-5">
+											<select class="form-control" id="rSdAndRole"
+												oninput="remunRateChanged()"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="rProjBasedRemunType">Remuneration Type *</label>
+										<div class="col-md-5">
+											<select class="form-control" id="rProjBasedRemunType"
+												onchange="populateRemunIntervalAndUnitType()"
+												oninput="remunRateChanged()"></select>
+										</div>
+									</div>
+									<!--  
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rUnitTypeName">Unit Type</label>
+										<div class="col-md-3">
+									 -->
+											<input type="hidden" id="rUnitTypeName" name="rUnitTypeName"
+												class="form-control" readonly>
+									<!--
+										</div>
+									</div>
+									 -->
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="rRemunerationIntervalName">Unit</label>
+										<div class="col-md-3">
+											<input type="text" id="rRemunerationIntervalName"
+												name="rRemunerationIntervalName" class="form-control"
+												readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rRatePerUnit">Rate
+											(R) *</label>
+										<div class="col-md-2">
+											<input type="text" id="rRatePerUnit" name="rRatePerUnit"
+												class="form-control" placeholder="rate"
+												oninput="remunRateChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rDescription">Description</label>
+										<div class="col-md-7">
+											<input type="text" id="rDescription" name="rDescription"
+												class="form-control" placeholder="description"
+												oninput="remunRateChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rStartDate">Start
+											Date *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input id="rStartDate" name="rStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked" onchange="remunRateChanged()">
+												<span class="input-group-addon pointer"
+													onclick="$('#rStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="rEndDate">End
+											Date *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input id="rEndDate" name="rEndDate" class="form-control"
+													placeholder="yyyy-mm-dd" data-provide="datepicker"
+													data-date-format="yyyy-mm-dd" data-date-autoclose=true
+													data-date-show-on-focus=false data-date-today-btn="linked"
+													onchange="remunRateChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#rEndDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeRemunRateDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveRemunRateDialogButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveRemunRate()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- remunRateDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/project/subTabTimeRate.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

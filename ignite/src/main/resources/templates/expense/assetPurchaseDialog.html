@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      
+      
+<head></head>
+
+<body>  
+	<div th:fragment="assetPurchaseDialog" th:remove="tag">
+
+		<div class="modal fade" id="assetPurchaseDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg90">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block" id="assetPurchaseDialogTitle">Asset</h4>
+						<h5 id="__igdev_assetPurchaseDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--assetPurchaseDialog--</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apAssetId</span><input readonly id="apAssetId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apVehicleId</span><input readonly id="apVehicleId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apParticipantIdOriginalOwner</span><input readonly id="apParticipantIdOriginalOwner" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</h5>						
+					
+						<button type="button" class="close"	onclick="closeAssetPurchaseDialog()" aria-hidden="true">&times;</button>
+					</div>
+					
+					
+					<div class="modal-body">
+	
+						<div class="container johannes-container">
+						  <div class="row">
+							  
+						    <!-- Left Side Panels -->
+						    <div class="col-md-8">
+								 
+						      <!-- Top Panel on the Left -->
+						      <div class="card mb-4">
+						        <div class="card-body">	
+									
+										<div id="apAssetDlgErrorDiv" style="display: none"></div>
+	
+	
+	                              <!-- RYE -->
+										<div class="row">
+											<label class="col-md-2 col-form-label">Payer *</label> 
+											<div class="col-md-4">
+												<input type="text" id="peasParticipantPayerSystemName" readonly class="form-control"> 
+											</div>
+
+											<label class="col-md-2 col-form-label"
+												for="peasParticipantIdMadePurchaseSystemName">Purchase made by *</label> <!-- Participant made purchase * -->
+											<div class="col-md-4">                          
+												<div class="input-group">
+													<input type="text"
+														id="peasParticipantMadePurchaseSystemName" readonly
+														class="form-control"> <span
+														class="input-group-addon pointer"
+														onclick="editSelectParticipantMadePurchase223()"> <i
+														class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>		
+									
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<h5 id="__igdev_assetDialog1488790eeeeFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 75%;background-color: #ffffff">&nbsp; peasParticipantIdMadePurchase &nbsp;</span><input id="peasParticipantIdMadePurchase" readonly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 16px;font-size: 75%;">
+													<span style="display: inline-block;font-size: 75%;background-color: #ffffff">&nbsp; peasProjectParticipantId &nbsp;</span><input id="peasProjectParticipantId" readonly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 16px;font-size: 75%;">
+													<span style="display: inline-block;font-size: 75%;background-color: #ffffff">&nbsp; peasUnitTypeCode &nbsp;</span><input id="peasUnitTypeCode" readonly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 16px;font-size: 75%;">
+													<span style="display: inline-block;font-size: 75%;background-color: #ffffff">&nbsp; peasParticipantIdVendor &nbsp;</span><input id="peasParticipantIdVendor" readonly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 16px;font-size: 75%;">
+													<span style="display: inline-block;font-size: 75%;background-color: #ffffff">&nbsp; peasAssetId &nbsp;</span><input id="peasAssetId" readonly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 16px;font-size: 75%;">
+												</h5>												
+											</div>
+										</div>													
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="peasProjectName">Project *</label>
+											<div class="col-md-4">
+												<div class="input-group">
+
+													<input type="text" id="peasProjectName"
+														readonly class="form-control"> <span
+														class="input-group-addon pointer"
+														onclick="selectProjectForExpense()"> <i
+														class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+											<label class="col-md-2 col-form-label"
+												for="peasParticipantIdVendorSystemName">Vendor</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text"
+														id="peasParticipantVendorSystemName" readonly
+														class="form-control"> <span
+														class="input-group-addon pointer"
+														onclick="editSelectParticipantVendor223()"> <i
+														class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>											
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="peasExpenseTypeId">Expense Type *</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<select class="form-control" id="peasExpenseTypeId"
+														onchange= "populateExpenseUnitTypeCode224(); apeDialogChanged()">
+													</select>
+												</div>
+											</div>	
+											
+											<label class="col-md-2 col-form-label"
+												for="peasTaxDeductableCategoryId">Tax Deduct Category</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<select class="form-control" id="peasTaxDeductableCategoryId"
+														onchange="apeDialogChanged()">
+													</select>
+												</div>
+											</div>														
+													
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="peasPaymentMethodCode">Payment Method *</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<select class="form-control" id="peasPaymentMethodCode"
+														onchange="checkPaymentMethodType()">
+													</select>
+												</div>
+											</div>
+
+											<label class="col-md-2 col-form-label" id="peasBankCardIdUsedLabel"  hidden="hidden"
+												for="peasBankCardIdUsed">Bank Card Used *</label>
+											<label class="col-md-2 col-form-label" id="peasBankAccountIdUsedLabel"  hidden="hidden"
+												for="peasBankAccountIdUsed">Bank Account Used *</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<select class="form-control" id="peasBankCardIdUsed"  hidden="hidden"
+														onchange="apeDialogChanged()">
+													</select>
+													<select class="form-control" id="peasBankAccountIdUsed"  hidden="hidden"
+														onchange="apeDialogChanged()">
+													</select>
+												</div>
+											</div>
+											
+											<label class="col-md-2 col-form-label" for="peasNoteToAccountant">Note to Accountant</label>
+											<div class="col-md-2">
+												<input type="text" id="peasNoteToAccountant"
+													class="form-control" placeholder="Note to Accountant"  maxlength=255
+													onkeyup="apeDialogChanged()">
+											</div>												
+											
+										</div>
+																
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="peasPaymentDescription">Payment Description *</label>
+											<div class="col-md-4">
+												<input type="text" id="peasPaymentDescription"
+													class="form-control" placeholder="Payment Description"  maxlength=255 
+													onkeyup="apeDialogChanged()">
+											</div>
+													
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="peasPurchaseDate">Purchase Date *</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input id="peasPurchaseDate" 
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="apeDialogChanged()"> 
+														<span
+														class="input-group-addon pointer"
+														onclick="$('#peasPurchaseDate').datepicker('show')"
+														>
+														<i class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>
+	
+											<!--  <label class="col-md-2 col-form-label"
+												for="peNumberOfUnits" id="labelNumberOfUnits">Number of Units *</label>
+											<div class="col-md-2">
+												<input type="text" id="peNumberOfUnits"  maxlength=10 
+													class="form-control"
+													placeholder="Number Of Units" onkeypress="return onlyNumberKey(event)"
+													onkeyup="apeDialogChanged()">
+											</div>-->
+	
+											<label class="col-md-2 col-form-label"
+												for="peasAmountPerUnit" id="labelAmountPerUnit">Amount *</label>
+											<div class="col-md-2">
+												<input type="text" id="peasAmountPerUnit"  maxlength=15 
+													class="form-control"
+													placeholder="Amount Per Unit" onkeypress="return onlyNumberAndDotKey(event)"
+													onkeyup="apeDialogChanged()">
+											</div>
+										</div>									
+																		
+										<div class="row">
+
+
+										<!--  														
+											<div class="offset-md-2 col-md-2">
+												<input type="checkbox" id="peFullyLinked" disabled="disabled"> <label
+													class="col-form-label" for="peFullyLinked"
+													onkeyup="expenseSubTypeChanged()">Fully Linked</label>
+											</div>
+										</div>									
+										<div class="row">
+											<label class="col-md-2 col-form-label" id="peBankReferenceLabel"  hidden="hidden"
+												for="peBankReference">Reference for Bank Statement</label>
+											<div class="col-md-5">
+												<input type="text" id="peBankReference"
+													class="form-control"  maxlength=60
+													onkeyup="apeDialogChanged()">
+											</div>
+										-->
+										</div> 
+                              <!-- RYE klaar -->				
+	
+	
+	
+
+	
+	
+	
+                              <!-- RYE -->		
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="apAssetTypeId">Asset Type</label>
+											<div class="col-md-2">
+												<select id="apAssetTypeId" class="form-control"></select>
+											</div>
+											
+											<label class="col-md-2 col-form-label"
+												for="apAssetConditionId">Asset Condition</label>
+											<div class="col-md-2">
+												<select id="apAssetConditionId" class="form-control"
+													onchange="apeDialogChanged()"></select>
+											</div>											
+											
+											<label class="col-md-2 col-form-label"
+												for="apAssetStatusId">Asset Status</label>
+											<div class="col-md-2">
+												<select id="apAssetStatusId" class="form-control"
+													onchange="apeDialogChanged()"></select>
+											</div>
+											
+										</div>	
+										
+										<div class="row">											
+																						
+											<label class="col-md-2 col-form-label"	for="apParticipantIdOriginalOwnerName">Original Owner</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" id="apParticipantIdOriginalOwnerName" readonly class="form-control" onchange="apeDialogChanged()"> 
+													<!--<span class="input-group-addon pointer" onclick="editApSelectParticipantIdOriginalOwner()"> 
+														  <i class="fas fa-binoculars"></i> 
+													</span>-->
+												</div>
+											</div>
+
+											<label class="col-md-2 col-form-label"	for="apParticipantIdCurrentOwnerName">Current Owner</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" id="apParticipantIdCurrentOwnerName" readonly class="form-control" onchange="apeDialogChanged()"> 
+													<span class="input-group-addon pointer" onclick="editApSelectParticipantIdCurrentOwner()"> 
+														<i class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+										</div>	
+										
+										<div class="row">
+
+											<label class="col-md-2 col-form-label"	for="apParticipantIdSponsorName">Sponsor</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" id="apParticipantIdSponsorName" readonly class="form-control" onchange="apeDialogChanged()"> 
+													<span class="input-group-addon pointer" onclick="editApSelectParticipantIdSponsor()"> 
+														<i class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+										</div>		
+																	
+										<div class="row">
+											<label class="col-md-2 col-form-label"	for="apParticipantOfficeIdLocationName">Office Location</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" id="apParticipantOfficeIdLocationName" readonly class="form-control" onchange="apeDialogChanged()"> 
+													<span class="input-group-addon pointer" onclick="editApSelectParticipantOfficeIdLocation()"> 
+														<i class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+											<label class="col-md-2 col-form-label"	for="apParticipantIdSoldToName">Sold To</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" id="apParticipantIdSoldToName" readonly class="form-control" onchange="apeDialogChanged()"> 
+													<span class="input-group-addon pointer" onclick="editApSelectParticipantIdSoldTo()"> 
+														<i class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+										</div>			
+										<div class="row">
+
+											
+											<label class="col-md-2 col-form-label" for="apGuaranteePeriodEnd">Guarantee End</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input id="apGuaranteePeriodEnd" 
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="apeDialogChanged()"> <span
+														class="input-group-addon pointer"
+														onclick="$('#apGuaranteePeriodEnd').datepicker('show')"> <i
+														class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>										
+
+											<label class="col-md-2 col-form-label" for="apOwnershipToSponsorDate">Ownership To Sponsor</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input id="apOwnershipToSponsorDate" 
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="apeDialogChanged()"> <span
+														class="input-group-addon pointer"
+														onclick="$('#apOwnershipToSponsorDate').datepicker('show')"> <i
+														class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>
+											
+											<label class="col-md-2 col-form-label" for="apAssetRemovedDate">Asset Removed Date</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input id="apAssetRemovedDate" 
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="apeDialogChanged()"> <span
+														class="input-group-addon pointer"
+														onclick="$('#apAssetRemovedDate').datepicker('show')"> <i
+														class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>											
+											
+										</div>			
+										
+										<div class="row">		
+
+
+											<label class="col-md-2 col-form-label" for="apAssetNumber">Asset Number</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input type="text"  id="apAssetNumber" readonly
+														class="form-control" onchange="apeDialogChanged()"> 
+													<span class="input-group-addon pointer" id="apAssetNumberButton" onclick="getNextAssetProjectNumber()">
+														<i class="fas fa-hashtag"></i>
+													</span>
+												</div>
+											</div>									
+											<label class="col-md-2 col-form-label" for="apBrandOrMake">Brand/Make</label>
+											<div class="col-md-2">
+												<input type="text" id="apBrandOrMake" maxlength=255
+													class="form-control" placeholder="Brand/Make"
+													onkeyup="apeDialogChanged()">
+											</div>
+										</div>		
+										
+	
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="apDescription">Description</label>
+											<div class="col-md-10">
+												<input type="text" id="apDescription" maxlength=255
+													class="form-control" placeholder="Description"
+													onkeyup="apeDialogChanged()">
+											</div>
+										</div>								
+													
+													
+															
+
+									
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="apSerialNumber">Serial Number</label>
+											<div class="col-md-2">
+												<input type="text" id="apSerialNumber" maxlength=255
+													class="form-control" placeholder="Serial Number"
+													onkeyup="apeDialogChanged()">
+											</div>
+											<label class="col-md-2 col-form-label" for="apParticipantRightOfUse">Right of Use</label>
+											<div class="col-md-2">
+												<input type="text" id="apParticipantRightOfUse" maxlength=10
+													class="form-control" placeholder="Right of Use"
+													onkeyup="apeDialogChanged()">
+											</div>										
+		
+											<label class="col-md-2 col-form-label" for="apAssetSoldAmount">Asset Sold Amount</label>
+											<div class="col-md-2">
+												<input type="text" id="apAssetSoldAmount" maxlength=15 onkeypress="return onlyNumberAndDotKey(event)"
+													class="form-control" placeholder="Asset Sold Amount"
+													onkeyup="apeDialogChanged()">
+											</div>
+		
+										</div>									
+	
+										<div class="row">
+											<h5 id="__igdev_assetPurchaseIdsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apParticipantIdCurrentOwner</span><input readonly id="apParticipantIdCurrentOwner" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apParticipantIdSponsor</span><input readonly id="apParticipantIdSponsor" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apParticipantIdSoldTo</span><input readonly id="apParticipantIdSoldTo" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;apParticipantOfficeIdLocation</span><input readonly id="apParticipantOfficeIdLocation" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											</h5>					
+										</div>
+                              <!-- RYE klaar -->
+									
+
+								  </div>  <!-- <div class="card-body">  of the bottom left panel  -->
+					         </div>   <!-- <div class="card">        of the bottom left panel  -->
+						    </div>   <!--  <div class="col-md-8">     of all  left panels-->
+						
+						
+						
+						    <!-- Right Side Panel -->
+						    <div class="col-md-4">
+						      <div class="card" style="height: 100%;">
+						        <div class="card-body">
+						          <!--<h5 class="card-title">View Document</h5>-->
+						          
+						          
+						          
+										<div class="col-md-12">
+											<div id="emptyDocumentDisplayerAsset" style="display: block; width: 100%; height: 100%;">
+												<p style="text-align: center; color: #777777">
+													<br> <br> <br> <br> Please select a	Document.
+												</p>
+											</div>
+											<div id="documentDisplayerAsset" style="display: none; width: 100%; height: 100%;">
+												<iframe id="displayerFrameAsset" style="border-color: #dae2e7c4; border-style: solid" 
+												        width="100%" height="650px"></iframe>
+											</div>
+										</div>
+												
+																
+						        </div>    <!-- <div class="card-body">  of the right panel  -->
+						      </div>    <!--  <div class="card" style="height: 100%;">      -->
+						    </div>    <!--  <div class="col-md-4">     of all  right panels -->
+						    
+						    
+						    
+						  </div>  <!--  <div class="row">   -->
+						</div>    <!--  <div class="container johannes-container">  -->
+
+
+
+
+
+						
+					</div>   <!-- <div class="modal-body"> -->
+						
+						
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeAssetPurchaseDialog()">Cancel</button>
+						<button id="saveAssetProjectButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveAssetProject()">Save</button>
+					</div>  <!--  <div class="modal-footer">  --> 
+					
+				</div>  <!--  <div class="modal-content">  -->
+					
+
+			</div>
+		</div>
+		<!-- assetPurchaseDialog: End -->
+
+
+		<script type="text/javascript" th:src="@{ignite/js/expense/assetPurchaseDialog.js}"></script>
+
+
+	</div>
+
+</body>
+</html>		

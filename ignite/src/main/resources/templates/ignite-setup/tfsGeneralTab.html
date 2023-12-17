@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+</head>
+ 
+<body>
+	<div th:fragment="tfsGeneralTab" th:remove="tag">
+
+		<div id="tfsGeneralTab" class="tab-pane active">
+			<form  onsubmit="return false"	class="form-horizontal">
+				<fieldset>
+					<div class="row">
+						<div class="col-md-4">
+							<h4 style="display: inline-block">
+								Industries
+								<button id="addFolderStructureButton"
+									class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" title="Add new Industry"
+									style="display: inline-block"
+									onclick="newfolderStructure()">
+									<i class='fas fa-plus'></i>
+								</button>
+								<button id="deleteFolderStructureButton"
+									class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" title="Delete this node"
+									style="display: inline-block"
+									onclick="promptDeletefolderStructure()">
+									<i class='fas fa-minus'></i>
+								</button>
+							</h4>
+
+							<span id="__igdev_tfsGeneralTreeLabel65q45a8"	style="display: inline-block; background-color: #ffff99 !important; color: Black" hidden="hidden"> 
+								<span style="font-size: 85%">&nbsp;tree:tfsGeneralTree</span>
+								<span style="font-size: 90%; height: 16px; background-color: #ffffff">&nbsp;&nbsp;selectedTfsGeneralTreeId</span> <input id="selectedTfsGeneralTreeId" readonly style="background-color: #ffff99 !important; color: Black; width: 45px; height: 16px;">
+							</span>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<div style="display: flex; height: calc(100vh - 430px); width: 100%; overflow: hidden">
+								<div id="tfsGeneralTreePanel" class="scroll-panel panel-body"
+									style="overflow: scroll !important; height: inherit; width: inherit; float: left">
+									<div id="tfsGeneralTree"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="tfsGeneralTreeTabDlgErrorDiv" style="display: none"></div>
+					<div class="row">
+						<!--  <input type="hidden" id="folderStructureCodeParent" class="form-control" readonly >-->
+						<label class="col-md-1 col-form-label" for="tfsParentName">Parent Folder Name *</label>
+						<div class="col-md-3">
+							<input type="text" id="tfsParentName" class="form-control" readonly>
+						</div>
+						
+						<span id="__igdev_tfsGeneralTreeLabel6w3"	style="display: inline-block; background-color: #ffff99 !important; color: Black; height: 20px" hidden="hidden"> 
+							<span style="font-size: 90%; height: 20px; background-color: #ffffff">&nbsp;&nbsp;tfsParentId</span> <input id="tfsParentId" readonly style="background-color: #ffff99 !important; color: Black; width: 45px; height: 16px;">
+						</span>											
+					</div>
+					<div class="row">
+						<label class="col-md-1 col-form-label"
+							for="tfsName">Folder Name</label>
+						<div class="col-md-3">
+							<input type="text" id="tfsName"
+								class="form-control"
+								onkeyup="folderStructureDialogChanged()" placeholder="name">
+						</div>
+						
+						<div class="offset-md-0 col-md-2 ">
+							<input type="checkbox" id="perSdFlag"
+								onclick="folderStructureDialogChanged()"> <label
+								class="col-form-label" for="perSdFlag">Per SD</label>
+						</div>		
+															
+					</div>
+					<div class="row">
+						<!--<label class="col-md-2 col-form-label" for="tfsOrderNumber">Display order</label>
+						<div class="col-md-1">
+							<input type="text" id="tfsOrderNumber" class="form-control"
+								onkeyup="folderStructureDialogChanged()"
+								placeholder="order number"
+								onkeypress="return onlyNumberKey(event)">
+						</div>-->
+
+						<label class="col-md-1 col-form-label"
+							for="tfsDescription">Description</label>
+						<div class="col-md-3">
+							<input type="text" id="tfsDescription"
+								class="form-control"
+								onkeyup="folderStructureDialogChanged()"
+								placeholder="description">
+						</div>
+
+						<button id="savefolderStructureButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="savefolderStructure()">Save</button>
+					</div>
+					
+					<div class="row">
+						<span class="input-group" id="__igdev_editfolderStructureLabel123151" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+							<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;tfsTypicalFolderStructureId</span><input id="tfsTypicalFolderStructureId" readonly style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+							<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;tfsTypicalFolderStructureIdParent</span><input id="tfsTypicalFolderStructureIdParent" readonly style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+							<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;tfsServiceDisciplineIdIndustry</span><input id="tfsServiceDisciplineIdIndustry" readonly style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+						</span>
+					</div>	
+				</fieldset>
+			</form>
+		</div>
+
+			
+		<script type="text/javascript" th:src="@{ignite/js/ignite-setup/tfsGeneralTab.js}"></script>
+	</div>
+</body>
+</html>		

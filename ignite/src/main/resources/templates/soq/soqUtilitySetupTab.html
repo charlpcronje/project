@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head></head>
+
+<body>
+	<div th:fragment="soqUtilitySetupTab" th:remove="tag">
+
+		<div id="soqUtilitySetupTab" class="tab-pane active">
+			<form id="soqUtilitySetupTabForm" onsubmit="return false" class="form-horizontal">
+				<fieldset>
+
+					<div class="row">
+						<div class="col-md-4">
+							<h4>SOQ</h4>
+							<div id="soqSetupBtnRow" class="row">
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" style="display: inline-block; margin: 0px 6px"
+									onclick="showSoqScheduleDialog()">
+									<i class='fas fa-plus'></i>
+								</button>
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" disabled style="display: inline-block; margin: 0px 6px">
+									<i class='fas fa-minus'></i>
+								</button>
+							</div>
+							<div class="row">
+								<table id="soqTable" class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<h4>Sub Schedule</h4>
+							<div id="templateSetupBtnRow" class="row">
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" style="display: inline-block; margin: 0px 6px"
+									onclick="showSoqSubScheduleDialog()">
+									<i class='fas fa-plus'></i>
+								</button>
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" disabled style="display: inline-block; margin: 0px 6px">
+									<i class='fas fa-minus'></i>
+								</button>
+							</div>
+							<div class="row">
+								<table id="soqSubScheduleTable" class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<h4>SOQ Schedule Template Item Tree</h4>
+							<div id="templateSetupBtnRow" class="row">
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" style="display: inline-block; margin: 0px 6px"
+									onclick="showSoqTemplateItemDialog()">
+									<i class='fas fa-plus'></i>
+								</button>
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" disabled style="display: inline-block; margin: 0px 6px">
+									<i class='fas fa-minus'></i>
+								</button>
+							</div>
+							<div class="row">
+								<table id="soqTemplateItemTable" class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+
+						<dialog th:replace="soq/soqScheduleDialog :: soqScheduleDialog"></dialog>
+
+<!--						<dialog th:replace="soq/soqSubScheduleDialog :: soqSubScheduleDialog"></dialog>-->
+
+<!--						<dialog th:replace="soq/soqItemDialog :: soqItemDialog"></dialog>-->
+
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+
+		<script type="text/javascript" th:src="@{ignite/js/soq/soqUtilitySetupTab.js}"></script>
+
+	</div>
+
+</body>
+
+</html>

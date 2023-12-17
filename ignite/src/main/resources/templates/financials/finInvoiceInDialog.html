@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	dir="ltr" style="--viewer-container-height: 444px;">
+	<!-- <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="finInvoiceInDialog" th:remove="tag">
+
+
+
+
+
+		<div class="modal fade" id="finInvoiceInDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg70">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="invoiceInTitle"
+							style="display: inline-block">Invoice Received</h4>
+						<span id="__igdev_invoiceInFormLabel"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden"> <span
+							style="display: inline-block; font-size: 90%; height: 16px">&nbsp;
+								--finInvoiceInDialog-- </span> <span
+							style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+								&nbsp; iiInvoiceInId</span> <input readonly id="iiInvoiceInId"
+							style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+							<span
+							style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+								&nbsp; iiParticipantIdTo</span> <input readonly id="iiParticipantIdTo"
+							style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+							<span
+							style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+								&nbsp; iiParticipantNameTo</span> <input readonly id="iiParticipantNameTo"
+							style="background-color: #ffff99 !important; color: Black; width: 160px; height: 20px;">
+							<span
+							style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+								&nbsp; iiParticipantVatNumberTo</span> <input readonly id="iiParticipantVatNumberTo"
+							style="background-color: #ffff99 !important; color: Black; width: 90px; height: 20px;">
+						</span>
+
+						<button type="button" class="close"
+							onclick="closeInvoiceInDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+								
+								
+								
+								
+<div class="container johannes-container">
+  <div class="row">
+  
+	<!-- Left Side Panels -->
+	<div class="col-md-8">
+	
+	  <!-- Top Panel on the Left -->
+	  <div class="card mb-4">
+		<div class="card-body">									
+								
+								
+								
+									<div id="iiDlgErrorDiv" style="display: none"></div>
+
+									<div class="panel-content">
+
+
+														<fieldset>
+															
+															<div class="row">
+																<label class="col-md-4 col-form-label"
+																	for="iiParticipantIdFrom">Invoice Received From *</label>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input type="text" id="iiParticipantFromSystemName"
+																			readonly class="form-control"> <span
+																			class="input-group-addon pointer"
+																			onclick="selectParticipantIdFrom()"> <i
+																			class="fas fa-binoculars"></i>
+																		</span>
+																	</div>
+																</div>															
+															</div>
+															
+															<div class="row">
+																<span id="__igdev_iiParticipantIdFrom"
+																	style="display: inline-block; background-color: #ffff99 !important; color: Black"
+																	hidden="hidden"> 
+																	<span style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+																		iiParticipantIdFrom</span> <input id="iiParticipantIdFrom" readonly style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+																	<span style="display: inline-block; font-size: 90%; background-color: #ffffff">&nbsp;
+																		iiParticipantVatNumberFrom</span> <input id="iiParticipantVatNumberFrom" readonly style="background-color: #ffff99 !important; color: Black; width: 80px; height: 20px;">	
+																</span>
+															</div>
+															
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiInvoiceInDate">Invoice
+																	Date *</label>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input id="iiInvoiceInDate" class="form-control"
+																			placeholder="yyyy-mm-dd" data-provide="datepicker"
+																			data-date-format="yyyy-mm-dd" data-date-autoclose=true
+																			data-date-show-on-focus=false data-date-today-btn="linked"
+																			onchange="iiDialogChanged()"> <span
+																			class="input-group-addon pointer"
+																			onclick="$('#iiInvoiceInDate').datepicker('show')">
+																			<i class="fas fa-calendar-alt"></i>
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiDateReceived">Date
+																	Received</label>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input id="iiDateReceived" class="form-control"
+																			placeholder="yyyy-mm-dd" data-provide="datepicker"
+																			data-date-format="yyyy-mm-dd" data-date-autoclose=true
+																			data-date-show-on-focus=false data-date-today-btn="linked"
+																			onchange="iiDialogChanged()"> <span
+																			class="input-group-addon pointer"
+																			onclick="$('#iiDateReceived').datepicker('show')">
+																			<i class="fas fa-calendar-alt"></i>
+																		</span>
+																	</div>
+																</div>
+															</div>															
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiInvoiceNumber">Invoice
+																	Number *</label>
+																<div class="col-md-6">
+																	<input type="text" id="iiInvoiceNumber" class="form-control"
+																		placeholder="Invoice Number" maxlength=255
+																		onkeyup="iiDialogChanged()">
+																</div>
+															</div>
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiClientReferenceNumber">Client
+																	Reference Number</label>
+																<div class="col-md-6">
+																	<input type="text" id="iiClientReferenceNumber"
+																		class="form-control" placeholder="Client Reference Number"
+																		maxlength=255 onkeyup="iiDialogChanged()">
+																</div>
+															</div>
+															
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiInvoiceAmountExclTax">Invoice Excl Amount *</label>
+																<div class="col-md-6">
+																	<input type="text" id="iiInvoiceAmountExclTax" maxlength=15 onfocus="this.select();" 
+																		class="form-control" 
+																		onkeypress="return onlyNumberAndDotKey(event)"
+																		onkeyup="iiDialogChanged(); amountExclChanged()">
+																</div>															
+															</div>
+															
+															<div class="row">
+																<div class="col-md-4">
+																	<input type="checkbox" id="taxCheck" onclick="taxChanged()"> 
+																	<label class="col-form-label" for="taxCheck">Tax</label>
+																</div>	
+																
+																<div class="col-md-5" id="taxDiv" style="display: block">
+																	<input type="text" id="iiInvoiceTaxAmount" maxlength=14
+																		class="form-control"  readonly
+																		onkeypress="return onlyNumberAndDotKey(event)"
+																		onkeyup="iiDialogChanged()">
+																</div>
+															</div>		
+																												
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiInvoiceTotalAmountInclTax">Invoice Incl Amount *</label>
+																<div class="col-md-6">
+																	<input type="text" id="iiInvoiceTotalAmountInclTax" maxlength=15 onfocus="this.select();" 
+																		class="form-control" 
+																		onkeypress="return onlyNumberAndDotKey(event)"
+																		onkeyup="iiDialogChanged(); amountInclChanged()">
+																</div>																
+															</div>
+															
+															
+															
+															<div class="row">
+																<label class="col-md-4 col-form-label" for="iiDescription">Invoice
+																	Description</label>
+																<div class="col-md-8">
+																	<input type="text" id="iiDescription" class="form-control"
+																		placeholder="Invoice Description" maxlength=255
+																		onkeyup="iiDialogChanged()">
+																</div>
+															</div>
+														</fieldset>
+
+						
+												
+
+
+									</div>
+									
+									
+									
+									
+       </div>  <!-- <div class="card-body"> -->
+      </div>   <!-- <div class="card" > -->
+
+      <!-- Bottom Left Panel -->
+      <div class="card">
+        <div class="card-body">
+		
+		
+		
+          <h5 class="card-title">Documents</h5>
+          <!-- Your content for the bottom left panel goes here -->
+
+
+								<div class="row">
+									<div class="col-lg-6" style="overflow: hidden">
+										<div class="row btn-toolbar btn-toolbar-slim">
+											<button type="button" id="newFolderBtn"
+												class="dt-button ui-button ui-state-default btn btn-sm"  
+												title="New Folder" onclick="promptUploadFile()">
+												<i class="fas fa-folder-open"></i>
+											</button>
+											<button type="button" id="deleteFolderBtn"
+												class="dt-button ui-button ui-state-default btn btn-sm"
+												title="New Folder" onclick="promptDeleteFile()">
+												<i class="fa fa-minus"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+		  
+        </div>  <!-- <div class="card-body"> -->
+      </div>   <!-- <div class="card" > -->
+      	  
+    </div>  <!-- <div class="col-md-8"> -->
+
+
+    <!-- Right Panel with the same height -->
+    <div class="col-md-4">
+	
+      <div class="card" style="height: 100%;">
+        <div class="card-body">
+		
+		
+		
+          <h5 class="card-title">Right Panel</h5>
+          <!-- Your content for the right panel goes here -->
+		  
+		  
+		  
+        </div>   <!-- <div class="card-body"> -->
+      </div>  <!-- <div class="card" style="height: 100%;"> -->
+	  
+    </div>    <!-- <div class="col-md-6"> -->
+	
+  </div>	<!-- <div class="row"> -->
+</div>		<!-- <div class="container johannes-container"> -->									
+									
+									
+									
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default"
+							onclick="closeInvoiceInDialog()" type="button">Cancel</button>
+						<button id="saveInvoiceInButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveInvoiceIn()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- finInvoiceInDialog -->
+
+
+
+
+
+
+		<script type="text/javascript"
+			th:src="@{ignite/js/financials/finInvoiceInDialog.js}"></script>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="agreementBetweenParticipantsTab" th:remove="tag">
+
+		<div id="agreementBetweenParticipantsTab" class="tab-pane">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div id="abpTabDlgErrorDiv" style="display: none"></div>
+					<div class="row">
+						<div class="col-md-3">
+							<h4 style="display: inline-block">Project Relationships</h4>
+							<span id="__igdev_agreementBetweenParticipantsTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp;&nbsp; --agreementBetweenParticipantsTab-- &nbsp; table:projectRelationshipTable</span>
+							</span>
+						</div>
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Remuneration Models</h4>
+							<span id="__igdev_agreementBetweenParticipantsTab1FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp;&nbsp; --agreementBetweenParticipantsTab-- &nbsp; table:agreementTable</span>
+							</span>
+						</div>
+						<div class="col-md-4">
+							<h4 style="display: inline-block" class="modal-title" id="abpAgreementDetailsHeader">
+								Recoverable Expense</h4>
+							<span id="__igdev_agreementBetweenParticipantsTab2FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp;table:recoverableExpenseTable</span>
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<table id="projectRelationshipTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<th>level</th>
+										<th>projectParticipantId</th>
+										<th>participantIdPayer</th>
+										<th>Contracting</th>
+										<th>participantIdBeneficiary</th>
+										<th>Contracted</th>
+										<th>Relationship</th>
+									</tr>
+								</thead>
+							</table>
+							</div>
+						<div class="col-md-5">
+							<div id="remunerationModelsEmptyPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Project Relationship.
+								</p>
+							</div>
+							<div id="remunerationModelsPanel" style="display: none">
+								<table id="agreementTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>agreementBetweenParticipantsId</th>
+											<th>projectParticipantId</th>
+											<th>participantIdPayer</th>
+											<th>Contracting</th>
+											<th>participantIdBeneficiary</th>
+											<th>Contracted</th>
+											<th>Relationship</th>
+											<th>remunerationModelCode</th>
+											<th>Remuneration Model</th>
+											<th>field deleted</th>
+											<th>Description</th>
+											<th>projectId</th>
+											<th>fsPreSplitContractingExpDeduct</th>
+											<th>fsPreSplitContractingThirdPDeduct</th>
+											<th>fsContractedExpensesAdded</th>
+											<th>fsPreSplitOtherPartInvoices</th>
+											<th>level</th>
+											<th width="20%">Budget</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div id="recoverableExpenseEmptyPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Recoverable Expense Agreement.
+								</p>
+							</div>
+							<div id="recoverableExpensePanel" style="display: none">
+								<table id="recoverableExpenseTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>recoverableExpenseId</th>
+											<th>agreementBetweenParticipantsId</th>
+											<th>Expense Group</th>
+											<th>expenseTypeId</th>
+											<th>Expense Type</th>
+											<th>Description</th>
+											<th>Budget</th>
+											<th>systemNamePayer</th>
+											<th>systemNameBeneficiary</th>
+											<th>agreementDescription</th>
+											<th>expenseTypeParentId</th>
+											<th>expenseTypeUnitCode</th>
+											<th>expenseTypeUnitName</th>
+											<th>expenseTypeId</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+		<!-- agreementDialog: Start -->
+		<div class="modal fade" id="agreementDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Remuneration Model Setup</h4>
+						<span id="__igdev_agreementDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">&nbsp;--agreementDialog--</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;aAgreementBetweenParticipantsId</span><input readonly id="aAgreementBetweenParticipantsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;aProjectParticipantId</span><input readonly id="aProjectParticipantId" style="background-color: #ffff99 !important; color:Black; width: 180px; height: 20px;">
+						</span>					
+						<button type="button" class="close"
+							onclick="closeAgreementDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="aDlgErrorDiv" style="display: none"></div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="aRelationshipName">Project Relationship *</label>
+										<div class="col-md-9">
+											<input type="text" id="aRelationshipName"
+												name="aRelationshipName" class="form-control"
+												readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="aRemunerationModel">Remuneration Model *</label>
+										<div class="col-md-5">
+											<select class="form-control" id="aRemunerationModel"
+												onchange="checkForFeeSplit()"
+												oninput="agreementDialogChanged()"></select>
+										</div>
+									</div>
+									<div id="aFeeSplitInfoPanel" style="display: none">
+										<div class="row">
+											<div class="offset-md-3 col-md-9">
+												<input type="checkbox" id="fsPreSplitContractingExpDeduct"
+													onchange="agreementDialogChanged()"> <label class="col-form-label"
+													for="fsPreSplitContractingExpDeduct"> Pre Fee
+													Split: Deduct Contracting Participant's Expenses (Detailed
+													or periodic lumpsums entered into system)</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="offset-md-3 col-md-9">
+												<input type="checkbox" id="fsPreSplitOtherPartInvoices"
+													onchange="agreementDialogChanged()"> <label class="col-form-label"
+													for="fsPreSplitOtherPartInvoices"> Pre Fee Split:
+													Deduct Participant invoices</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="offset-md-3 col-md-9">
+												<input type="checkbox"
+													id="fsPreSplitContractingThirdPDeduct" onchange="agreementDialogChanged()">
+												<label class="col-form-label"
+													for="fsPreSplitContractingThirdPDeduct"> Pre Fee
+													Split: Deduct Third party service provider invoices</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="offset-md-3 col-md-9">
+												<input type="checkbox" id="fsContractedExpensesAdded"
+													onchange="agreementDialogChanged()"> <label class="col-form-label"
+													for="fsContractedExpensesAdded"> Add Contracted
+													Participant's expenses over and above % Fee (Details
+													entered into system)</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="aDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="aDescription" name="aDescription"
+												class="form-control" placeholder="description"
+												oninput="agreementDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="aAgreementBudget">Agreement
+											Budget (R)</label>
+										<div class="col-md-3">
+											<input type="text" id="aAgreementBudget"
+												name="aAgreementBudget" class="form-control"
+												placeholder="agreement budget"
+												oninput="agreementDialogChanged()">
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeAgreementDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveAgreementDialogButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveAgreement()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- agreementDialog: End -->
+
+		<!-- recoverableExpenseDialog: Start -->
+		<div class="modal fade" id="recoverableExpenseDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Expense
+							Agreement between Participants</h4>
+						<h5 id="recoverableExpenseDialogFormLabel"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden">
+							<span style="font-size: 90%; height: 16px">--recoverableExpenseDialog--</span>
+						</h5>
+						<button type="button" class="close"
+							onclick="closeRecoverableExpenseDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="eaDlgErrorDiv" style="display: none"></div>
+									<input type="hidden" id="eaRecoverableExpenseId"> <input
+										type="hidden" id="eaAgreementBetweenParticipantsId">
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eaPayerName">Contracting *</label>
+										<div class="col-md-4">
+											<input type="text" id="eaPayerName" name="eaPayerName"
+												class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eaBeneficiaryName">Contracted *</label>
+										<div class="col-md-4">
+											<input type="text" id="eaBeneficiaryName"
+												name="eaBeneficiaryName" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="eaAgreementDescription">Agreement Description</label>
+										<div class="col-md-9">
+											<input type="text" id="eaAgreementDescription"
+												name="eaAgreementDescription" class="form-control" readonly>
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="eaExpenseTypeParent">Expense Type Parent</label>
+										<div class="col-md-5">
+											<select class="form-control" id="eaExpenseTypeParent"
+												onchange="populateExpenseTypeChildren()"
+												oninput="recoverableExpenseChanged()"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eaExpenseType">Expense
+											Type *</label>
+										<div class="col-md-5">
+											<select class="form-control" id="eaExpenseType"
+												onchange="populateExpenseUnitTypeAndHandling()"
+												oninput="recoverableExpenseChanged()"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eaExpenseBudget">Expense
+											Agreement Budget (R)</label>
+										<div class="col-md-3">
+											<input type="text" id="eaExpenseBudget"
+												name="eaExpenseBudget" class="form-control"
+												placeholder="expense agreement budget"
+												oninput="recoverableExpenseChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eaDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="eaDescription" name="eaDescription"
+												class="form-control" placeholder="description"
+												oninput="recoverableExpenseChanged()">
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeRecoverableExpenseDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveRecoverableExpenseDialogButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveRecoverableExpense()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- recoverableExpenseDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/project/agreementBetweenParticipantsTab.js}"></script>
+		
+		<!-- 
+		<script src="js/my-script.js?<?php echo filemtime('js/my-script.js'); ?>"></script>
+		 -->
+		 
+	</div>
+
+</body>
+</html>		

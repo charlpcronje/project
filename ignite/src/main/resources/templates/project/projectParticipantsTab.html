@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="projectParticipantsTab" th:remove="tag">
+	
+		<div id="projectParticipantsTab" class="tab-pane">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div id="ppTabDlgErrorDiv" style="display: none"></div>
+	
+					<div class="row">
+						<div class="col-md-7">
+							<h4 style="display: inline-block">Project Participants</h4>
+							<span id="__igdev_projectParticipantsTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; --projectParticipantsTab-- &nbsp; table:projectParticipantTable</span>
+							</span>
+						</div>
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Relationship Participants</h4>
+							<span id="__igdev_projectParticipantsTab2FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; table:participantChildrenTable</span>
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-7">
+							<table id="projectParticipantTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<th>projectParticipantIdContracted</th>     
+										<th>Level</th>                
+										<th>ParticipantIdContracted</th>    
+										<th>Contracted Participant</th>          
+										<th>projectParticipantIContracting</th>   
+										<th>Contracting Participant</th> 
+										<th>projectId</th>         
+										<th>projectName</th>       
+										<th>contractedStartDate</th>       
+										<th>contractedEndDate</th>       
+										<th>participantIdContracting</th>       
+									</tr>
+								</thead>
+							</table>
+						</div>
+	
+						<div class="col-md-5">
+							<div id="participantChildrenEmptyPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a	Participant.
+								</p>
+							</div>
+	
+							<div id="participantChildrenPanel" style="display: none">
+								<table id="participantChildrenTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>ProjectParticipantId</th>
+										<th>ProjectNumberText/th>
+										<th>ProjectTitle</th>
+										<th>ParticipantIdPayer</th>
+										<th>Contracted Participant</th>
+										<th>ProjectParticipantIdAboveMe</th>
+										<th>Parent</th>
+										<th>ProjectId</th>
+										<th>contractedStartDate</th>       
+										<th>contractedEndDate</th>       
+										<th>participantIdContracting</th>       
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+		<!-- projectParticipantDialog: Start -->
+		<div class="modal fade" id="projectParticipantDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Project Participant</h4>
+						<h5 id="projectParticipantDialogFormLabel"
+							style="display: inline-block; background-color: #ffff99 !important; color: Black"
+							hidden="hidden">
+							<span style="font-size: 90%; height: 16px">--projectParticipantDialog--</span>
+						</h5>
+						<button type="button" class="close"
+							onclick="closeProjectParticipantDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+
+						<section class="panel">
+
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="ppDlgErrorDiv" style="display: none"></div>
+									<input type="hidden" id="ppProjectParticipantId">
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="ppParticipantId">Project
+											Participant *</label> <input type="hidden" id="ppParticipantId">
+										<div class="col-md-7">
+											<div class="input-group">
+												<input type="text" id="ppParticipantName"
+													class="form-control"> <span
+													class="input-group-addon pointer"
+													onclick="selectParticipantIdForProject()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="ppStartDate">Start
+											Date</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<input id="ppStartDate" name="ppStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="projectParticipantChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#ppStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="ppEndDate">End
+											Date</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<input id="ppEndDate" name="ppEndDate" class="form-control"
+													placeholder="yyyy-mm-dd" data-provide="datepicker"
+													data-date-format="yyyy-mm-dd" data-date-autoclose=true
+													data-date-show-on-focus=false data-date-today-btn="linked"
+													onchange="projectParticipantChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#ppEndDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeProjectParticipantDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveProjectParticipantButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveProjectParticipant()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- projectParticipantDialog: End -->
+
+		<!-- participantChildDialog: Start -->
+		<div class="modal fade" id="participantChildDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Participant Relationships</h4>
+						<button type="button" class="close"
+							onclick="closeProjectParticipantChildDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="pcDlgErrorDiv" style="display: none"></div>
+									<input type="hidden" id="pcProjectParticipantIdAboveMe">
+									<div class="row">
+										<label class="col-md-4 col-form-label"
+											for="pcProjectParticipantAboveMe">Contracting Participant *</label>
+										<div class="col-md-8">
+											<input type="text" id="pcProjectParticipantAboveMe"
+												name="pcProjectParticipantAboveMe" class="form-control"
+												readonly>
+										</div>
+									</div>
+									<input type="hidden" id="pcProjectParticipantId"> <input
+										type="hidden" id="pcParticipantId">
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="pcParticipantId">Contracted
+											Participant *</label> <input type="hidden" id="pcParticipantId">
+										<div class="col-md-8">
+											<div class="input-group">
+												<input type="text" id="pcParticipantName" readonly
+													class="form-control"
+													onchange="projectParticipantChildChanged()"> <span
+													id="selectParticipantChildIdButton"
+													class="input-group-addon pointer"
+													onclick="selectParticipantChildId()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="pcStartDate">Start
+											Date</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input id="pcStartDate" name="pcStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="projectParticipantChildChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#pcStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="pcEndDate">End
+											Date</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input id="pcEndDate" name="pcEndDate" class="form-control"
+													placeholder="yyyy-mm-dd" data-provide="datepicker"
+													data-date-format="yyyy-mm-dd" data-date-autoclose=true
+													data-date-show-on-focus=false data-date-today-btn="linked"
+													onchange="projectParticipantChildChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#pcEndDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeProjectParticipantChildDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveprojectParticipantChildButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveParticipantChild()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ParticipantChild Dialog: End -->
+
+
+		<script type="text/javascript" th:src="@{ignite/js/project/projectParticipantsTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

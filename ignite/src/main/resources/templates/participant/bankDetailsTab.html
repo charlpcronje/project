@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+
+	<div th:fragment="bankDetailsTab" th:remove="tag">
+
+		<div id="bankDetailsTab" class="tab-pane">
+
+			<form id="epBankDetailsTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset></fieldset>
+			</form>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<h4 style="display: inline-block">Bank Details</h4>
+						<span id="__igdev_bankDetailsTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankDetailsTab-- &nbsp;&nbsp;&nbsp;table:participantBankDetailsTable</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;pbdParticipantBankDetailsId</span><input readonly id="pbdParticipantBankDetailsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;pbdParticipantBankDetailsName</span><input readonly id="pbdParticipantBankDetailsName" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>					
+					</div>	
+				</div>							
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table id="participantBankDetailsTable" 
+						class="table table-striped table-advance table-hover"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>Participant Bank Details Id</th>
+								<th>Participant Id</th>
+								<th>BankId</th>
+								<th>Bank Code</th>
+								<th>Bank</th>
+								<th>Account Type Code</th>
+								<th>Account</th>
+								<th>Branch Code</th>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Account Holder Name</th>
+								<th>Account Number</th>
+								<th>Default Bank Details</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-5">
+					<h4 style="display: inline-block">Bank Cards</h4>
+					<span id="__igdev_participantBankCardTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; table:participantBankCardTable</span>
+					</span>						
+				</div>
+			</div>
+
+			<div class="row">						
+				<div class="col-md-12">
+					<div id="bankCardEmptyPanel" style="display: block">
+						<p style="text-align: center; color: #777777">
+							<br> <br> <br> <br> Please select a Bank Detail Entry.
+						</p>
+					</div>
+
+					<div id="bankCardPanel" style="display: none">
+						<table id="participantBankCardTable"
+							class="table table-striped table-advance table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+									<th>bankCardId</th> 				<!--0 BankCardId     --> 
+									<th>participantBankDetailsId</th>   <!--1 ParticipantBankDetailsId   --> 
+									<th>individualIdMainCardUser</th>   <!--2 IndividualIdMainCardUser   --> 
+									<th>Main Card User</th>   			<!--3    --> 
+									<th>cardTypeId</th>               <!--4 CardTypeCode   --> 
+									<th>Card Type</th>               	<!--5    --> 
+									<th>Card Number</th>                <!--6 CardNumber     --> 
+									<th>Name on Card</th>               <!--7 NameOnCard     --> 
+									<th>Personal Card</th>              <!--8 PersonalCard   --> 
+									<th>Description</th>                <!--9 Description    --> 	
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+				<!-- participantBankDetailsDialog: Start -->
+		<div class="modal fade" id="participantBankDetailsDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Participant Bank Details</h4>
+						<span class="col-md-3" id="__igdev_participantBankDetailsDialogLabel" hidden="hidden">
+							<label style="background-color: #ffff99 !important; color:Black; height: 20px;">--participantBankDetailsDialog--</label>  
+						</span>
+						<button type="button" class="close"
+							onclick="closeParticipantBankDetailsDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="ebdDlgErrorDiv" style="display: none"></div>						
+									
+									<span id="__igdev_ebdParticipantBankDetailsId" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;ebdParticipantBankDetailsId</span><input readonly id="ebdParticipantBankDetailsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+									</span>										
+									
+									
+									<div class="panel-content">
+										<div class="row">
+											<label class="col-md-4 col-form-label"
+												for="ebdParticipantBankDetailsName">Name *</label>
+											<div class="col-md-7">
+												<input type="text" id="ebdParticipantBankDetailsName"
+													class="form-control" placeholder="Name of Bank details"
+													onkeyup="participantBDDialogChanged()">
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-4 col-form-label"
+												for="ebdParticipantBankDetailsDescription">Description</label>
+											<div class="col-md-8">
+												<input type="text" id="ebdParticipantBankDetailsDescription"
+													class="form-control"
+													placeholder="Description of Bank details"
+													onkeyup="participantBDDialogChanged()">
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-4 col-form-label" for="ebdBankId">Bank *</label>
+											<div class="col-md-7">
+												<div class="input-group">
+													<select class="form-control" id="ebdBankId"
+														onchange="populateBankBranchesForEdit()">
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-4 col-form-label" for="ebdBranchId">Branch</label>
+											<div class="col-md-7">
+												<div class="input-group">
+													<select class="form-control" id="ebdBranchId"
+														onchange="participantBDDialogChanged()">
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-4 col-form-label"
+												for="ebdAccountTypeId">Account Type</label>
+											<div class="col-md-7">
+												<div class="input-group">
+													<select class="form-control" id="ebdAccountTypeId"
+														onchange="participantBDDialogChanged()">
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-4 col-form-label"
+												for="ebdAccountHolderName">Account Holder Name *</label>
+											<div class="col-md-7">
+												<input type="text" id="ebdAccountHolderName"
+													class="form-control" placeholder="Account Holder Name"
+													onkeyup="participantBDDialogChanged()">
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-4 col-form-label" for="ebdAccountNumber">Account
+												Number *</label>
+											<div class="col-md-7">
+												<input type="text" id="ebdAccountNumber" class="form-control"  onkeypress="return onlyNumberKey(event)"
+													placeholder="Account Number"
+													onchange="participantBDDialogChanged()">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-7">
+												<input type="checkbox" id="ebdDefaultBankDetails" onchange="participantBDDialogChanged()">
+												<label class="col-form-label" for="ebdDefaultBankDetails">Default Bank Details</label>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default"
+							onclick="closeParticipantBankDetailsDialog()" type="button">Cancel</button>
+						<button id="saveParticipantBDButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveParticipantBankDetails()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- participantBankDetailsDialog: End -->
+		
+<!-- bankCardDialog: Start -->
+		<div class="modal fade" id="bankCardDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			 <div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Bank Card Details</h4>
+	
+						<span id="__igdev_bankCardDialogLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankCardDialog-- </span>
+						</span>										
+						<button type="button" class="close"
+							onclick="closeBankCardDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="bcDlgErrorDiv" style="display: none"></div>
+									<span id="__igdev_bcBankCardIdLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;bcBankCardId</span><input readonly id="bcBankCardId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;bcParticipantId</span><input readonly id="bcParticipantId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+									</span>											
+
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="bcParticipantBankDetailsId">Linked to *</label>
+										<div class="col-md-9">
+											<select id="bcParticipantBankDetailsId" class="form-control"
+												onchange="bankCardDialogChanged()"  placeholder="bank details"></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="bcCardTypeId">Card Type *</label>
+										<div class="col-md-6">
+											<select id="bcCardTypeId" class="form-control"
+												onchange="bankCardDialogChanged()"></select>
+										</div>
+									</div>
+									
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="bcIndividualIdMainCardUserName">Card User *</label>
+										<div class="col-md-6">
+											<div class="input-group">
+												<input type="hidden" id="__igdev_bcIndividualIdMainCardUser"
+													onkeyup="bankCardDialogChanged()"> <input type="text"
+													id="bcIndividualIdMainCardUserName" readonly
+													class="form-control" > <span
+													class="input-group-addon pointer"
+													onclick="editSelectCardUser()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									</div>								
+									
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="bcCardNumber">Card Number *</label>
+										<div class="col-md-6">
+											<input type="text" id="bcCardNumber"  onkeypress="return onlyNumberKey(event)"  maxlength=16 
+												class="form-control" placeholder="card number"
+												onkeyup="bankCardDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="bcNameOnCard">Name on Card *</label>
+										<div class="col-md-6">
+											<input type="text" id="bcNameOnCard" name="bcNameOnCard"  maxlength=45 
+												class="form-control" placeholder="name on card"
+												onkeyup="bankCardDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<div class="offset-md-3 col-md-4">
+											<input type="checkbox" id="bcPersonalCard"
+												onchange="bankCardDialogChanged()"> <label
+												class="col-form-label" for="bcPersonalCard">Personal Card</label>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="bcDescription">Description *</label>
+										<div class="col-md-9">
+											<input type="text" id="bcDescription" name="bcDescription"  maxlength=255 
+												class="form-control" placeholder="description"
+												onkeyup="bankCardDialogChanged()">
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeBankCardDialog()">Cancel</button>
+						<button id="saveBankCardBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveBankCardDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- bankCardDialog: End -->
+
+
+
+<!-- bankTransactionLinkDialog: Start      -->
+		<div class="modal fade" id="bankTransactionLinkDialog" tabindex="-1" role="dialog" 
+			data-backdrop="static" aria-labelledby="bankTransactionLinkDialogLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg70">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="bankTransactionLinkDialogHeader" style="display: inline-block">Bank Transaction Link</h4>
+						
+						<span id="__igdev_bankTransactionLinkDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankTransactionLinkDialog--</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;btlBankTransactionId</span><input readonly id="btlBankTransactionId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;btlBankTransactionLinkId</span><input readonly id="btlBankTransactionLinkId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>							
+						
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					
+					
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div class="panel-content">
+	
+											<div class="row">
+												<label class="col-md-2 col-form-label"
+													for="btlInvoiceIdName">Invoice</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text"
+															id="btlInvoiceIdName" readonly
+															class="form-control" > <span
+															class="input-group-addon pointer"
+															onclick="editSelectInvoiceForLink()"> <i
+															class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+												<span id="__igdev_btlInvoiceIdNameLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;btlInvoiceId</span><input readonly id="btlInvoiceId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>													
+											</div>									
+	
+	
+											<div class="row">
+												<label class="col-md-2 col-form-label" 	for="btlProjectExpenseIdName">Project Expense</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text"	id="btlProjectExpenseIdName" readonly class="form-control" > 
+														<span class="input-group-addon pointer" onclick="editSelectInvoiceForLink()"> 
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+												<span id="__igdev_btlProjectExpenseIdNameLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;btlProjectExpenseId</span><input readonly id="btlProjectExpenseId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>														
+												
+											</div>			
+
+
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="btlParticipantIdApprovedLinkName">Link approved by</label>
+												<div class="col-md-6">
+													<input type="text" id="btlParticipantIdApprovedLinkName" readonly
+														class="form-control" >
+												</div>														
+												<span id="__igdev_btlParticipantIdApprovedLinkNameLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;btlParticipantIdApprovedLink</span><input readonly id="btlParticipantIdApprovedLink" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>
+											</div>	
+	
+	
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="bcCardNumber">Link Amount</label>
+												<div class="col-md-4">
+													<input type="text" id="btlLinkAmount"  onkeypress="return onlyNumberAndDotKey(event)"  maxlength=16 
+														class="form-control" onkeyup="bankTransactionLinkDialogChanged()">
+												</div>
+											</div>
+
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="btlAutomaticCursorLinkCreated">Auto Link created</label>
+												<div class="col-md-4">
+													<input type="text" id="btlAutomaticCursorLinkCreated" readonly data-date-format="yyyy-mm-dd"
+														class="form-control" >
+												</div>
+											</div>	
+
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="btlLinkApproved">Link approved</label>
+												<div class="col-md-4">
+													<input type="text" id="btlLinkApproved" readonly data-date-format="yyyy-mm-dd"
+														class="form-control" >
+												</div>
+											</div>		
+
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="btlDescription">Description</label>
+												<div class="col-md-9">
+													<input type="text" id="btlDescription"  maxlength=255 
+														class="form-control" placeholder="description"
+														onkeyup="bankTransactionLinkDialogChanged()">
+												</div>
+											</div>	
+	
+	
+	
+											<div class="row">
+												<div class="col-md-12">
+													<table id="linkedProjectExpenseTable"
+														class="table table-striped table-advance table-hover"
+														style="width: 100%" title= "Project Expenses">
+	
+														<thead>
+															<tr>
+																<th>ProjectExpenseId</th>         <!--0  MySql-TableName: VProjectExpense-->
+																<th>ProjectParticipantIdPayer</th> <!--1  ProjectParticipantIdPayer-->
+																<th>ParticipantIdPayer</th>       <!--2  ParticipantIdPayer-->
+																<th>ParticipantPayerSystemName</th> <!--3  ParticipantPayerSystemName-->
+																<th>ProjectId</th>                <!--4  ProjectId-->
+																<th>ProjectName</th>              <!--5  ProjectName-->
+																<th>ParticipantIdMadePurchase</th> <!--6  ParticipantIdMadePurchase-->
+																<th>ParticipantMadePurchaseSystemName</th> <!--7  ParticipantMadePurchaseSystemName-->
+																<th>ParticipantIdVendor</th>      <!--8  ParticipantIdVendor-->
+																<th>ParticipantVendorSystemName</th> <!--9  ParticipantVendorSystemName-->
+																<th>ExpenseTypeId</th>            <!--10  ExpenseTypeId-->
+																<th>ExpenseTypeId</th>          <!--11  ExpenseTypeId-->
+																<th>ExpenseTypeName</th>          <!--12  ExpenseTypeName-->
+																<th>ExpenseTypeDescription</th>   <!--13  ExpenseTypeDescription-->
+																<th>UnitTypeCode</th>             <!--14  UnitTypeCode-->
+																<th>ExpenseTypeParentId</th>    <!--15  ExpenseTypeParentId-->
+																<th>ExpenseTypeParentName</th>    <!--16  ExpenseTypeParentName-->
+																<th>AssetId</th>                  <!--17  AssetId-->
+																<th>VehicleId</th>                <!--18  VehicleId-->
+																<th>VehicleName</th>              <!--19  VehicleName-->
+																<th>AssetDescription</th>         <!--20  AssetDescription-->
+																<th>PaymentMethodCode</th>        <!--21  PaymentMethodCode-->
+																<th>PaymentMethodName</th>        <!--22  PaymentMethodName-->
+																<th>BankCardIdUsed</th>           <!--23  BankCardIdUsed-->
+																<th>BankCardNumber</th>           <!--24  BankCardNumber-->
+																<th>BankCardNameOnCard</th>       <!--25  BankCardNameOnCard-->
+																<th>BankCardDescription</th>      <!--26  BankCardDescription-->
+																<th>ParticipantBankDetailsIdUsed</th> <!--27  ParticipantBankDetailsIdUsed-->
+																<th>AccountNumber</th>            <!--28  AccountNumber-->
+																<th>ParticipantBankDetailsName</th> <!--29  ParticipantBankDetailsName-->
+																<th>ParticipantBankDetailsDescription</th> <!--30  ParticipantBankDetailsDescription-->
+																<th>TaxDeductableCategoryId</th> <!--31  TaxDeductableCategoryId-->
+																<th>TaxDeductableCategoryName</th> <!--32  TaxDeductableCategoryName-->
+																<th>PaymentDescription</th>       <!--33  PaymentDescription-->
+																<th>PurchaseDate</th>             <!--34  PurchaseDate-->
+																<th>NumberOfUnits</th>            <!--35  NumberOfUnits-->
+																<th>AmountPerUnit</th>            <!--36  AmountPerUnit-->
+																
+																<th>NoteToAccountant</th>         <!--37  NoteToAccountant-->
+																<th>FullyLinked</th>              <!--38  FullyLinked-->
+																<th>BankReference</th>            <!--39  BankReference-->
+															</tr>
+														</thead>
+														<tbody>
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+											
+											
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>										
+											
+											
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeBankTransactionLinkDialog()">Cancel</button>
+						<button id="saveBankTransactionLinkDialogBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveBankTransactionLinkDialog()">Save</button>
+					</div>											
+											
+
+				</div>
+			</div>
+		</div>
+<!-- bankTransactionLinkDialog: End -->
+
+
+
+
+
+
+
+<!-- bankTransactionsDialog: Start   (List of Transactions)   -->
+		<div class="modal fade" id="bankTransactionsDialog" tabindex="-1" role="dialog" 
+			data-backdrop="static" aria-labelledby="bankTransactionsDialogLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg80">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="bankTransactionsDialogHeader" style="display: inline-block">Bank Transactions</h4>
+
+						<span id="__igdev_bankTransactionsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankTransactionsDialog-- &nbsp;&nbsp;&nbsp;table:allBankTransactionsTable</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;allParticipantBankDetailsId</span><input readonly id="allParticipantBankDetailsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>							
+						
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					
+						
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="tBankTransactionsDlgErrorDiv" style="display: none"></div>
+									<div class="panel-content">
+	
+											<div class="row">
+												<div class="col-md-2">
+													<h5>Date Range:</h5>
+												</div>
+												
+												<div class="col-md-2">
+													<div class="input-group">
+														<input id="tranStartDate" name="tranStartDate"
+															class="form-control" placeholder="yyyy-mm-dd"
+															data-provide="datepicker" data-date-format="yyyy-mm-dd"
+															data-date-autoclose=true data-date-show-on-focus=false
+															data-date-today-btn="linked"
+															onchange=""> 
+															<span
+															class="input-group-addon pointer"
+															onclick="$('#tranStartDate').datepicker('show')">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="input-group">
+														<input id="tranEndDate" name="tranEndDate"
+															class="form-control" placeholder="yyyy-mm-dd"
+															data-provide="datepicker" data-date-format="yyyy-mm-dd"
+															data-date-autoclose=true data-date-show-on-focus=false
+															data-date-today-btn="linked"
+															onchange=""> 
+															<span
+															class="input-group-addon pointer"
+															onclick="$('#tranEndDate').datepicker('show')">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+												
+												<button id = "btRefresh" class="btn btn-sm btn-primary" type="button"
+													onclick="initializeBankTransactionsList($('#allParticipantBankDetailsId').val())">Refresh</button>
+												 &nbsp;&nbsp;&nbsp;&nbsp;
+												<button id = "btLinkProjectExpenses" class="btn btn-sm btn-primary" type="button"
+													onclick="linkBankTransactionsToProjectExpenses($('#allParticipantBankDetailsId').val())">Link Project Expenses</button>
+
+												<div class="col-md-2">
+													<div class="input-group">
+														<input type="text" id="btlLinkedCount"
+														class="form-control"
+														placeholder=""
+														disabled>
+													</div>
+												</div>
+
+													
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<table id="allBankTransactionsTable"
+														class="table table-striped table-advance table-hover"
+														style="width: 100%" title= "Transaction List">
+	
+														<thead>
+															<tr>
+																<th>BTId</th> 		              <!-- 0 HIDE -->
+																<th>Date</th>
+																<th>Amount</th>	
+																<th>PBDId</th> 		              <!-- 3 HIDE --> 
+																<th>Statement Id</th> 		      <!-- 4 HIDE -->
+																<th>Statement</th>
+																<th>ParticipantOnTransactionID</th>  <!-- 6 HIDE -->
+																<th>Linked to</th>  			<!-- 7 -->
+																<th>Description from Statement</th>   		<!-- 8 Description1-->
+																<th>Description added</th>			<!-- 9 Description2-->
+																<th>Linked to Purchase</th>		<!-- 10 FullyLinked-->
+															</tr>
+														</thead>
+														<tbody>
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>										
+											
+					<div class="modal-footer fixed-dialog-footer">
+						<button class="btn btn-sm btn-default" type="button" data-dismiss="modal" onclick="close()">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- bankTransactionsDialog: End -->
+		
+		
+		
+<!-- bankTransactionDialog: Start -->
+		<div class="modal fade" id="bankTransactionDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Bank Transaction</h4>
+
+						<span id="__igdev_bankTransactionDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankTransactionDialog-- </span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;btBankTransactionId</span><input readonly id="btBankTransactionId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">	
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;btParticipantBankDetailsId</span><input readonly id="btParticipantBankDetailsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">															
+						</span>
+																
+						<button type="button" class="close"
+							onclick="closeBankTransactionDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="btDlgErrorDiv" style="display: none"></div>
+									<div class="panel-content">
+	
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="btTransactionDateShow">Transaction Date</label>
+											<div class="col-md-3">
+												<div class="input-group">
+													<input id="btTransactionDateShow"
+														name="btTransactionDateShow" class="form-control"
+														placeholder="yyyy-mm-dd" data-provide="datepicker"
+														data-date-format="yyyy-mm-dd" data-date-autoclose=true
+														data-date-show-on-focus=false
+														data-date-today-btn="linked" disabled
+														> 
+													
+												</div>
+											</div>						
+
+											<span id="__igdev_btTransactionDateLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;btTransactionDate</span><input readonly id="btTransactionDate" style="background-color: #ffff99 !important; color:Black; width: 150px; height: 20px;">								
+											</span>
+											
+										</div>
+	
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="btAmountShow">Amount</label>
+											<div class="col-md-3">
+												<div class="input-group">
+													<input type="text" id="btAmountShow"
+													class="form-control"
+													placeholder="Amount"
+													disabled>
+												</div>
+											</div>
+
+											<span id="__igdev_btAmountLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;btAmount</span><input readonly id="btAmount" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">								
+											</span>
+																					
+										</div>
+	
+										<div class="row">
+											<label class="col-md-2 col-form-label"	for="btDescription1">Bank Statement</label>
+	
+											<div class="col-md-3">
+												<div class="input-group">
+													<input type="text" id="btBankStatement" readonly class="form-control" onchange="bankTransactionDialogChanged()"> 
+													<span class="input-group-addon pointer" onclick="selectBankStatement()"> 
+														<i class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+											
+											<span id="__igdev_btBankStatementIdLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;btBankStatementId</span><input readonly id="btBankStatementId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;btParticipantIdOnTransaction</span><input readonly id="btParticipantIdOnTransaction" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">								
+											</span>											
+											
+										</div>
+										
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="btParticipantName">Participant</label>
+											<div class="col-md-10">
+												<div class="input-group">
+													<input type="text" id="btParticipantName" readonly class="form-control" onchange="bankTransactionDialogChanged()"> 
+													<span class="input-group-addon pointer" onclick="editSelectParticipantBankTransaction()"> 
+														<i class="fas fa-binoculars"></i>
+													</span>&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="checkbox" id="btFullyLinked" disabled="disabled"> <label
+													class="col-form-label" for="btFullyLinked"
+													onkeyup="expenseSubTypeChanged111()">Fully Linked</label>
+												</div>
+											</div>
+											
+										</div>									
+										
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="btDescription1">Description</label>
+											<div class="col-md-10">
+												<input type="text" id="btDescription1"
+													class="form-control" 
+													onkeyup="bankTransactionDialogChanged()" disabled>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="btDescription2">Description 2</label>
+											<div class="col-md-10">
+												<input type="text" id="btDescription2"  maxlength=255 
+													class="form-control"
+													placeholder="Description"
+													onkeyup="bankTransactionDialogChanged()">
+											</div>
+										</div>
+
+
+										<div class="row">						
+											<div class="col-md-12">
+												<table id="bankTransactionLinkTable"
+													class="table table-striped table-advance table-hover"
+													style="width: 100%">
+													<thead>
+														<tr>
+															<th>bankTransactionLinkId</th>    <!--0  MySql-TableName: VBankTransactionLink-->
+															<th>bankTransactionId</th>        <!--1  bankTransactionId-->
+															<th>invoiceId</th>                <!--2  invoiceId-->
+															<th>projectExpenseId</th>         <!--3  projectExpenseId-->
+															<th>participantIdApprovedLink</th> <!--4  participantIdApprovedLink-->
+															<th>Linked Amount</th>               <!--5  linkAmount-->
+															<th>Automatic Link Created</th> <!--6  automaticCursorLinkCreated-->
+															<th>Link Approved</th>             <!--7  linkApproved-->
+															<th>description</th>              <!--8  description-->
+															<th>participantBankDetailsId</th> <!--9  participantBankDetailsId-->
+															<th>bankStatementId</th>          <!--10  bankStatementId-->
+															<th>participantIdOnTransaction</th> <!--11  participantIdOnTransaction-->
+															<th>description1</th>             <!--12  description1-->
+															<th>description2</th>             <!--13  description2-->
+															<th>transactionDate</th>          <!--14  transactionDate-->
+															<th>Amount</th>                   <!--15  amount-->
+															<th>fullyLinkedBt</th>            <!--16  fullyLinkedBt-->
+															<th>participantIdMadePurchase</th> <!--17  participantIdMadePurchase-->
+															<th>participantIdVendor</th>      <!--18  participantIdVendor-->
+															<th>expenseTypeId</th>            <!--19  expenseTypeId-->
+															<th>assetId</th>                  <!--20  assetId-->
+															<th>paymentMethodCode</th>        <!--21  paymentMethodCode-->
+															<th>bankCardIdUsed</th>           <!--22  bankCardIdUsed-->
+															<th>participantBankDetailsIdUsed</th> <!--23  participantBankDetailsIdUsed-->
+															<th>taxDeductableCategoryId</th> <!--24  taxDeductableCategoryId-->
+															<th>paymentDescription</th>       <!--25  paymentDescription-->
+															<th>purchaseDate</th>             <!--26  purchaseDate-->
+															<th>numberOfUnits</th>            <!--27  numberOfUnits-->
+															<th>amountPerUnit</th>            <!--28  amountPerUnit-->
+															
+															<th>noteToAccountant</th>         <!--29  noteToAccountant-->
+															<th>fullyLinkedPe</th>            <!--30  fullyLinkedPe-->
+															<th>bankReference</th>            <!--31  bankReference-->
+															<th>approvedBy</th>               <!--32  approvedBy-->
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default"
+							onclick="closeBankTransactionDialog()" type="button">Cancel</button>
+						<button id="saveBankTransactionButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveBankTransaction()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- bankTransactionDialog: End -->
+		
+		
+<!-- importCsvDialog: Start -->
+		<div class="modal fade" id="importCsvDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Import CSV bank statements</h4>
+						<span id="__igdev_importCsvDialogLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--importCsvDialog-- </span>
+						</span>						
+
+						<button type="button" class="close"
+							onclick="closeImportCsvDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="csvDlgErrorDiv" style="display: none"></div>						
+									
+									<div class="panel-content">
+										
+										<div class="row">
+											<span class="col-md-3" id="__igdev_csvParticipantBankDetailsIdLabel" hidden="hidden">
+												<label style="background-color: #ffff99 !important; color:Black; height: 20px;">ParticipantBankDetailsId</label>  
+											</span>
+	
+											<span class="col-md-3" id="__igdev_csvParticipantBankDetailsIdDiv" hidden="hidden">
+												<input type="text" id="csvParticipantBankDetailsId" class="form-control" placeholder="ParticipantBankDetailsId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+											</span>
+	
+										</div>
+									
+										<div class="row">
+											<label class="col-md-3 col-form-label" for="csvBankCode">Bank</label>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input type="text"	id="csvBankCode" readonly class="form-control">
+												</div>
+											</div>
+										</div>
+	
+										<div class="row">
+											<label class="col-md-3 col-form-label"for="csvAccountTypeId">Account Type</label>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input type="text"	id="csvAccountTypeId" readonly class="form-control">
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<label class="col-md-3 col-form-label"for="csvAccountNumber">Account Number</label>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input type="text"	id="csvAccountNumber" readonly class="form-control">
+												</div>                                                <!-- class="form-control" -->
+											</div>
+										</div>
+										
+										<div class="row">
+											<label class="col-md-3 col-form-label"for="csvLastTransaction">Last Transaction</label>
+											<div class="col-md-9">
+												<div class="input-group">
+													<input type="text"	id="csvLastTransaction" readonly class="form-control">
+												</div>                                                <!-- class="form-control" -->
+											</div>
+										</div>
+										
+										
+										<div class="row">
+											<label class="col-md-3 col-form-label"for="csvAccountNumber">CSV File</label>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input type="file"	id="uploadfile" accept=".csv"  class="btn btn-sm btn-primary" onchange="showFileInTextArea()">
+													<br>
+	<!--  												<button id="uploadconfirm"> Upload File</button>  -->
+												</div>
+											</div>
+										</div>	
+																		
+										<div class="row">
+											<div class="col-md-12">
+												<textarea id="csvTextarea" rows="9" wrap="hard"  readonly style="width:100%; resize:none">  </textarea>
+											</div>
+										</div>
+										
+										
+										
+										<div class="row" style=" margin : 0; margin-bottom:0">
+											<span class="col-md-3" id="__igdev_csvAccNrFromFileNameLabel" hidden="hidden" >
+												<label style="background-color: #ffff99 !important; color:Black; height: 20px; margin-bottom:0;">AccNr from FileName</label>  
+											</span>
+		
+											<span class="col-md-6" id="__igdev_csvAccNrFromFileNameDiv" hidden="hidden">
+												<input type="text" id="csvAccNrFromFileName" class="form-control" placeholder="" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px; margin-bottom:0;" height="36">
+											</span>
+										</div>
+	
+										<div class="row" style=" margin : 0; padding-top:0;">
+											<span class="col-md-3" id="__igdev_arrayFromFileFinalLengthLabel" hidden="hidden" >
+												<label style="background-color: #ffff99 !important; color:Black; height: 20px; margin : 0; padding-top:0;">arrayFromFileFinal.Length</label>  
+											</span>
+											<span class="col-md-3" id="__igdev_arrayFromFileFinalLengthDiv" hidden="hidden">
+												<input type="text" id="arrayFromFileFinalinput" class="form-control" placeholder="" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px; margin : 0; padding-top:0;" height="36">
+											</span>
+											<span class="col-md-3" id="__igdev_arrayFromDBLengthLabel" hidden="hidden" >
+												<label style="background-color: #ffff99 !important; color:Black; height: 20px; margin : 0; padding-top:0;">arrayFromDB.Length</label>  
+											</span>
+											<span class="col-md-3" id="__igdev_arrayFromDBLengthDiv" hidden="hidden">
+												<input type="text" id="arrayFromDBinput" class="form-control" placeholder="" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px; margin : 0; padding-top:0;" height="36">
+											</span>										
+										</div>									
+	
+										<div class="row" id="myProgressBar" hidden="hidden">
+											<div id="myProgress">
+											  	<div id="myBar"></div>
+											</div>
+										</div>
+																				
+										
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" id="theCancelButton"
+							onclick="closeImportCsvDialog()" type="button">Cancel</button>
+						<button id="importButton" class="btn btn-sm btn-primary"
+							type="button" onclick="importCsvFile()">Import</button>
+					</div>                    <!-- importCsvFile -->
+				</div>
+			</div>
+		</div>
+<!-- importCsvDialog: End -->
+
+
+<!-- bankStatementDialog: Start -->
+		<div class="modal fade" id="bankStatementDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Bank Statement</h4>
+						
+						<span id="__igdev_bankStatementDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankStatementDialog--</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;bsBankStatementId</span><input readonly id="bsBankStatementId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;bsParticipantBankDetailsId</span><input readonly id="bsParticipantBankDetailsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>					
+						
+						<button type="button" class="close"
+							onclick="closeBankStatementDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="bsDlgErrorDiv" style="display: none"></div>
+									<div class="panel-content">
+		
+										<div class="row">
+											<label class="col-md-3 col-form-label" for="bsStatementDate">Statement Date</label>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input id="bsStatementDate" name="bsStatementDate"
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="bankStatementDialogChanged()"> <span
+														class="input-group-addon pointer"
+														onclick="$('#bsStatementDate').datepicker('show')"> <i
+														class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>
+										</div>	
+	
+										<div class="row">
+											<label class="col-md-3 col-form-label"
+												for="bsStatementNumber">Statement Number</label>
+											<div class="col-md-5">
+												<input type="text" id="bsStatementNumber"
+													class="form-control"
+													placeholder="Statement Number"
+													onkeyup="bankStatementDialogChanged()">
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-3 col-form-label" for="bsTransactionDateFrom">Transaction Date From</label>
+											<div class="col-md-7">
+												<div class="input-group">
+													<input id="bsTransactionDateFrom" name="bsTransactionDateFrom"
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="bankStatementDialogChanged()"> <span
+														class="input-group-addon pointer"
+														onclick="$('#bsTransactionDateFrom').datepicker('show')"> <i
+														class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>
+										</div>	
+										
+										<div class="row">
+											<label class="col-md-3 col-form-label" for="bsTransactionDateTo">Transaction Date To</label>
+											<div class="col-md-7">
+												<div class="input-group">
+													<input id="bsTransactionDateTo" name="bsTransactionDateTo"
+														class="form-control" placeholder="yyyy-mm-dd"
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked"
+														onchange="bankStatementDialogChanged()"> <span
+														class="input-group-addon pointer"
+														onclick="$('#bsTransactionDateTo').datepicker('show')"> <i
+														class="fas fa-calendar-alt"></i>
+													</span>
+												</div>
+											</div>
+										</div>						
+	
+									
+	<!-- 								<div class="row">
+											<label class="col-md-3 col-form-label" for="upload">Select PDF statement 2</label>
+											<div class="col-md-7">
+												<div class="input-group">									
+										
+													<input type="file" id="upload"   accept="application/pdf"/>
+														<a id="link" download >shouldnt be visible</a>   <!-- style="display: none" 
+												</div>
+											</div>
+										</div>	-->
+	
+	
+										<div class="row">
+											<label class="col-md-3 col-form-label" for="bsTransactionsLinked">Transactions Linked</label>
+											<div class="col-md-7">
+												<div class="input-group">
+													<input id="bsTransactionsLinked" name="bsTransactionsLinked"
+														class="form-control" disabled="disabled"> <span  id="bsLinkTransactionsButton"
+														class="input-group-addon pointer"
+														onclick="linkBankTransactions()"  hidden="hidden"> <i
+														class="fas fa-link"></i>
+													</span>
+												</div>
+											</div>
+										</div>			
+	
+										<div class="row">
+											<label class="col-md-3 col-form-label"
+												for="bsDescription">Description</label>
+											<div class="col-md-9">
+												<input type="text" id="bsDescription"  maxlength=255 
+													class="form-control"
+													placeholder="Description"
+													onkeyup="bankStatementDialogChanged()">
+											</div>
+										</div>
+	
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default"
+							onclick="closeBankStatementDialog()" type="button">Cancel</button>
+						<button id="saveBankStatementButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveBankStatement()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- bankStatementDialog: End -->
+		
+		
+<!-- View BankStatements Dialog: Start      List of BankStatements   -->
+		<div class="modal fade" id="bankStatementsDialog" tabindex="-1" role="dialog" 
+			data-backdrop="static" aria-labelledby="bankStatementsDialogLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-med50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="bankStatementsDialogHeader" style="display: inline-block">Bank Statements</h4>
+						
+						<span id="__igdev_bankStatementsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--bankStatementsDialog-- &nbsp;&nbsp;&nbsp;table:allBankStatementsTable</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;bsParticipantBankDetailsId</span><input readonly id="bsParticipantBankDetailsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>											
+							
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+	
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="bsBankStatementsDlgErrorDiv" style="display: none"></div>
+									<div class="panel-content">
+						
+	
+											<div class="row">
+												<div class="col-md-2">
+													<h5>Date Range:</h5>
+												</div>
+												
+												<div class="col-md-3">
+													<div class="input-group">
+														<input id="bsStartDate" name="bsStartDate"
+															class="form-control" placeholder="yyyy-mm-dd"
+															data-provide="datepicker" data-date-format="yyyy-mm-dd"
+															data-date-autoclose=true data-date-show-on-focus=false
+															data-date-today-btn="linked"
+															onchange=""> 
+															<span
+															class="input-group-addon pointer"
+															onclick="$('#bsStartDate').datepicker('show')">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="input-group">
+														<input id="bsEndDate" name="bsEndDate"
+															class="form-control" placeholder="yyyy-mm-dd"
+															data-provide="datepicker" data-date-format="yyyy-mm-dd"
+															data-date-autoclose=true data-date-show-on-focus=false
+															data-date-today-btn="linked"
+															onchange=""> 
+															<span
+															class="input-group-addon pointer"
+															onclick="$('#bsEndDate').datepicker('show')">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+												<button id = "bsRefresh" class="btn btn-sm btn-primary" type="button"
+													onclick="initializeBankStatementsList($('#bsParticipantBankDetailsId').val())">Refresh</button>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<table id="allBankStatementsTable"
+														class="table table-striped table-advance table-hover"
+														style="width: 100%" title= "Statement List">
+	
+														<thead>
+															<tr>
+																<th>BSId</th> 		              <!-- 0 HIDE -->
+																<th>PBDId</th>					  <!-- 1 HIDE -->
+																<th>Description</th>	
+																<th>Statement Number</th>   <!-- 3 Statement Number --> 
+																<th>Statement Date</th>     <!-- 4 Statement Date -->
+																<th>Date From</th>      <!--5 Transaction Date From -->
+																<th>Date To</th>        <!--6 Transaction Date To -->
+														<!--		<th>StatementPDF</th>  	-->
+															</tr>
+														</thead>
+														<tbody>
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>				
+					<div class="modal-footer fixed-dialog-footer">
+						<button class="btn btn-sm btn-default" type="button" data-dismiss="modal" >Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- View BankStatements Dialog: End -->       
+
+
+
+
+		<script type="text/javascript" th:src="@{ignite/js/participant/bankDetailsTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="soqAdminTab" th:remove="tag">
+
+		<div id="soqAdminTab" class="tab-pane">
+			<span id="__igdev_subScheduleTab" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+				<span style="font-size: 90%; height: 16px">&nbsp;--Sub Schedule--</span>
+				<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;soqTemplateId</span>
+					<input readonly id="soqTemplateId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+			</span>	
+		
+			<form id="soqAdminTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+
+					<div class="row">
+						<div class="col-md-4">
+							<h4>SOQ</h4>
+							<div class="row">
+								<table id="soqScheduleTable"
+										class="table table-striped table-advance table-hover"
+										style="width: 100%">
+									<thead>
+										<tr>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th>Name</th>
+											<th>Description</th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+						
+							<div id="emptySubScheduleDiv" style="display:inline-block">
+								<br><br>
+								<h5>Please select a template.</h5>
+							</div>
+							
+							<div id="subScheduleDiv" style="display: none">
+								<h4>Sub Schedule </h4>
+								<div class="row">
+									<table id="soqSubScheduleTable"
+											class="table table-striped table-advance table-hover"
+											style="width: 100%">
+										<thead>
+											<tr>
+												<th>Soq Template Sub Schedule Id</th>
+												<th>Soq Template Id</th>
+												<th>Name</th>
+												<th>Description</th>
+												<th>Order Number</th>
+												<th>Sub Report Header 1</th>
+												<th>Sub Report Header 2</th>
+												<th>Page Number Prefix</th>
+												<th>Page Number PostFix</th>
+												<th>Start Page Number</th>
+												<th>Last Update Timestamp</th>
+												<th>Last Update UserName</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<h4>SOQ Schedule Template Item Tree</h4>
+							<div id="templateSetupBtnRow" class="row">
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button"
+									style="display: inline-block; margin: 0px 6px" onclick="showSoqTemplateItemDialog()">
+									<i class='fas fa-plus'></i>
+								</button>
+								<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm"
+									type="button" disabled
+									style="display: inline-block; margin: 0px 6px">
+									<i class='fas fa-minus'></i>
+								</button>
+							</div>
+							<div class="row">
+								<table id="soqItemTable"
+										class="table table-striped table-advance table-hover"
+										style="width: 100%">
+									<thead>
+										<tr>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<!-- Dialogs start -->
+						<dialog th:replace="soq/soqScheduleDialog :: soqScheduleDialog"></dialog>
+						
+						<dialog th:replace="soq/soqSubScheduleDialog :: soqSubScheduleDialog"></dialog>
+						
+						<dialog th:replace="soq/soqItemDialog :: soqItemDialog"></dialog>
+						<!-- Dialogs end -->
+						
+					</div>
+							
+				</fieldset>
+			</form>
+		</div>
+
+		<script type="text/javascript" th:src="@{ignite/js/soq/soqAdminTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

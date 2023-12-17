@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf == null ? '' : _csrf.headerName}" />
+
+<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+<title>Ignite: Setup Assignment Types</title>
+<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
+<!-- bootstrap datatables -->
+<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+
+<!-- bootstrap theme -->
+<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap-theme.css}">
+
+<!-- font icon -->
+<link rel="stylesheet" type="text/css" th:href="@{css/elegant-icons-style.css}">
+<link rel="stylesheet" type="text/css" th:href="@{font-awesome/6.4.2/css/all.min.css}">
+
+<!-- full calendar css-->
+<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+
+<!-- easy pie chart-->
+<link rel="stylesheet" type="text/css" th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}" media="screen">
+
+<!-- owl carousel -->
+<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/jquery-jvectormap-1.2.2.css}">
+
+<!-- Custom styles -->
+<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style-responsive.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/jquery-ui-1.10.4.min.css}">
+
+<!-- Ignite -->
+<link rel="stylesheet" type="text/css" th:href="@{ignite/css/ignite.css}">
+
+</head>
+
+<body>
+
+	
+	<script th:inline="text">
+		var _igModel = {
+			username : "[[${igUsername}]]",
+			avatar : "[[${igUserAvatar}]]"
+		};
+	</script>
+
+	<!-- container section start -->
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav">
+				<div class="icon-reorder tooltips"
+					data-original-title="Toggle Navigation" 
+					data-placement="bottom"
+					onclick="toggleSidebar()">
+					<i class="icon_menu"></i>
+				</div>
+			</div>
+
+			<!--logo start-->
+			<div id="headerLogo" style="display:inline"></div>
+			<!--logo end-->
+
+			<div class="top-nav notification-row">
+				<profile-menu th:replace="fragments/profile-menu :: profile-menu"></profile-menu>
+			</div>
+		</header>
+		<!--header end-->
+
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<sidebar-menu th:replace="fragments/sidebar-menu :: sidebar-menu"></sidebar-menu>
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!--overview start-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h4 id="pageHeader">
+							<i class="fa fa-coins"></i> Setup: Assignment and Task Types
+						</h4>
+
+						<section class="panel">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6">
+										<h4>Assignment Types</h4>
+									</div>
+									<div class="col-md-6">
+								        <h4 id="taskTypesHeader">Tasks</h4>
+									</div>
+								</div>
+								<div class="row"> 
+									<div class="col-md-6">
+										<table id="assignmentTypeTable" class="table table-striped table-advance table-hover" style="width:100%">
+					                  		<thead>
+												<tr>
+													<th>Id</th>
+													<th>Name</th>
+													<th>Description</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<div class="col-md-6">
+										<div id="taskTypeEmptyPanel" style="display:block">
+											<p style="text-align:center; color: #777777;">
+												<br><br><br><br>
+												Please select an Assignment Type
+											</p>
+										</div>
+										<div id="taskTypePanel" style="display:none">
+											<table id="taskTypeTable" class="table table-striped table-advance table-hover" style="width:100%">
+						                  		<thead>
+													<tr>
+														<th>TaskTypeId</th>
+														<th>AssignmentTypeId</th>
+														<th style="width:35px">Task Order Number</th>
+														<th>Name</th>
+														<th>Description</th>
+														<th>DurationDays</th>
+														<th>DurationHours</th>
+														<th>TimeOfDay</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+
+			</section>
+			<div class="text-right"></div>
+		</section>
+		<!--main content end-->
+	</section>
+	<!-- container section end -->
+
+
+	<!-- Assignment Type Dialog: Start -->
+	<div class="modal fade" id="assignmentTypeDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="assignmentTypeDialog" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Assignment Type</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      </div>
+	      <div class="modal-body">
+
+			<section class="panel">
+				<form onsubmit="return false" class="form-horizontal">
+					<fieldset>
+						<div id="aDlgErrorDiv" style="display: none"></div>
+				    					    	
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="aDlgAssignmentTypeId" hidden="hidden">ID</label>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" id="aDlgAssignmentTypeId" class="form-control" hidden="hidden">
+								</div>
+							</div>
+				    	</div>
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="aDlgName">Name</label>
+							<div class="col-md-8">
+								<div class="form-group">
+									<input type="text" id="aDlgName" maxlength="50" class="form-control">
+								</div>
+							</div>
+				    	</div>
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="aDlgDescription">Description</label>
+							<div class="col-md-9">
+								<div class="form-group">
+									<input type="text" id="aDlgDescription" maxlength="255" class="form-control">
+								</div>
+							</div>
+						</div>
+				    </fieldset>
+			  	</form>
+	    	</section>
+	      
+	      </div>
+	      <div class="modal-footer">
+			<button data-dismiss="modal" class="btn btn-sm btn-default" type="button">Cancel</button>
+	        <button class="btn btn-sm btn-primary" type="button" onclick="saveAssignmentType()">Save</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Assignment Type Dialog: End -->
+
+
+
+	<!-- taskTypeDialog: Start -->
+	<div class="modal fade" id="taskTypeDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="taskTypeDialog" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Task Type</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      </div>
+	      <div class="modal-body">
+
+			<section class="panel">
+				<form onsubmit="return false" class="form-horizontal">
+					<fieldset>
+
+				 <!--		<input type="hidden" id="ttDlgTaskTypeId">          <!-- type="hidden"  -->
+				 <!--		<input type="hidden" id="ttDlgAssignmentTypeId">    <!-- type="hidden"  -->
+
+						<div id="eDlgErrorDiv" style="display: none"></div>
+				    					    	
+ 					    <div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgTaskTypeId" hidden = "hidden">ID</label>  <!--  hidden = "hidden" -->
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" id="ttDlgTaskTypeId" class="form-control" hidden = "hidden">  <!--  hidden = "hidden" -->
+								</div>
+							</div>
+				    	</div>
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgAssignmentTypeId" hidden = "hidden">Assignment Type ID</label>  <!--  hidden = "hidden" -->
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" id="ttDlgAssignmentTypeId" class="form-control" hidden = "hidden">  <!--  hidden = "hidden" -->
+								</div>
+							</div>
+				    	</div>
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgTaskOrderNumber">Task Order Number</label>
+							<div class="col-md-3">
+								<div class="form-group">
+									<input type="text" id="ttDlgTaskOrderNumber" placeholder="Task Order Number" maxlength="10" class="form-control">
+								</div>
+							</div>
+				    	</div>
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgName">Name</label>
+							<div class="col-md-8">
+								<div class="form-group">
+									<input type="text" id="ttDlgName" maxlength="50" placeholder="Name" class="form-control">
+								</div>
+							</div>
+				    	</div>
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgDescription">Description</label>
+							<div class="col-md-9">
+								<div class="form-group">
+									<input type="text" id="ttDlgDescription" maxlength="255" placeholder="Description" class="form-control">
+								</div>
+							</div>
+				    	</div>
+				    	
+						<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgDurationDays">Duration Days</label>
+							<div class="col-md-2">
+								<div class="form-group">
+									<input type="text" id= "ttDlgDurationDays" placeholder="Days" onkeyup="durationDaysKeyup()"  maxlength="3" class="form-control">
+								</div>
+							</div>
+				    	</div>	
+						<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgDurationHours">Duration Hours</label>
+							<div class="col-md-2">
+								<div class="form-group">
+									<input type="text" id="ttDlgDurationHours" placeholder="Hours" onkeyup="durationHoursKeyup()"  maxlength="2" class="form-control">
+								</div>
+							</div>
+				    	</div>				    	
+				    	
+				    	<div class="row">
+				    		<label class="col-md-3 col-form-label" for="ttDlgTimeOfDayH">Time of day</label>
+							<div class="col-md-2">
+								<div class="form-group">
+									<input type="text" id="ttDlgTimeOfDayH" placeholder="HH" onkeyup="timeOfDayKeyupH()" maxlength="2" class="form-control">
+								</div>
+							</div><label class="col-md-1 col-form-label" for="ttDlgTimeOfDayM"><b>:</b></label>
+							<div class="col-md-2">
+								<div class="form-group">
+									<input type="text" id="ttDlgTimeOfDayM" placeholder="mm" onkeyup="timeOfDayKeyupM()" maxlength="2" class="form-control">
+								</div>
+							</div>
+							<div class="col-md-6 col-form-label">
+								<div class="form-group">
+									<input type="text" id="ttDlgTimeOfDay" class="form-control" hidden = "hidden">  <!-- hidden="hidden" -->
+								</div>
+							</div>
+				    	</div>
+	    	
+				    </fieldset>
+			  	</form>
+	    	</section>
+	      
+	      </div>
+	      <div class="modal-footer">
+			<button data-dismiss="modal" class="btn btn-sm btn-default" type="button">Cancel</button>
+	        <button class="btn btn-sm btn-primary" type="button" onclick="saveTaskType()">Save</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- taskTypeDialog: End -->
+
+
+
+
+
+
+
+		
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript" th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript" th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript" th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+	
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript" th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript" th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+	
+	<!-- custom select -->
+	<script type="text/javascript" th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<script type="text/javascript" th:src="@{ignite/js/task-manager/setup-assignment-type.js}"></script>
+
+</body>
+</html>

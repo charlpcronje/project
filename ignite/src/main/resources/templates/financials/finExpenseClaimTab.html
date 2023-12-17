@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="finExpenseClaimTab" th:remove="tag">
+
+		<div id="finExpenseClaimTab" class="tab-pane">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div id="fecTabDlgErrorDiv" style="display: none"></div>
+					<div class="row">
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+							<h5>Date Range:</h5>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="fecStartDate" name="fecStartDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#fecStartDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="fecEndDate" name="fecEndDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#fecEndDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+									
+								</span>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<button id = "fecExpenseClaimRefresh" class="btn btn-sm btn-primary" type="button"
+											onclick="getExpenseClaimForDateRange()">Refresh</button>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-3">
+							<h4 style="display: inline-block">Relationships</h4>
+							<span id="__igdev_finExpenseClaimTabFormLabel1" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp;--finExpenseClaimTab-- &nbsp; table:fecRelationshipTable</span>
+							</span>
+						</div>
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Recoverable Expenses</h4>
+							<span id="__igdev_finExpenseClaimTabFormLabel2" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; table:fecRecoverableExpenseTable</span>
+							</span>
+						</div>
+						<div class="col-md-4">
+							<h4 style="display: inline-block">Expense Entries</h4>
+							<span id="__igdev_finExpenseClaimTabFormLabel3" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; table:fecExpenseDetailTable</span>
+								
+								<span style="font-size: 80%">&nbsp;&nbsp;fecAllowanceFlag</span><input readonly id="fecAllowanceFlag" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+
+							</span>
+						</div>
+					</div>
+
+					<!-- Expense Claims -  Table 1 High level summary -->
+					<div class="row">
+						<div class="col-md-3">
+							<table id="fecRelationshipTable"
+								class="table table-striped table-advance table-hover" style="width: 100%">
+								<thead>
+									<tr>
+										<th>participantIdContracting</th>
+										<th>Contracting</th>
+										<th>participantIdContracted</th>
+										<th>Contracted</th>
+										<th># Units</th>
+										<th>Total</th>
+										<th></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="col-md-5">
+							<div id="emptyFecRecoverableExpensePanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Beneficiary.
+								</p>
+							</div>
+
+							<!-- Expense Claims - Table 2 Summary per participant and expense type-->
+
+							<div id="fecRecoverableExpensePanel" style="display: none">
+								<table id="fecRecoverableExpenseTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>ProjectId</th>
+										<th>Project</th>
+										<th>Expense Type</th>
+										<th>Unit</th>
+										<th>participantIdContracting</th>
+										<th>participantInAgreementContracting</th>
+										<th>participantIdContracted</th>
+										<th>participantInAgreementContracted</th>
+										<th># Units</th>
+										<th>Line Amount</th>
+										<th>expenseTypeId</th>
+										<th>recoverableExpenseId</th>
+										<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div id="emptyFecExpenseDetailPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a Cost record.
+								</p>
+							</div>
+
+							<!-- Expense Claims - Table 3 Expense detail -->
+							<div id="fecExpenseDetailPanel" style="display: none">
+								<table id="fecExpenseDetailTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+										<th>RowNumber</th>
+										<th>expenseHandlingPerc</th>
+										<th>maxExpenseAmtPerUnit</th>
+										<th>paymentDescription</th>
+										<th>Purchase Date</th>
+										<th>Participant made purchase</th>
+										<th># Units</th>
+										<th>Rate</th>
+										<th>Rate</th>
+										<th>Total</th>
+										<th></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>						
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+		<!-- showFinDetailDialog: Start -->
+		<div class="modal fade" id="showFinDetailDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg70">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div  class="row">
+							<div class="col-lg-12">
+								<h4 id="editFinTimesheetDialogHeader" style="display: inline-block">
+									<i class="fa fa-info-circle"></i> Expense Entry Detail:
+								</h4>
+								<span  class="input-group" id="__igdev_editFinTimesheetDialogLabel99"  hidden="hidden">
+									<span style="background-color: #ffff99 !important; color:Black; height: 20px;">--showFinDetailDialog--(finExpenseClaimTab.html)--</span>  
+									<span>&nbsp; &nbsp; finDetailRowNumber</span><input readonly id="finDetailRowNumber" style="background-color: #ffff99 !important; color:Black; width: 100px; height: 20px;">
+									<span>&nbsp; &nbsp; finDetailProjectExpenseId</span><input readonly id="finDetailProjectExpenseId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+								</span>					
+							</div>
+						</div>
+						<button type="button"  class="close" onclick="closeShowFinDetailDialog()"
+							aria-hidden="true">&times;</button>
+					</div>
+					
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+
+									<div class="panel-content">
+
+										<div class="row">
+											<label class="col-md-2 col-form-label">Payer</label> 
+											<div class="col-md-4">
+												<input type="text" id="finDetailParticipantMadeOrigPayment" readonly class="form-control"> 
+											</div>
+											<span id="__igdev_finfinDetailParticipantMadeOrigPaymentIdFormLabel11" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailParticipantIdMadeOrigPayment</span>
+													<input readonly id="finDetailParticipantIdMadeOrigPayment" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">										
+											</span>		
+										</div>
+										<div class="row">																						
+											<label class="col-md-2 col-form-label"
+												for="finDetailProjectName">Project</label>
+											<div class="col-md-5">
+												<input type="text" id="finDetailProjectName" readonly class="form-control"> 
+											</div>
+											<span id="__igdev_finDetailProjectParticipantIdFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailProjectParticipantIdMadeOrigPayment</span>
+													<input readonly id="finDetailProjectParticipantIdMadeOrigPayment" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											</span>											
+										</div>
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="finDetailExpenseTypeName">Expense Type</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" 	id="finDetailExpenseTypeName" readonly 	class="form-control"> 
+												</div>
+											</div>
+											<div>
+												<span id="__igdev_finDetailExpenseTypeIdFormLabel123" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailExpenseTypeId</span>
+															<input readonly id="finDetailExpenseTypeId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailUnitTypeCode</span>
+															<input readonly id="finDetailUnitTypeCode" style="background-color: #ffff99 !important; color:Black; width: 120px; height: 20px;">
+												</span>					
+											</div>													
+										</div>									
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="finDetailParticipantIdMadePurchaseSystemName">Participant that made purchase</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text" 	id="finDetailParticipantMadePurchaseSystemName" readonly class="form-control"> 
+												</div>
+											</div>		
+											<div  class="col-md-4">
+												<span id="__igdev_purParticipantIdMadePurchaseFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailParticipantIdMadePurchase</span>
+															<input readonly id="finDetailParticipantIdMadePurchase" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>					
+											</div>			
+										</div>
+										
+										<div class="row" id="vendorRow">													
+											<label class="col-md-2 col-form-label"
+												for="finDetailParticipantIdVendorSystemName">Vendor</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text"  id="finDetailParticipantVendorSystemName" readonly 	class="form-control"> 
+												</div>
+											</div>	
+											<div>
+												<span id="__igdev_finfinDetailParticipantIdVendor333" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailParticipantIdVendor</span>
+														<input readonly id="finDetailParticipantIdVendor" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">										
+												</span>
+											</div>
+										</div>
+										
+										
+										<div class="row"  id="assetRow">
+											<label class="col-md-2 col-form-label" id="finDetailAssetLabel"
+												for="finDetailAssetDescription">Asset</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text"  id="finDetailAssetDescription" readonly 	class="form-control"> 
+												</div>
+											</div>	
+											<div class="col-md-4">
+												<span id="__igdev_finfinDetailParticipantIdVendor444" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailAssetId</span>
+														<input readonly id="finDetailAssetId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">										
+												</span>
+											</div>
+										</div>		
+																		
+										<div class="row"  id="vehicleRow">
+											<label class="col-md-2 col-form-label" id="finDetailVehicleLabel"
+												for="finDetailVehicleName">Vehicle</label>
+											<div class="col-md-4">
+												<div class="input-group">
+													<input type="text"  id="finDetailVehicleName" readonly 	class="form-control"> 
+												</div>
+											</div>	
+											<div class="col-md-4">
+												<span id="__igdev_finfinDetailParticipantIdVendor445" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailVehicleId</span>
+														<input readonly id="finDetailVehicleId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">										
+												</span>
+											</div>
+										</div>											
+										
+										
+										
+										
+										<div class="row"  id="paymentMethodRow">
+											<label class="col-md-2 col-form-label"
+												for="finDetailPaymentMethodName">Payment Method</label>
+											<div class="col-md-3">
+												<div class="input-group">
+													<input type="text"  id="finDetailPaymentMethodName" readonly 	class="form-control"> 
+												</div>
+											</div>
+											
+											<div class="input-group" id="bankCardGroup">
+												<label class="col-md-2 col-form-label" id="finDetailBankCardUsedLabel"  
+													for="finDetailBankCard">Bank Card Used</label>											
+												<div class="col-md-3">
+													<div class="input-group">
+														<input type="text"  id="finDetailBankCard" readonly 	class="form-control"> 
+													</div>
+												</div>
+											</div>
+											<div class="input-group" id="bankAccountGroup">
+												<label class="col-md-2 col-form-label" id="finDetailBankAccountUsedLabel" 
+													for="finDetailBankAccount">Account Used</label>
+												<div class="col-md-3">
+													<div class="input-group">
+														<input type="text"  id="finDetailBankAccount" readonly 	class="form-control"> 
+													</div>
+												</div>		
+											</div>
+																		
+										</div>
+										
+										<div class="row">		
+											<span id="__igdev_finDetailBankIds" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 	
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailBankCardIdUsed</span>
+													<input readonly id="finDetailBankCardIdUsed" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; finDetailParticipantBankDetailsIdUsed</span>
+													<input readonly id="finDetailParticipantBankDetailsIdUsed" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">																				
+											</span>
+											
+										</div>					
+													
+													
+													
+													
+																
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="finDetailPaymentDescription" id="lblPayment">Payment Description</label>
+											<label class="col-md-2 col-form-label" for="finDetailPaymentDescription" id="lblAllow">Allowance Description</label>
+											<div class="col-md-7">
+												<input type="text" id="finDetailPaymentDescription"
+													class="form-control" placeholder="Payment Description" readonly maxlength=255 >
+											</div>
+										</div>
+										
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="finDetailPurchaseDate" id="lblPdate">Purchase Date</label>
+											<label class="col-md-2 col-form-label" for="finDetailPurchaseDate" id="lblAdate">Allowance Claim Date</label>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input id="finDetailPurchaseDate" 
+														class="form-control" readonly
+														data-provide="datepicker" data-date-format="yyyy-mm-dd"
+														data-date-autoclose=true data-date-show-on-focus=false
+														data-date-today-btn="linked">
+												</div>
+											</div>
+	
+											<label class="col-md-2 col-form-label"
+												for="finDetailNumberOfUnits" id="labelNumberOfUnits">Number of Units</label>
+											<div class="col-md-2">
+												<input type="text" id="finDetailNumberOfUnits"  maxlength=10 
+													class="form-control" readonly
+													placeholder="Number Of Units" 
+													>
+											</div>
+	
+											<label class="col-md-2 col-form-label"	for="finDetailAmountPerUnit" id="lblAmountPerUnit">Amount per Unit</label>
+											<div class="col-md-2">
+												<input type="text" id="finDetailAmountPerUnit"  maxlength=15 
+													class="form-control" readonly
+													placeholder="Amount Per Unit" 
+													>
+											</div>
+										</div>									
+													
+													
+																		
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="finDetailNoteToAccountant">Note to Accountant</label>
+											<div class="col-md-10">
+												<input type="text" id="finDetailNoteToAccountant" readonly
+													class="form-control"   >
+											</div>
+										</div>
+
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="finDetailTaxDeductableCategoryId">Tax Deductable Category</label>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input type="text" id="finDetailTaxDeductableCategoryId" readonly
+													class="form-control"   >
+												
+												</div>
+											</div>
+											
+											<div class="offset-md-2 col-md-2">
+												<div class="input-group">
+													<input type="checkbox" id="finDetailFullyLinked" disabled="disabled"> 
+													<label class="col-form-label" for="finDetailFullyLinked" id="lblCheckboxie" >Fully Linked</label>
+												</div>
+											</div>
+										</div>			
+																
+										<div class="row" id="referenceRow">
+											<label class="col-md-2 col-form-label" id="finDetailBankReferenceLabel"
+												for="finDetailBankReference">Reference for Bank Statement</label>
+											<div class="col-md-5">
+												<input type="text" id="finDetailBankReference"
+													class="form-control"   readonly	>
+											</div>
+										</div>
+
+									</div>
+							
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button data-dismiss="modal" class="btn btn-sm btn-default" onclick="closeShowFinDetailDialog()"
+							type="button">Cancel</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ShowFinDetailDialog: End  -->
+
+		<script type="text/javascript" th:src="@{ignite/js/financials/finExpenseClaimTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>

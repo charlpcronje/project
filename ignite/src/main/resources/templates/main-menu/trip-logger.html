@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf == null ? '' : _csrf.headerName}" />
+
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+	<title>Ignite: Individuals</title>
+	<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+
+	<!-- bootstrap theme -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap-theme.css}">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
+	<!-- bootstrap datatables -->
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+
+	<!-- bootstrap theme -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap-theme.css}">
+
+	<!-- font icon -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/elegant-icons-style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{font-awesome/6.4.2/css/all.min.css}">
+
+	<!-- full calendar css-->
+	<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+
+	<!-- easy pie chart-->
+	<link rel="stylesheet" type="text/css" th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}"
+		media="screen">
+
+	<!-- owl carousel -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/jquery-jvectormap-1.2.2.css}">
+
+	<!-- jqTree css -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/jqtree.css}">
+
+	<!-- Custom styles -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/style-responsive.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/jquery-ui-1.10.4.min.css}">
+
+	<!-- Ignite -->
+	<link rel="stylesheet" type="text/css" th:href="@{ignite/css/ignite.css}">
+
+	<style>
+		/* Adjust positioning for Start Time calendar */
+		#tlClockContainer .flatpickr-calendar {
+			top: 100% !important;
+			left: 0 !important;
+		}
+
+		/* Adjust positioning for End Time calendar */
+		#tlBinosContainer .flatpickr-calendar {
+			top: 100% !important;
+			left: 0 !important;
+		}
+	</style>
+
+	<!-- flatpickr CSS and javascript -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+</head>
+
+<body>
+
+	
+	<script th:inline="text">
+		var _igModel = {
+			username: "[[${igUsername}]]",
+			avatar: "[[${igUserAvatar}]]",
+			userId: "[[${igUserId}]]",
+			participantId: "[[${igParticipantId}]]"
+		};
+	</script>
+
+	<!-- container section start -->
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav">
+				<div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"
+					onclick="toggleSidebar()">
+					<i class="icon_menu"></i>
+				</div>
+			</div>
+
+			<!--logo start-->
+			<div id="headerLogo" style="display: inline"></div>
+			<!--logo end-->
+
+			<div class="top-nav notification-row">
+				<profile-menu th:replace="fragments/profile-menu :: profile-menu"></profile-menu>
+			</div>
+		</header>
+		<!--header end-->
+
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<sidebar-menu th:replace="fragments/sidebar-menu :: sidebar-menu"></sidebar-menu>
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!--overview start-->
+				<!--vehicleTripsTable Start-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h4 id="pageHeader" style="display: inline-block">
+							<i class="fa fa-user"></i> Trip Logger
+						</h4>
+						<h5 id="vehicleTripsFormLabel"
+							style="display: inline-block; background-color: #ffff99 !important; color:Black"
+							hidden="hidden">
+							<span style="font-size: 90%; height: 16px">--vehicletripstable--</span>
+						</h5>
+
+						<section class="panel">
+							<div class="panel-body">
+
+								<table id="vehicleTripsTable" class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>TripLoggerId</th>
+											<th>ProjectId</th>
+
+											<th>Trip Date</th>
+											<th>Trip Start Time</th>
+											<th>Vehicle Name</th>
+											<th>Licence Number</th>
+											<th>Project</th>
+											<th>On Behalf OF</th>
+											<th>Driver</th>
+											<th>Destination</th>
+											<th>Distance</th>
+
+											<th>TravelTimeMinutes</th>
+											<th>InstructedBy</th>
+											<th>TripStartingPointName</th>
+											<th>VehicleId</th>
+											<th>Description</th>
+											<th>ModelName</th>
+											<th>MakeName</th>
+											<th>TripOrderDate</th>
+											<th>TripEndTime</th>
+											<th>TripStartCoordinates</th>
+											<th>TripEndCoordinates</th>
+											<th>OwnerId</th>
+											<th>OwnerName</th>
+											<th>ParticipantIdDriver</th>
+											<th>ParticipantIdGaveInstruction</th>
+											<th>ParticipantIdOnBehalfOf</th>
+											<th>OdometerReading</th>
+											<th>TripStartKm</th>
+											<th>TripEndKm</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!--vehicleTripsTable End-->
+				<!-- tripLoggerDialog: Start -->
+				<div class="modal fade" id="tripLoggerDialog" tabindex="-1" role="dialog" data-backdrop="static"
+					aria-labelledby="parameterDialogLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" style="display: inline-block">Trip Logger Dialog</h4>
+
+								<h5 id="tripLoggerDialogFormLabel"
+									style="display: inline-block; background-color: #ffff99 !important; color:Black"
+									hidden="hidden">
+									<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; --tripLoggerDialog--
+									</span>
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;
+										&nbsp; tlTripLoggerId</span><input readonly id="tripLoggerId"
+										style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								</h5>
+
+								<button type="button" class="close" onclick="closeTripLoggerDialog()"
+									aria-hidden="true">&times;</button>
+							</div>
+							<div class="modal-body">
+								<section class="panel">
+									<form onsubmit="return false" class="form-horizontal">
+										<fieldset>
+											<div id="tlDlgErrorDiv" style="display: none"></div>
+
+											<div class="row">
+												<label class="col-md-2">Instructed/OrderBy *</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="hidden" id="tlTripLoggerId"
+															onchange="tripLoggerDialogChanged()" hidden="hidden">
+
+														<input type="hidden" id="tlParticipantIdGaveInstruction"
+															onchange="tripLoggerDialogChanged()">
+														<input type="text" id="tlOrderBy" readonly class="form-control"
+															onchange="tripLoggerDialogChanged()">
+														<span class="input-group-addon pointer" id="tlBinos"
+															onclick="editSelectTlInstructedBy()">
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+
+												<label class="col-md-2 col-form-label">On Behalf Of *</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="hidden" id="tlParticipantIdOnBehalfOf"
+															onchange="tripLoggerDialogChanged()">
+														<select type="text" id="tlBehalfOf" readonly
+															class="form-control"
+															onchange="updateHiddenInputFromSelect(this, 'tlParticipantIdOnBehalfOf'); tripLoggerDialogChanged()"></select>
+														<span class="input-group-addon pointer" id="tlBinos"
+															onclick="editSelectTlOnBehalfOf()">
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2">Driver *</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="hidden" id="tlParticipantDriverId"
+															onchange="tripLoggerDialogChanged()" hidden="hidden">
+														<input type="text" id="tlDriver" readonly class="form-control"
+															onchange="tripLoggerDialogChanged()">
+														<span class="input-group-addon pointer" id="tlBinos"
+															onclick="editSelectTlDriver()">
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+												<label class="col-md-2 col-form-label" for="tlTripOrderDate">Trip Order
+													Date *</label>
+												<div class="col-md-4">
+													<div class="input-group">
+
+														<input id="tlTripOrderDate" name="tlTripOrderDate"
+															class="form-control" placeholder="yyyy-mm-dd"
+															data-provide="datepicker" data-date-format="yyyy-mm-dd"
+															data-date-autoclose=true data-date-show-on-focus=false
+															data-date-today-btn="linked"
+															onchange="tripLoggerDialogChanged()">
+														<span class="input-group-addon pointer"
+															onclick="$('#tlTripOrderDate').datepicker('show')">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+
+
+											</div>
+											<div class="row">
+												<label class="col-md-2">Project *</label>
+												<div class="col-md-10">
+													<div class="input-group">
+														<input type="hidden" id="tlProjectId"
+															onchange="tripLoggerDialogChanged()">
+														<select type="text" id="tlProject" readonly class="form-control"
+															onchange="updateHiddenInputFromSelect(this, 'tlProjectId'); tripLoggerDialogChanged()"></select>
+														<span class="input-group-addon pointer" id="tlBinos"
+															onclick="editSelectTlProject()">
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2">Description</label>
+												<div class="col-md-10">
+													<div class="input-group">
+														<input id="tlDescription" type="text" class="form-control"
+															placeholder="Description"
+															onkeyup="tripLoggerDialogChanged()">
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<label class="col-md-12 col-form-label" for="tlTripOrderDate">Vehicle
+													Information:</label>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label">Vehicle</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="hidden" id="tlVehicleId"
+															onchange="tripLoggerDialogChanged()">
+														<select type="text" id="tlVehicle" readonly class="form-control"
+															onchange="updateHiddenInputFromSelect(this, 'tlVehicleId'); tripLoggerDialogChanged();">
+														</select>
+														<span class="input-group-addon pointer" id="tlBinos"
+															onclick="editSelectTlVehicle()">
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+												<label class="col-md-2">Owner</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="hidden" id="tlOwnerId"
+															onchange="tripLoggerDialogChanged()">
+														<input type="text" id="tlOwner" readonly class="form-control"
+															onchange="tripLoggerDialogChanged()">
+													</div>
+												</div>
+
+
+											</div>
+											<div class="row">
+												<label class="col-md-2">Last km Reading</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="hidden" id="tlLastKmReading"
+															onchange="tripLoggerDialogChanged()">
+														<input type="text" id="tlLastkmReadingFormatted" readonly
+															class="form-control" onchange="formatAndAddKm('tlLastkmReadingFormatted', 'tlLastKmReading');
+															 tripLoggerDialogChanged();
+															 nullChecker('tlLastKmReading', 'tlLastkmReadingFormatted');">
+													</div>
+												</div>
+												<label class="col-md-2 col-form-label">License plate</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input type="text" id="tlLicensePlate" readonly
+															class="form-control" onchange="tripLoggerDialogChanged()">
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label">Trip
+													Information:</label>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="tlTripDate">Trip
+													Date</label>
+												<div class="col-md-4">
+													<div class="input-group">
+														<input id="tlTripDate" name="tlTripDate" class="form-control"
+															placeholder="yyyy-mm-dd" data-provide="datepicker"
+															data-date-format="yyyy-mm-dd" data-date-autoclose=true
+															data-date-show-on-focus=false data-date-today-btn="linked"
+															onchange="tripLoggerDialogChanged()">
+														<span class="input-group-addon pointer"
+															onclick="$('#tlTripDate').datepicker('show')">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="tlStartTime">Start
+													Time</label>
+												<div class="col-md-4" id="startTimeContainer">
+													<div class="input-group">
+														<input type="text" id="tlStartTime" name="tlStartTime"
+															class="form-control timepicker" placeholder="hh:mm"
+															onchange="updateTimeCalc(); tripLoggerDialogChanged()">
+														<span class="input-group-addon pointer" id="tlClockContainer"
+															onclick="openTimePicker('tlStartTime')">
+															<i class="fas fa-clock"></i>
+														</span>
+													</div>
+												</div>
+
+												<label class="col-md-2 col-form-label" for="tlEndTime">End Time</label>
+												<div class="col-md-4" id="endTimeContainer">
+													<div class="input-group">
+														<input type="text" id="tlEndTime" name="tlEndTime"
+															class="form-control timepicker" placeholder="hh:mm"
+															onchange="updateTimeCalc(); tripLoggerDialogChanged()">
+														<span class="input-group-addon pointer" id="tlBinosContainer"
+															onclick="openTimePicker('tlEndTime')">
+															<i class="fas fa-clock"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="row">
+												<label class="col-md-2 col-form-label"
+													for="tlCoordinateStart">Coordinates
+													Start</label>
+												<div class="col-md-4">
+													<input id="tlCoordinateStart" type="text" class="form-control"
+														placeholder="" onkeyup="tripLoggerDialogChanged()">
+												</div>
+												<label class="col-md-2 col-form-label" for="tlCoordinateEnd">Coordinates
+													End</label>
+												<div class="col-md-4">
+													<input id="tlCoordinateEnd" type="text" class="form-control"
+														placeholder="" onkeyup="tripLoggerDialogChanged()">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="tlStartName">Start Point
+													Name</label>
+												<div class="col-md-4">
+													<select class="form-control" id="tlStartName"
+														onchange="tripLoggerDialogChangedStartingPoint()">
+													</select>
+													<input type="text" id="customInput" style="display: none;">
+													<button id="tlStartingNameButton"
+														onclick="handleCustomInputStartingPoint()"
+														style="display: none;">Submit</button>
+												</div>
+												<label class="col-md-2 col-form-label" for="tlEndName">End Point
+													Name</label>
+												<div class="col-md-4">
+													<select class="form-control" id="tlEndName"
+														onchange="tripLoggerDialogChangedEndPoint()">
+													</select>
+													<input type="text" id="tlEndCustomInput" style="display: none;">
+													<button id="tlEndNameButton" onclick="handleCustomInputEndPoint()"
+														style="display: none;">Submit</button>
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="tlKmReadingStart">Km Reading
+													Start</label>
+												<div class="col-md-4">
+													<input type="hidden" id="tlKmReadingStart"
+														onchange="tripLoggerDialogChanged()">
+													<input id="tlKmReadingStartFormatted" type="text"
+														class="form-control" placeholder="" onblur="formatAndAddKm('tlKmReadingStartFormatted', 'tlKmReadingStart');
+																 updateDistanceCalc();
+																 tripLoggerDialogChanged();
+																 nullChecker('tlKmReadingStart','tlKmReadingStartFormatted');">
+												</div>
+												<label class="col-md-2 col-form-label" for="tlKmReadingEnd">Km Reading
+													End</label>
+												<div class="col-md-4">
+													<input type="hidden" id="tlKmReadingEnd"
+														onchange="tripLoggerDialogChanged()">
+													<input id="tlKmReadingEndFormatted" type="text" class="form-control"
+														placeholder="" onblur="formatAndAddKm('tlKmReadingEndFormatted', 'tlKmReadingEnd');
+															 updateDistanceCalc();
+															 tripLoggerDialogChanged();
+															 nullChecker('tlKmReadingEnd', 'tlKmReadingEndFormatted');">
+												</div>
+											</div>
+
+											<div class="row">
+												<label class="col-md-2 col-form-label">Distance (km)</label>
+												<div class="col-md-4">
+													<input type="hidden" id="tlDistance"
+														onchange="tripLoggerDialogChanged()">
+													<input id="tlDistanceFormat" type="text" class="form-control"
+														placeholder="" onblur="
+														calculateEndKm('tlKmReadingStart', 'tlKmReadingEnd', 'tlDistance', 'tlKmReadingEndFormatted');
+														tripLoggerDialogChanged();
+														nullChecker('tlDistance', 'tlDistanceFormat');">
+												</div>
+
+												<label class="col-md-2 col-form-label" for="tlTripTime">Trip Time
+													(hh:mm)</label>
+												<div class="col-md-4">
+													<input type="hidden" id="tlTripTimeMinutes"
+														onchange="tripLoggerDialogChanged()">
+													<input id="tlTripTime" type="text" class="form-control"
+														placeholder="" onkeyup="tripLoggerDialogChanged()" readonly>
+												</div>
+											</div>
+
+										</fieldset>
+									</form>
+								</section>
+							</div>
+							<div class="modal-footer">
+								<button onclick="closeTripLoggerDialog()" class="btn btn-sm btn-default"
+									type="button">Cancel</button>
+								<button id="saveTripLoggerDialogButton" class="btn btn-sm btn-primary" type="button"
+									onclick="saveTripLoggerDialog()">Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- tripLoggerDialog: End -->
+
+
+			</section>
+			<div class="text-right"></div>
+		</section>
+		<!--main content end-->
+	</section>
+	<!-- container section end -->
+
+
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript" th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript" th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript" th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript" th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript" th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+
+	<!-- custom select -->
+	<script type="text/javascript" th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{ignite/js/dirtyforms.js}"></script> -->
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+	<script type="text/javascript" th:src="@{js/tree.jquery.js}"></script>
+
+
+
+
+	<!-- timesheetDialog: Start 
+	<dialog th:replace="timesheet/timesheetDialog :: timesheetDialog"></dialog>
+	 timesheetDialog: End -->
+
+	<!-- custom script for this page -->
+	<script type="text/javascript" th:src="@{ignite/js/main-menu/trip-logger.js}"></script>
+
+
+
+
+
+</body>
+
+</html>

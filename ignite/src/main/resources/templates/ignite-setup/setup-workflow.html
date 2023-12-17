@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf == null ? '' : _csrf.headerName}" />
+	
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+	
+	<title>Ignite: Workflows</title>
+	<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+	
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	
+	<!-- bootstrap datatables -->
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+	
+	<!-- bootstrap theme -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap-theme.css}">
+	
+	<!-- font icon -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/elegant-icons-style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{font-awesome/6.4.2/css/all.min.css}">
+	
+	<!-- full calendar css-->
+	<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+	
+	<!-- easy pie chart-->
+	<link rel="stylesheet" type="text/css" th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}" media="screen">
+	
+	<!-- owl carousel -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/jquery-jvectormap-1.2.2.css}">
+	
+	<!-- Custom styles -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/style-responsive.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/jquery-ui-1.10.4.min.css}">
+	
+	<!-- Ignite -->
+	<link rel="stylesheet" type="text/css" th:href="@{ignite/css/ignite.css}">
+</head>
+
+<body>
+	<script th:inline="text">
+		var _igModel = {
+			username : "[[${igUsername}]]",
+			avatar : "[[${igUserAvatar}]]"
+		};
+	</script>
+
+	<!-- container section start -->
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav">
+				<div class="icon-reorder tooltips"
+					data-original-title="Toggle Navigation" 
+					data-placement="bottom"
+					onclick="toggleSidebar()">
+					<i class="icon_menu"></i>
+				</div>
+			</div>
+
+			<!--logo start-->
+			<div id="headerLogo" style="display:inline"></div>
+			<!--logo end-->
+
+			<div class="top-nav notification-row">
+				<profile-menu th:replace="fragments/profile-menu :: profile-menu"></profile-menu>
+			</div>
+		</header>
+		<!--header end-->
+
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<sidebar-menu th:replace="fragments/sidebar-menu :: sidebar-menu"></sidebar-menu>
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!--overview start-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h4>
+							<i class="fa fa-list"></i> Setup: Workflows
+						</h4>
+
+						<div class="panel-content" style="height: calc(100% - 2em);">
+						
+							<div class="btn-toolbar mb-2">
+								<div class="btn-group mr-2">
+									<select id="workflowDefinitionSelect" 
+								        class="form-control input-md btn dt-button btn-secondary" 
+								        onchange="loadWorkflowDefinition()"></select>
+								</div>
+	
+								<div class="dt-buttons ui-buttonset mr-2">
+									<select id="workflowTypeSelect"
+									        class="form-control input-md btn dt-button btn-secondary"
+									        onchange="filterWorkflowDefinitionList()"
+									>
+										<option value="with" selected>Definitions with steps only</option>
+										<option value="without">Definitions without steps only</option>
+										<option value="all">All</option>
+									</select>
+								</div>
+
+								<div class="dt-buttons ui-buttonset mr-2">
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="editWorkflowDefinition()"><i class="fa fa-pencil-alt" title="Properties"></i></button>
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="newWorkflowDefinition()"><i class="fa fa-plus" title="New"></i></button>
+								</div>
+
+								<div class="btn-group ui-buttonset mr-2">
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="newWorkflowDefinitionStep()"><i class="fa fa-shoe-prints" title="New step"></i></button>
+								</div>
+								
+								<div class="dt-buttons ui-buttonset mr-2">
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="resetGraph()"><i class="fa fa-sync-alt" title="Reset"></i></button>
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="vizZoom('workflowDefinitionGraphSvgDiv', 10)"><i class="fa fa-search-plus" title="Zoom In"></i></button>
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="vizZoom('workflowDefinitionGraphSvgDiv', -10)"><i class="fa fa-search-minus" title="Zoom Out"></i></button>
+									<!-- 
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="viewLeftRight()"><i class="fa fa-arrow-right" title="View Left To Right"></i></button>
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="viewTopDown()"><i class="fa fa-arrow-down" title="View Top Downwards"></i></button>
+									-->
+									<button class="dt-button ui-button ui-state-default ui-button-text-only btn btn-sm" onclick="downloadGraph()"><i class="fa fa-download" title="Download"></i></button>
+								</div>
+
+								<div class="dt-buttons ui-buttonset" style="height: 32px; margin-left: auto; order: 2">
+									<div id="workflowStatusDiv" style="display: inline-block; line-height: 32px;"></div>
+								</div>
+							</div>
+							
+							<div id="workflowDefinitionGraphDiv" style="width:100%; height: calc(100% - 2em) !important; overflow: scroll; background-color: #eeeeee">
+								<div id="workflowDefinitionGraphAnchorDiv" style="position: relative; top: 0; left: 0; display:inline; height: 1px; width: 1px;"></div>
+								<div id="workflowDefinitionGraphSvgDiv" style="position: relative; height: 100%; width: 100%; top: 0%; left: 0%; transform-origin: top left; transform: translate(-50%, -50%); transition: all 0s;">
+									<!-- Target for dynamic svg generation -->
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</section>
+			<div class="text-right"></div>
+		</section>
+		<!--main content end-->
+	</section>
+	<!-- container section start -->
+
+	<!-- Start: workflowDefinitionDialog -->
+	<div id="workflowDefinitionDialog" class="modal fade" role="dialog" data-backdrop="static">
+	
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<form onsubmit="return false;">
+					<fieldset>
+						<input id="wdWorkflowDefinitionId" type="hidden">
+		
+						<div class="modal-header">
+							<h4 class="modal-title">Workflow Definition</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>	        
+						</div>
+						<div class="modal-body fixed-dialog-body">
+
+							<div id="workflowDefinitionDialogErrorStateDiv" class="alert alert-danger" role="alert" style="display:none">
+								<table width="100%">
+									<tr>
+										<td width="50px" valign="top"><i class="fas fa-exclamation-triangle" style="font-size:28pt !important"></i></td>
+										<td valign="top" width="*">
+											<div id="workflowDefinitionDialogErrorMsgDiv"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdWorkflowDefinitionCode">Code</label>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input id="wdWorkflowDefinitionCode" class="form-control" required>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdWorkflowDefinitionName">Name</label>
+								<div class="col-md-10">
+									<div class="form-group">
+										<input id="wdWorkflowDefinitionName" class="form-control" required>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdWorkflowDefinitionDescription">Description</label>
+								<div class="col-md-10">
+									<div class="form-group">
+										<textarea id="wdWorkflowDefinitionDescription" class="form-control" rows=5 style="width:100%" required></textarea>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdDataProviderId">Owner</label>
+								<div class="col-md-4">
+									<div class="form-group">
+										<select id="wdDataProviderId" class="form-control"></select>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdDataProviderId">Table</label>
+								<div class="col-md-4">
+									<div class="form-group">
+										<select id="wdRecordObjectNameSchema" onchange="updateRecordObjectNameTable()" class="form-control"></select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<select id="wdRecordObjectNameTable" class="form-control"></select>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdSlaMinutes">SLA</label>
+								<div class="col-md-3">
+									<div class="form-group input-group">
+										<input type="number" id="wdSlaMinutes" class="form-control">
+										<label class="input-group-append">
+											<span class="input-group-text">
+												Minutes
+											</span>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="wdFailoverMailbox">Failover Mailbox</label>
+								<div class="col-md-6">
+									<div class="form-group input-group">
+										<input id="wdFailoverMailbox" class="form-control">
+										<button class="dt-button ui-button ui-state-default btn btn-sm" onclick="selectRole('wdFailoverMailbox')"><i class="fa fa-user-tag" title="Select role"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="modal-footer">
+						  <button id="deleteWorkflowDefinitionBtn" type="button" class="btn btn-sm btn-danger mr-2" onclick="confirmDeleteWorkflowDefinition()">Delete</button>
+						  <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+						  <button id="saveWorkflowDefinitionBtn" type="button" class="btn btn-sm btn-primary" onclick="saveWorkflowDefinition()">Save</button>
+						</div>
+					</fieldset>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<!-- End: workflowDefinitionDialog -->
+	
+	<!-- Start: workflowDefinitionStepDialog -->
+	<div id="workflowDefinitionStepDialog" class="modal fade" role="dialog" data-backdrop="static">
+	
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<form onsubmit="return false;">
+					<fieldset>
+						<input id="WorkflowDefinitionId" type="hidden">
+						<input id="WorkflowDefinitionStepNumberInput" type="hidden">
+		
+						<div class="modal-header">
+							<h4 class="modal-title">Workflow Definition Step</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>	        
+						</div>
+						<div class="modal-body fixed-dialog-body">
+
+							<div id="workflowDefinitionStepDialogErrorStateDiv" class="alert alert-danger" role="alert" style="display:none">
+								<table width="100%">
+									<tr>
+										<td width="50px" valign="top"><i class="fas fa-exclamation-triangle" style="font-size:28pt !important"></i></td>
+										<td valign="top" width="*">
+											<div id="workflowDefinitionStepDialogErrorMsgDiv"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							
+							<div id="workflowDefinitionStep_Message" class="alert alert-info" role="info" style="display:none">
+								<table width="100%">
+									<tr>
+										<td width="50px" valign="top"><i id="workflowDefinitionMessageIcon" class="fas fa-exclamation-triangle" style="font-size:28pt !important"></i></td>
+										<td valign="top" width="*">
+											<div id="WorkflowDefinitionMessage"></div>
+										</td>
+									</tr>
+								</table>
+							</div>								
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="WorkflowDefinitionStepNameInput">Step Name</label>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input id="WorkflowDefinitionStepNameInput" class="form-control" required>
+									</div>
+								</div>
+							</div>
+														
+							<div id="workflowDefinitionStepTypeSelectDiv" style="display:none">
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="workflowDefinitionStepTypeSelect">Step Type</label>
+									<div class="col-md-3">
+										<div class="form-group">
+											<select id="workflowDefinitionStepTypeSelect" class="form-control" onchange="selectWorkflowDefinitionStepType()">
+												<option value="">Basic</option>
+												<option value="condition">Condition</option>
+												<option value="email">Email</option>
+												<option value="sql">SQL</option>
+												<option value="workflow">Trigger workflow</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div id="workflowDefinitionStep_Condition" style="display:none">
+								<div class="row">
+									<h5>Condition</h5>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="TestFieldInput">Test Field</label>
+									<div class="col-md-4">
+										<div class="form-group input-group">
+											<input id="TestFieldInput" class="form-control" required>
+											<button class="dt-button ui-button ui-state-default btn btn-sm" onclick="selectField('TestFieldInput')"><i class="far fa-sticky-note" title="Select field"></i></button>
+										</div>
+									</div>
+									<label class="col-md-2 col-form-label" for="TestValueInput">= Test Value</label>
+									<div class="col-md-4">
+										<div class="form-group">
+											<input id="TestValueInput" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="IfTrueStepNumberSelect">If TRUE goto</label>
+									<div class="col-md-3">
+										<div class="form-group">
+											<select id="IfTrueStepNumberSelect" class="form-control"></select>
+										</div>
+									</div>
+									<label class="offset-md-1 col-md-2 col-form-label" for="IfFalseStepNumberSelect">If FALSE goto</label>
+									<div class="col-md-3">
+										<div class="form-group">
+											<select id="IfFalseStepNumberSelect" class="form-control"></select>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div id="workflowDefinitionStep_Mail" style="display:none">
+								<div class="row">
+									<h5>Send Email</h5>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="MailboxInput">Email/Role</label>
+									<div class="col-md-6">
+										<div class="form-group input-group">
+											<input id="MailboxInput" class="form-control">
+											<button class="dt-button ui-button ui-state-default btn btn-sm" onclick="selectRole('MailboxInput')"><i class="fa fa-user-tag" title="Select role"></i></button>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="MailSubjectInput">Subject</label>
+									<div class="col-md-10">
+										<div class="form-group input-group">
+											<input id="MailSubjectInput" class="form-control">
+											<button class="dt-button ui-button ui-state-default btn btn-sm" onclick="selectField('MailSubjectInput', false)"><i class="far fa-sticky-note" title="Select field"></i></button>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="MailBodyTextTextArea">Body</label>
+									<div class="col-md-10">
+										<div class="btn-toolbar mb-2">
+											<button class="dt-button ui-button ui-state-default btn btn-sm" onclick="selectField('MailBodyTextTextArea', false)"><i class="far fa-sticky-note" title="Select field"></i></button>
+										</div>
+										<div class="form-group">
+											<textarea id="MailBodyTextTextArea" rows=8 style="width:100%"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div id="workflowDefinitionStep_TriggerWorkflow" style="display:none">
+								<div class="row">
+									<h5>Trigger Workflow</h5>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="TriggerWorkflowInput">Trigger Workflow</label>
+									<div class="col-md-10">
+										<div class="form-group input-group">
+											<input id="TriggerWorkflowInput" class="form-control">
+											<button class="dt-button ui-button ui-state-default btn btn-sm" onclick="selectTrigger('TriggerWorkflowInput')"><i class="icon icon-workflow" title="Select Workflow"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div id="workflowDefinitionStep_Sql" style="display:none">
+								<div class="row">
+									<h5>Execute SQL Statement</h5>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="SqlTextTextArea">SQL</label>
+									<div class="col-md-10">
+										<div class="form-group">
+											<textarea id="SqlTextTextArea" rows=8 style="width:100%"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+							<div id="workflowDefinitionStep_Goto" style="display:none">
+								<div class="row">
+									<label class="col-md-2 col-form-label" for="GotoStepNumberInput">Goto</label>
+									<div class="col-md-3">
+										<div class="form-group">
+											<select id="GotoStepNumberSelect" class="form-control"></select>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div id="workflowDefinitionStep_Sla" style="display:none">	
+								<div class="row">
+									<div class="offset-md-2 col-md-3">
+										<div class="form-group">
+											<input type="checkbox" id="PauseWorkflowFlagInput">
+											<label for="PauseWorkflowFlagInput">Pause for SLA</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="workflowDefinitionStep_MarkDiv" style="display:none">
+								<div class="row">
+									<div class="offset-md-2 col-md-3">
+										<div class="form-group">
+											<input type="checkbox" id="MarkFailedFlagInput">
+											<label for="MarkFailedFlagInput">Mark as failed</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="offset-md-2 col-md-3">
+										<div class="form-group">
+											<input type="checkbox" id="MarkCompletedFlagInput">
+											<label for="MarkCompletedFlagInput">Mark as complete</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="modal-footer">
+						  <button id="deleteWorkflowDefinitionStepBtn" type="button" class="btn btn-sm btn-danger mr-2" onclick="confirmDeleteWorkflowDefinitionStep()">Delete</button>
+						  <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+						  <button id="saveWorkflowDefinitionStepBtn" type="button" class="btn btn-sm btn-primary" onclick="saveWorkflowDefinitionStep()">Save</button>
+						</div>
+					</fieldset>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<!-- End: workflowDefinitionStepDialog -->
+	
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript" th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript" th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript" th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript" th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript" th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+	
+	<!-- custom select -->
+	<script type="text/javascript" th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{ignite/js/dirtyforms.js}"></script> -->
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<script type="text/javascript" th:src="@{ignite/js/ignite-setup/setup-workflow.js}"></script>
+
+</body>
+</html>

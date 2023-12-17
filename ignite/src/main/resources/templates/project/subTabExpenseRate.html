@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="subTabExpenseRate" th:remove="tag">
+
+		<!-- subTabExpenseRate: Start -->
+		<div id="subTabExpenseRate" class="tab-pane">
+			<div class="row">
+				<div class="col-md-8">
+					<h4 style="display: inline-block">Recoverable Expense Agreements</h4>
+					<span id="__igdev_prExpenseRatesTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp; &nbsp;--subTabExpenseRate-- &nbsp; table:expenseAgreementTable</span>
+					</span>
+				</div>
+				<div class="col-md-4">
+					<h4 style="display: inline-block" id = "expenseRemunerationRatesHeading">Current Expense Rates</h4>
+					<span id="__igdev_prExpenseRatesTab3FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px"> &nbsp; table:expenseRateTable</span>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<table id="expenseAgreementTable"
+						class="table table-striped table-advance table-hover"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>recoverableExpenseId</th>
+								<th>agreementBetweenParticipantsId</th>
+								<th>projectId</th>
+								<th>projectParticipantId</th>
+								<th>participantIdPayer</th>
+								<th>Payer</th>
+								<th>participantIdBeneficiary</th>
+								<th>Beneficiary</th>
+								<th>Agreement</th>
+								<th>expenseTypeId</th>
+								<th>expenseAgreementDescription</th>
+								<th>Expense Type</th>
+								<th>allowHandlingPerc</th>
+								<th>AllowMaxAmtPerUnit</th>
+								<th>UnitCode</th>
+								<th>Unit</th>
+								<th>level</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<div id="expenseRateEmptyPanel" style="display: block">
+						<p style="text-align: center; color: #777777">
+							<br> <br> <br> <br> Please select an Agreement.
+						</p>
+					</div>
+					<div id="expenseRatePanel" style="display: none">
+						<table id="expenseRateTable"
+							class="table table-striped table-advance table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+								<th>expenseRateId</th>
+								<th>RecoverableExpenseId</th>
+								<th>ExpenseTypeId</th>
+								<th>Expense Type</th>
+								<th>ExpenseTypeUnitCode</th>
+								<th>Unit</th>
+								<th>Rate</th>
+								<th>Handling %</th>
+								<th>Max Amt</th>
+								<th>description</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- subTabExpenseRate: End -->
+						
+
+		<!-- expenseRateDialog: Start -->
+		<div class="modal fade" id="expenseRateDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="expenseRateDialogHeader"
+							style="display: inline-block">Expense Rate for Agreement</h4>
+							<span id="__igdev_expenseRateDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">--expenseRateDialog--</span>
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; expenseRateId</span>
+										<input readonly id="expenseRateId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; eAgreementBetweenParticipantsId</span>
+										<input readonly id="eAgreementBetweenParticipantsId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; eRecoverableExpenseId</span>
+										<input readonly id="eRecoverableExpenseId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; eExpenseTypeId</span>
+										<input readonly id="eExpenseTypeId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							</span>								
+						<button type="button" class="close"
+							onclick="closeExpenseRateDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="eDlgErrorDiv" style="display: none"></div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="eParticipantPayer">Participant Payer *</label>
+										<div class="col-md-4">
+											<input type="text" id="eParticipantPayer"
+												name="eParticipantPayer" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="eParticipantBeneficiary">Participant Beneficiary *</label>
+										<div class="col-md-4">
+											<input type="text" id="eParticipantBeneficiary"
+												name="eParticipantBeneficiary" class="form-control" readonly>
+										</div>
+									</div>
+				
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eExpenseTypeName">Expense
+											Type *</label>
+										<div class="col-md-4">
+											<input type="text" id="eExpenseTypeName"
+												name="expenseTypeName" class="form-control" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eUnitName">Unit *</label>
+										<div class="col-md-3">
+											<input type="text" id="eUnitName" name="eUnitName"
+												class="form-control" readonly>
+										</div>
+									</div>
+									<section class="panel" id="expenseRatePerUnitPanel">
+										<div class="row">
+											<label class="col-md-3 col-form-label"
+												for="expenseRatePerUnit">Rate (R) *</label>
+											<div class="col-md-2">
+												<input type="text" id="expenseRatePerUnit"
+													name="expenseRatePerUnit" class="form-control"
+													placeholder="rate per unit"
+													oninput="expenseRateDialogChanged()">
+											</div>
+										</div>
+									</section>
+									<section class="panel" id="expenseHandlingPercPanel">
+										<div class="row">
+											<label class="col-md-3 col-form-label"
+												for="expenseHandlingPerc">Handling %</label>
+											<div class="col-md-2">
+												<input type="text" id="expenseHandlingPerc"
+													name="expenseHandlingPerc" class="form-control"
+													placeholder="handling percentage"
+													oninput="expenseRateDialogChanged()">
+											</div>
+										</div>
+									</section>
+									<section class="panel" id="eMaxExpenseAmtPerUnitPanel">
+										<div class="row">
+											<label class="col-md-3 col-form-label"
+												for="eMaxExpenseAmtPerUnit">Max Expense Amount per
+												Unit</label>
+											<div class="col-md-2">
+												<input type="text" id="eMaxExpenseAmtPerUnit"
+													name="eMaxExpenseAmtPerUnit" class="form-control"
+													placeholder="max amount"
+													oninput="expenseRateDialogChanged()">
+											</div>
+										</div>
+									</section>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eDescription">Description</label>
+										<div class="col-md-7">
+											<input type="text" id="eDescription" name="eDescription"
+												class="form-control" placeholder="description"
+												oninput="expenseRateDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eStartDate">Start
+											Date *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input id="eStartDate" name="eStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked" onchange="expenseRateDialogChanged()">
+												<span class="input-group-addon pointer"
+													onclick="$('#eStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eEndDate">End
+											Date *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input id="eEndDate" name="eEndDate" class="form-control"
+													placeholder="yyyy-mm-dd" data-provide="datepicker"
+													data-date-format="yyyy-mm-dd" data-date-autoclose=true
+													data-date-show-on-focus=false data-date-today-btn="linked"
+													onchange="expenseRateDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#eEndDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeExpenseRateDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveExpenseRateDialogButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveExpenseRate()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- expenseRateDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/project/subTabExpenseRate.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

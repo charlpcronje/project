@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+<meta name="_csrf_header"
+	th:content="${_csrf == null ? '' : _csrf.headerName}" />
+
+<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+<title>Ignite: Assignments</title>
+<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+
+<!-- bootstrap datatables -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+
+<!-- bootstrap theme -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap-theme.css}">
+
+<!-- font icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/elegant-icons-style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{font-awesome/6.4.2/css/all.min.css}">
+
+<!-- full calendar css-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+
+<!-- easy pie chart-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}"
+	media="screen">
+
+<!-- owl carousel -->
+<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-jvectormap-1.2.2.css}">
+	
+<!-- jqTree css -->
+<link rel="stylesheet" type="text/css" th:href="@{css/jqtree.css}">
+
+<!-- Custom styles -->
+<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/style-responsive.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-ui-1.10.4.min.css}">
+
+<!-- Ignite -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{ignite/css/ignite.css}">
+
+</head>
+
+<body>               
+
+	
+	<script th:inline="text">
+		var _igModel = {
+			username : "[[${igUsername}]]",
+			avatar : "[[${igUserAvatar}]]"
+		}
+	</script>
+
+
+	<!-- container section start -->
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav">
+				<div class="icon-reorder tooltips"
+					data-original-title="Toggle Navigation" data-placement="bottom"
+					onclick="toggleSidebar()">
+					<i class="icon_menu"></i>
+				</div>
+			</div>
+
+			<!--logo start-->
+			<div id="headerLogo" style="display: inline"></div>
+			<!--logo end-->
+
+			<div class="top-nav notification-row">
+				<profile-menu th:replace="fragments/profile-menu :: profile-menu"></profile-menu>
+			</div>
+		</header>
+		<!--header end-->
+
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<sidebar-menu th:replace="fragments/sidebar-menu :: sidebar-menu"></sidebar-menu>
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!--overview start-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h4 id="pageHeader">
+							<i class="fa fa-user"></i> Assignments
+						</h4>
+
+							<div class="row btn-toolbar">
+								<div class="row">
+									<label class="col-md-3 col-form-label" for="rangeStartDate">Date Range</label>
+									<div class="col-md-3">
+										<input type="text" id="rangeStartDate" name="rangeStartDate"
+											class="form-control" placeholder="date from" disabled>
+									</div>
+									<div class="col-md-3">
+										<input type="text" id="rangeEndDate" name="rangeEndDate"
+											class="form-control" placeholder="date to" disabled>
+									</div>
+									<button id = "selectNewDateRangeButton" type="button" class="btn btn-sm btn-primary" title = "Change Date Range"
+											onclick="selectNewDateRange()"> ...
+									</button>
+								</div>
+							</div>
+
+					
+						<section class="panel">
+							<div class="panel-body">
+
+								<table id="assignmentTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>AssignmentId</th>  					<!-- 0  -->
+											<th>ProjectParticipantIdInstructor</th>  <!-- 1  -->
+											<th>PpInstructorName</th>  			<!-- 2  -->
+											<th>IndividualIdInstructor</th>  	<!-- 3  -->
+											<th>Instructor Name</th>  <!-- 4  -->
+											<th>ProjectParticipantIdIndivResp</th>  <!-- 5  -->
+											<th>Individual Responsible</th>  	<!-- 6  -->
+											<th>IndividualIdLogger</th>  	<!-- 7  -->
+											<th>IndividualLoggerName</th>  	<!-- 8  -->
+											<th>AssignmentGroupId</th>  	<!-- 9  -->
+											<th>Assignment Group</th>  <!-- 10  -->
+											<th>Assignment Number</th>  <!-- 11  -->
+											<th>Name</th>  			<!-- 12  -->
+											<th>Description</th>  	<!-- 13  -->
+											<th>Start Date</th>  		<!-- 14  -->
+											<th>TimeOfDay</th>  	<!-- 15  -->
+											<th>RepeatCode</th>  	<!-- 16  -->
+											<th>LastUpdateTimestamp</th>  <!-- 17  -->
+											<th>LastUpdateUserName</th>   <!-- 18  -->
+											<th>ProjectId</th>  		  <!-- 19  -->
+											<th>ProjectAssignmentNumber</th>  <!-- 20  -->
+											<th>Title</th>  				<!-- 21  -->
+											<th>ProjectName</th>  			<!-- 22  -->
+											<th>Completed</th> 
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</section>
+					</div>
+				</div>
+
+			</section>
+			<div class="text-right"></div>
+		</section>
+		<!--main content end-->
+	</section>
+	<!-- container section end -->
+
+
+
+	<!-- dateRangeDialog: Start -->
+	<div class="modal fade" id="dateRangeDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="parameterDialogLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="dateRangeDialogHeader">Select Date Range for Assignments</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<section class="panel">
+						<form onsubmit="return false" class="form-horizontal">
+							<fieldset>
+								<div id="drDlgErrorDiv" style="display: none"></div>
+								<label class="col-md-2 col-form-label" for="drStartDate">Date Range</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input id="drStartDate" name="drStartDate"
+											class="form-control" placeholder="dd/mm/yyyy"
+											data-provide="datepicker" data-date-format="dd/mm/yyyy"
+											data-date-autoclose=true data-date-show-on-focus=false
+											data-date-today-btn="linked"
+											onchange=""> 
+											<span
+											class="input-group-addon pointer"
+											onclick="$('#drStartDate').datepicker('show')">
+											<i class="fas fa-calendar-alt"></i>
+										</span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input id="drEndDate" name="drEndDate"
+											class="form-control" placeholder="dd/mm/yyyy"
+											data-provide="datepicker" data-date-format="dd/mm/yyyy"
+											data-date-autoclose=true data-date-show-on-focus=false
+											data-date-today-btn="linked"
+											onchange=""> 
+											<span
+											class="input-group-addon pointer"
+											onclick="$('#drEndDate').datepicker('show')">
+											<i class="fas fa-calendar-alt"></i>
+										</span>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default"
+						type="button">Cancel</button>
+					<button id = "selectDateRangeButton" class="btn btn-sm btn-primary" type="button"
+						onclick="initializeAssignmentTable()" data-dismiss="modal" >Go</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- dateRangeDialog: End -->
+
+
+
+
+	<!-- editAssignmentDialog: Start -->
+	<div class="modal fade" id="assignmentDialog" tabindex="-1" role="dialog"
+		data-backdrop="static" aria-labelledby="assignmentDialogLabel"
+		aria-hidden="true">
+		<div style="width:90%">  <!-- <div class="modal-dialog modal-lg"> -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<input type="hidden" id="pdProjectId">
+					<h4 class="modal-title" id="assignmentDialogHeader">Assignment
+						Detail</h4>
+					<button type="button" class="close" onclick="anyUnsavedData()"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body fixed-dialog-body">
+					<div id="aDlgErrorDiv" style="display: none"></div>
+					<header class="panel-heading tab-bg-info">
+						<ul class="nav nav-tabs">
+							<li class="active" id="aGeneralTabLink"><a
+								id="aGeneralTabAnchor" data-toggle="tab" href="#aGeneralTab">General</a></li>
+							<li id="tTaskTabLink"><a
+								id="tTaskTabAnchor" data-toggle="tab" href="#tTaskTab">Tasks</a></li>
+										
+																								
+						</ul>
+					</header>
+					
+					<div class="panel-body">
+						<div class="tab-content">
+							<div id="aGeneralTab" class="tab-pane active">
+								<form onsubmit="return false" class="form-horizontal">
+									<fieldset>
+										<div class="row btn-toolbar">
+											<button type="button" id="saveGeneralTabButton" 
+												class="dt-button ui-button ui-state-default btn btn-sm"
+												title="Save" onclick="saveAssignmentGeneral()" disabled>
+												<i class="fa fa-save"></i>
+											</button>
+										</div>
+										<div class="panel-content">
+											<div class="row" id="aAssignmentIdLabel" hidden="hidden">
+												<label  class="col-md-2 col-form-label" for="aAssignmentId">Assignment ID</label>  <!-- hidden="hidden" -->
+												<div class="col-md-1">
+													<input type="text" id="aAssignmentId" class="form-control" placeholder="aAssignmentId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-md-1" id="aProjectIdLabel" hidden="hidden">
+													<label >ProjectId</label>  
+												</div>
+												<div class="col-md-1" id="aProjectIdDiv" hidden="hidden">
+													<input type="text" id="aProjectId" class="form-control" placeholder="aProjectId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+												</div>
+									
+												<label class="col-md-2 col-form-label" for="aProjectId">Project</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text" id="aProjectName" readonly class="form-control"> 
+														<span class="input-group-addon pointer" onclick="selectProjectId()"> 
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-md-1" id="ppIdInstructorLabel" hidden="hidden">
+													<label>P-P-IdInstructor</label>  
+												</div>
+												<div class="col-md-1" id="aProjectParticipantIdInstructorDiv" hidden="hidden">
+													<input type="text" id="aProjectParticipantIdInstructor" class="form-control" placeholder="aProjectParticipantIdInstructor" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">  
+												</div>
+												<label class="col-md-2 col-form-label" for="aPpInstructorName">Project Participant Instructor</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text" id="aPpInstructorName" readonly class="form-control"> 
+														<span class="input-group-addon pointer" id="ppIdInstructorBino" onclick="selectProjectParticipantIdInstructor()" hidden="hidden"> 
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-md-1" id="individualIdInstructorLabel" hidden="hidden">
+													<label>IndividualIdIns</label>  
+												</div>
+												<div class="col-md-1" id="aIndividualIdInstructorDiv" hidden="hidden">
+													<input type="text" id="aIndividualIdInstructor" class="form-control" placeholder="aIndividualIdInstructor" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">   
+												</div>
+												<label class="col-md-2 col-form-label" for="aIndividualInstructorName">Individual Instructor</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text" id="aIndividualInstructorName" readonly class="form-control"> 
+														<span class="input-group-addon pointer" id="individualIdInstructorBino" onclick="selectIndividualInstructor()" hidden="hidden"> 
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-md-1" id="p-p-IdIndivRespLabel" hidden="hidden">
+													<label >P-P-IdIndivResp</label>  
+												</div>
+												<div class="col-md-1" id="aProjectParticipantIdIndivRespDiv" hidden="hidden">
+													<input type="text" id="aProjectParticipantIdIndivResp" class="form-control" placeholder="aProjectParticipantIdIndivResp" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">    
+												</div>
+												<label class="col-md-2 col-form-label" for="aIndividualRespName">Responsible Person</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text" id="aIndividualRespName" readonly class="form-control"> 
+														<span class="input-group-addon pointer" id="ppIdIndivRespBino" onclick="selectResponsiblePerson()" hidden="hidden"> 
+															<i class="fas fa-binoculars"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-md-1" id="individualIdLoggerLabel" hidden="hidden">
+													<label >Individual IdLogger</label>  
+												</div>
+												<div class="col-md-1" id="aIndividualIdLoggerDiv" hidden="hidden">
+													<input type="text" id="aIndividualIdLogger" class="form-control" placeholder="aIndividualIdLogger" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+												</div>
+												<label class="col-md-2 col-form-label" for="aIndividualLoggerName">Individual logging Assignment</label>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input type="text" id="aIndividualLoggerName" readonly class="form-control"> 
+													</div>
+												</div>
+											</div>
+
+											<div class="row" id="aAssignmentTypeDiv" hidden="hidden">
+												<label class="col-md-2 col-form-label"
+													for="aAssignmentType">Assignment Type</label>
+												<div class="col-md-5">
+													<div class="input-group">
+														<select class="form-control" id="aAssignmentType"
+															onchange="generalTabChanged()">
+														</select>
+													</div>
+												</div>
+											</div>
+										
+											<div class="row">
+		<!-- 									
+												<div class="col-md-1" id="assignmentGroupIdLabel" hidden="hidden">
+													<label>Assignment GroupId</label>  
+												</div>
+												<div class="col-md-1" id="aAssignmentGroupIdDiv" hidden="hidden">
+													<input type="text" id="aAssignmentGroupId" onchange="generalTabChanged()" readonly class="form-control">  
+												</div>
+												-->
+												<label class="col-md-2 col-form-label"
+													for="aAssignmentGroup">Assignment Group</label>
+												<div class="col-md-5">
+													<div class="input-group">
+														<select class="form-control" id="aAssignmentGroup"
+															onchange="generalTabChanged()">
+														</select>
+													</div>
+												</div>
+											</div>
+											
+											
+																					
+											
+											<div class="row">
+												<label class="col-md-2 col-form-label"
+													for="aAssignmentNumber">Assignment Number</label>
+												<div class="col-md-2">
+													<input type="text" id="aAssignmentNumber"
+														class="form-control" placeholder="Assignment Number" readonly>
+												</div>
+												
+												
+																						
+												<div class="offset-md-2 col-md-4">
+													<input type="checkbox" id="aCompleted" onclick="generalTabChanged()"> 
+													<label class="col-form-label" for="aCompleted">Completed</label>
+												</div>
+											
+												
+												
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label"
+													for="aName">Name</label>
+												<div class="col-md-4">
+													<input type="text" id="aName"
+														class="form-control" placeholder="Name" onkeyup="generalTabChanged()">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-md-2 col-form-label"
+													for="aDescription">Description</label>
+												<div class="col-md-8">
+													<input type="text" id="aDescription"
+														class="form-control" placeholder="Description" onkeyup="generalTabChanged()">
+												</div>
+											</div>
+											
+											<div class="row">
+												<label class="col-md-2 col-form-label" for="aStartDate">Start Date</label>
+												<div class="col-md-3">
+													<div class="input-group">
+														<input id="aStartDate" name="aStartDate"
+															class="form-control" placeholder="dd/mm/yyyy"
+															data-provide="datepicker" data-date-format="dd/mm/yyyy"
+															data-date-autoclose=true data-date-show-on-focus=false
+															data-date-today-btn="linked"
+															onchange="generalTabChanged()" onkeyup="generalTabChanged()">
+															<span
+															class="input-group-addon pointer"
+															onclick="$('#aStartDate').datepicker('show')"
+															>
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+
+
+
+
+											
+											<div class="row">
+									    		<label class="col-md-2 col-form-label" for="aTimeOfDayH">Time of day</label>
+												<div class="col-md-1">
+													<div class="input-group">
+														<input type="text" id="aTimeOfDayH" placeholder="HH" onkeyup="timeOfDayKeyupH()" maxlength="2" class="form-control" onchange="generalTabChanged()">
+													</div>
+												</div>
+												<label ><b>:</b></label>
+												<div class="col-md-1">
+													<div class="input-group">
+														<input type="text" id="aTimeOfDayM" placeholder="mm" onkeyup="timeOfDayKeyupM()" maxlength="2" class="form-control" onchange="generalTabChanged()">
+													</div>
+												</div>
+									<!-- 		</div>
+											<div class="row"> -->
+												<div class="col-md-6 col-form-label" id="aTimeOfDayDiv" hidden="hidden">
+													<div class="input-group">
+														<input type="text" id="aTimeOfDay" class="form-control" readonly onchange="generalTabChanged()">  
+													</div>
+												</div>
+												
+									    	</div>				
+									    														
+											<div class="row" id="aRepeatDiv">
+												<div class="row" id="aRepeatCodeDiv" hidden="hidden">
+													<label class="col-md-2 col-form-label" for="aRepeatCode">RepeatCode</label>
+													<div class="col-md-4">
+														<input type="text" id="aRepeatCode"
+															class="form-control" onkeyup="generalTabChanged()" readonly >
+													</div>
+												</div>
+												
+												<div class="row">
+													<div class="offset-md-2 col-md-1">
+														<div class="form-group">
+															<input type="checkbox" id="aCheckRepeat" name="aCheckRepeat" onClick="repeatCheckClicked()">
+															<label class="col-form-label" for="aCheckRepeat">Repeat</label>
+														</div>
+													</div>
+													<div id="repeatUnits">
+														<label class="col-md-1 col-form-label" for="aName">for</label>
+														<div class="col-md-4">
+															<input type="text" id="aUnits"
+																class="form-control"  maxlength="3" onkeyup="aUnitsKeyup()">
+														</div>
+														<label id="aUnitsName" class="col-md-1 col-form-label">units</label>
+													</div>
+												</div>
+											</div>
+									    	
+									    	
+									    	
+									    	
+									    	
+									    	
+					                  		<div class="row"  id="repeatOptionsDWMY">
+												<div class="col-md-1">
+													<div class="form-group">
+														<input type="radio" id="ttDaily" name="ttRepeat" value="ttDaily" class="form-control" onClick="ttDailyClicked()">
+													</div>
+												</div>
+									    		<label class="col-md-2 col-form-label" for="ttDaily" >Daily</label>
+					
+												<div class="col-md-1">
+													<div class="form-group">
+														<input type="radio" id="ttWeekly" name="ttRepeat" value="ttWeekly" class="form-control" onClick="ttWeeklyClicked()">
+													</div>
+												</div>
+									    		<label class="col-md-2 col-form-label" for="ttWeekly">Weekly</label>
+					
+												<div class="col-md-1">
+													<div class="form-group">
+														<input type="radio" id="ttMonthly" name="ttRepeat" value="ttMonthly" class="form-control" onClick="ttMonthlyClicked()">
+													</div>
+												</div>
+									    		<label class="col-md-2 col-form-label" for="ttMonthly">Monthly</label>
+					
+												<div class="col-md-1">
+													<div class="form-group">
+														<input type="radio" id="ttYearly" name="ttRepeat" value="ttYearly" class="form-control" onClick="ttYearlyClicked()">
+													</div>
+												</div>
+									    		<label class="col-md-2 col-form-label" for="ttYearly">Yearly</label>
+									    	</div>			
+					
+									    					    					    					    					    	
+											<div class="row" id="weeklyOptions" hidden="hidden">
+									    		<div class="offset-md-2 col-md-6">
+													<div class="form-group">
+														<input type="checkbox" id="ttCheckSu" name="ttCheck" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckSu">Sunday</label>
+													</div>
+													<div class="form-group">
+														<input type="checkbox" id="ttCheckMo" name="ttCheck" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckMo">Monday</label>
+													</div>
+													<div class="form-group">
+														<input type="checkbox" id="ttCheckTu" name="ttCheckTu" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckTu">Tuesday</label>
+													</div>
+													<div class="form-group">		
+														<input type="checkbox" id="ttCheckWe" name="ttCheckWe" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckWe">Wednesday</label>
+													</div>
+													<div class="form-group">									
+														<input type="checkbox" id="ttCheckTh" name="ttCheckTh" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckTh">Thursday</label>
+													</div>
+													<div class="form-group">
+														<input type="checkbox" id="ttCheckFr" name="ttCheckFr" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckFr">Friday</label>
+													</div>
+													<div class="form-group">
+														<input type="checkbox" id="ttCheckSa" name="ttCheckSa" onclick="getWeeklyDayOptions()">
+														<label class="col-form-label" for="ttCheckSa">Saturday</label>
+													</div>
+					
+												</div>
+									    	</div>
+					
+											<div class="row" id="monthlyOptions" hidden="hidden">
+												<div class="col-md-4" id="ttMonthlyDropdown1">
+													<select class="form-control" id="monthly1stDropdown" onchange="whichMonthDropdownOrDate()">
+													      <option value="0">Select</option>
+													      <option value="Date">Date</option>
+													      <option value="First">First</option>
+													      <option value="Second">Second</option>
+													      <option value="Third">Third</option>
+													      <option value="Last">Last</option>
+													      <option value="2nd Last">2nd Last</option>   <!-- Day and Workday -->
+													      <option value="3rd Last">3rd Last</option>   <!-- Day and Workday -->
+													</select>						
+												</div>
+												<div class="col-md-4" id="ttMonthlyDropdown2" hidden="hidden">
+													<select class="form-control" id="monthly2ndDropdown" onchange="getRepeatCodeForMonth()">
+													      <option value="0">Select</option>
+													      <option value="Day">Day</option>
+													      <option value="Workday">Workday</option>
+													      <option value="Sunday">Sunday</option>
+													      <option value="Monday">Monday</option>
+													      <option value="Tuesday">Tuesday</option>
+													      <option value="Wednesday">Wednesday</option>
+													      <option value="Thursday">Thursday</option>
+													      <option value="Friday">Friday</option>
+													      <option value="Saturday">Saturday</option>
+													</select>						
+												</div>
+												<div class="col-md-4" id="ttMonthlyDropdown3" hidden="hidden">
+													<select class="form-control" id="monthly3rdDropdown" onchange="getRepeatCodeForMonth()">
+													      <option value="0">Select</option>
+													      <option value="Day">Day</option>
+													      <option value="Workday">Workday</option>
+													</select>						
+												</div>		
+												<div class="col-md-4" id="ttMonthlyText" hidden="hidden">
+													<div class="col-md-4">
+														<div class="form-group">  <!--  Dag van die maand-->
+															<input type="text" id="ttDate" maxlength="2"  onkeyup="dagVanDieMaandKeyup()" class="form-control">
+														</div>
+													</div>					
+												</div>
+												<label class="col-md-3 col-form-label" id="everyMonthLabel" hidden="hidden">of every month</label>																									
+											</div>  <!-- <div class="row" id="monthlyOptions" hidden="hidden"> -->
+					
+									    			    	
+											<div class="row" id="yearlyOptions" hidden="hidden">
+												<div class="col-md-3" id="ttYearlyText">
+													<div class="col-md-3">
+														<div class="form-group">  <!--  Dag van die maand-->
+															<input type="text" id="ttDateY" maxlength="2" onkeyup="dagVanDieMaandYearlyKeyup()" class="form-control">
+														</div>
+													</div>					
+												</div>
+												<div class="col-md-3">
+													<select class="form-control" id="ttMonthDropdown" onchange="checkDateAgainstMonth()">
+													      <option value="0">Select</option>
+													      <option value="January">January</option>
+													      <option value="February">February</option>
+													      <option value="March">March</option>
+													      <option value="April">April</option>
+													      <option value="May">May</option>
+													      <option value="June">June</option>
+													      <option value="July">July</option>
+													      <option value="August">August</option>
+													      <option value="September">September</option>
+													      <option value="October">October</option>
+													      <option value="November">November</option>
+													      <option value="December">December</option>
+													</select>						
+												</div>
+												
+												<label class="col-md-3 col-form-label" id="everyMonthLabel" >of every year</label>																									
+											</div>  <!--  id="yearlyOptions"  -->   					    	
+					   					    	
+										</div>
+									</fieldset>
+								</form>
+							</div>
+
+							<div id="tTaskTab" class="tab-pane">
+								<form onsubmit="return false" class="form-horizontal">
+								
+									<div class="row"> 
+										<div class="col-md-12">
+											
+										
+											<div class="row">
+												<div class="col-md-4">
+													<label class="col-sm-4 h4">Tasks</label>
+											        
+												</div>
+												<div class="col-md-4">
+																											 	
+											        <label class="col-sm-4 h4">Revisions</label>
+											        <div class="col-sm-4" id="revPanelTaskIdLabel" hidden="hidden"> <!-- hidden="hidden" -->
+											            <input type="text" id="revPanelTaskId" class="form-control"  placeholder="revPanelTaskId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+											        </div>
+															
+												</div>
+												<div class="col-md-4">
+													<label class="col-sm-4 h4">Submissions</label>
+											        <div class="col-sm-4" id="subPanelRevIdLabel" hidden="hidden"> <!-- hidden="hidden" -->
+											        	<input type="text" id="subPanelRevId" class="form-control"  placeholder="TaskRevisionId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+											        </div>
+											        
+
+													<span class="input-group-btn" style="width:0px;"></span>
+													<div class="col-sm-3" id="subPanelTaskSubIdLabel" hidden="hidden"> <!-- wysHiddenGoed -->
+			            								 <input type="text" id="subPanelTaskSubId" class="form-control"  placeholder="TaskSubId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+													</div>													        
+											        
+											        
+											        
+											        
+											        
+											        
+												</div>
+											</div>										
+										
+											<div class="row">
+												<div class="col-md-4">
+													<div id="tTaskPanel">  <!--  style="display:none" -->
+														<table id="tTaskTable" class="table table-striped table-advance table-hover" style="width:100%">
+									                  		<thead>
+																<tr>
+																	<th>TaskId</th>
+																	<th>AssignmentId</th>
+																	<th>TaskImportanceTypeId</th>
+																	<th>ImportanceValue</th>
+																	<th>Importance</th>  <!-- ImportanceName -->
+																	<th style="width:35px">Order Number</th>
+																	<th>TaskNumber</th>
+																	<th>Name</th>
+																	<th>Description</th>
+																	<th>StartDate</th>
+																	<th>DurationDays</th>
+																	<th>DurationHours</th>
+																	<th>TimeOfDay</th>
+																	<th>Completed</th>
+																</tr>
+															</thead>
+															<tbody>
+															</tbody>
+														</table>
+													</div>
+												</div>
+												
+												<div class="col-md-4">
+													<div id="revisionEmptyPanel" style="display: block">
+														<p style="text-align: center; color: #777777">
+															<br> <br> <br> <br> Please select a Task.
+														</p>
+													</div>
+													<div id="revisionPanel" style="display: none">
+													
+												
+											
+														<table id="taskRevisionTable"
+															class="table table-striped table-advance table-hover"
+															style="width: 100%">
+															<thead>
+																<tr>
+																<th>TaskRevisionId</th>
+																<th>TaskId</th>
+																<th>Revision Number</th>  <!-- RevisionNumber -->
+																<th>Revision Date</th>  <!-- RevisionDate -->
+																<th>Name</th>
+																<th>Description</th>
+																<th>NeededCompletionDate</th>  <!-- NeededCompletionDate -->
+																<th>ExpectedCompletionDate</th>  <!-- ExpectedCompletionDate -->
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>												
+
+												<div class="col-md-4">												
+
+
+													<div id="submissionEmptyPanel" style="display: block">
+														<p style="text-align: center; color: #777777">
+															<br> <br> <br> <br> Please select a Revision.
+														</p>
+													</div>
+													<div id="submissionPanel" style="display: none">
+													
+													
+														<table id="taskSubmissionTable"
+															class="table table-striped table-advance table-hover"
+															style="width: 100%">
+															<thead>
+																<tr>
+																<th>TaskSubmissionId</th>
+																<th>TaskRevisionId</th>
+																<th>Submission Number</th> <!-- SubmissionNumber -->
+																<th>Submission Date</th> <!-- SubmissionDate -->
+																<th>Accepted</th> <!-- Acceptedflag -->
+																<th>Comment</th>
+																<th>Feedback</th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+
+													
+												</div>
+												
+												
+											</div>
+										</div>
+									</div>								
+								
+
+								</form>
+							</div>
+
+						</div>						
+						
+					</div>
+				
+
+				</div>					
+								
+				
+
+				<div class="modal-footer fixed-dialog-footer">
+					<button class="btn btn-sm btn-default" type="button" onclick="anyUnsavedData()">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- editAssignmentDialog: End -->
+
+
+
+
+	<!-- taskDialog: Start -->
+	<div class="modal fade" id="taskDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="taskDialogLabel" aria-hidden="true">
+		<div  class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Task</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+
+						<form onsubmit="return false" class="form-horizontal">
+
+
+							<fieldset>
+
+								
+								<div class="panel-content">
+								
+								
+									<div class="row"> <!-- hidden="hidden"-->
+										<label class="col-md-2 col-form-label"  id="tTaskIdLabel" for="tTaskId"  hidden="hidden">Task ID</label>  <!-- hidden="hidden"-->
+										<div class="col-md-2" id="tTaskIddiv" hidden="hidden">
+											<input type="text" id="tTaskId" class="form-control"  placeholder="tTaskId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+										</div>
+									</div>									
+																	
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tTaskImportanceType">Task Importance Type</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<select class="form-control" id="tTaskImportanceType"
+													onchange="taskTabChanged()">
+												</select>
+											</div>
+										</div>
+									</div>
+
+
+
+
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tOrderNumber">Order Number</label>
+										<div class="col-md-2">
+											<input type="text" id="tOrderNumber"
+												class="form-control" placeholder="Order Number" onkeyup="taskTabChanged()">
+										</div>
+									</div>																				
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tTaskNumber">Task Number</label>
+										<div class="col-md-4">
+											<input type="text" id="tTaskNumber"
+												class="form-control" placeholder="Task Number" onkeyup="taskTabChanged()">
+										</div>
+										
+										
+										<div class="offset-md-2 col-md-4">
+											<input type="checkbox" id="tCompleted" onclick="taskTabChanged()"> 
+											<label class="col-form-label" for="tCompleted">Completed</label>
+										</div>										
+										
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tName">Name</label>
+										<div class="col-md-8">
+											<input type="text" id="tName"
+												class="form-control" placeholder="Name" onkeyup="taskTabChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tDescription">Description</label>
+										<div class="col-md-8">
+											<input type="text" id="tDescription"
+												class="form-control" placeholder="Description" onkeyup="taskTabChanged()()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="tStartDate">Start Date</label>
+										<div class="col-md-3">
+											<div class="input-group">
+												<input id="tStartDate" name="tStartDate"
+													class="form-control" placeholder="dd/mm/yyyy"
+													data-provide="datepicker" data-date-format="dd/mm/yyyy"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="taskTabChanged()" onkeyup="taskTabChanged()">
+													<span
+													class="input-group-addon pointer"
+													onclick="$('#tStartDate').datepicker('show')"
+													>
+													<i class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+							    		<label class="col-md-2 col-form-label" for="tTimeOfDayH">Time of day</label>
+										<div class="col-md-1">
+											<div class="input-group">
+												<input type="text" id="tTimeOfDayH" placeholder="HH" onkeyup="tTimeOfDayKeyupH()" maxlength="2" class="form-control" onchange="taskTabChanged()">
+											</div>
+										</div>
+										<label ><b>:</b></label>
+										<div class="col-md-1">
+											<div class="input-group">
+												<input type="text" id="tTimeOfDayM" placeholder="mm" onkeyup="tTimeOfDayKeyupM()" maxlength="2" class="form-control" onchange="taskTabChanged()">
+											</div>
+										</div>
+							<!-- 		</div>
+									<div class="row"> -->
+										<div class="col-md-6 col-form-label" id="tTimeOfDayDiv"> <!--  hidden="hidden" -->
+											<div class="input-group">
+												<input type="text" id="tTimeOfDay" class="form-control" readonly onchange="taskTabChanged()">  
+											</div>
+										</div>
+										
+							    	</div>				
+		    	
+			   					    	
+								</div>
+
+								
+							</fieldset>
+						</form>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default"
+						type="button">Cancel</button>
+					<button class="btn btn-sm btn-primary" type="button" id="blouSaveTaskTabButton" 
+						onclick="saveTask()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- taskDialog: End -->
+
+
+
+	<!-- taskRevisionDialog: Start -->
+	<div class="modal fade" id="taskRevisionDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="taskRevisionDialogLabel" aria-hidden="true">
+		<div  class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Task Revision</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+
+						<form onsubmit="return false" class="form-horizontal">
+
+
+							<fieldset>
+
+								
+								<div class="panel-content">
+								
+								
+									<div class="row" hidden="hidden" id="taskRevisionAndTaskIdDiv"> <!-- wysHiddenGoed-->
+										<label class="col-md-2 col-form-label" for="rTaskRevisionId">Task Revision ID</label>  <!-- hidden="hidden"-->
+										<div class="col-md-2">
+											<input type="text" id="rTaskRevisionId" class="form-control"  placeholder="rTaskRevisionId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+										</div>
+										<label class="col-md-2 col-form-label" for="rTaskId">Task ID</label>  <!-- hidden="hidden"-->
+										<div class="col-md-2">
+											<input type="text" id="rTaskId" class="form-control"  placeholder="rTaskId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+										</div>
+									</div>									
+
+
+																	
+									
+
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tRevisionNumber">Revision Number</label>
+										<div class="col-md-2">
+											<input type="text" id="rRevisionNumber"
+												class="form-control" placeholder="Revision Number" readonly>
+										</div>
+									</div>																				
+
+
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="rRevisionDate">Revision Date</label>
+										<div class="col-md-3">
+											<div class="input-group">
+												<input id="rRevisionDate" name="rRevisionDate"
+													class="form-control" placeholder="dd/mm/yyyy"
+													data-provide="datepicker" data-date-format="dd/mm/yyyy"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="taskRevisionTabChanged()" onkeyup="taskRevisionTabChanged()">
+													<span
+													class="input-group-addon pointer"
+													onclick="$('#rRevisionDate').datepicker('show')"
+													>
+													<i class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+
+	
+
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="rRevisionName">Name</label>
+										<div class="col-md-8">
+											<input type="text" id="rRevisionName"
+												class="form-control" placeholder="Name" onkeyup="taskRevisionTabChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="rRevisionDescription">Description</label>
+										<div class="col-md-8">
+											<input type="text" id="rRevisionDescription"
+												class="form-control" placeholder="Description" onkeyup="taskRevisionTabChanged()()">
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="rNeededCompletionDate">Needed Completion Date</label>
+										<div class="col-md-3">
+											<div class="input-group">
+												<input id="rNeededCompletionDate" name="rNeededCompletionDate"
+													class="form-control" placeholder="dd/mm/yyyy"
+													data-provide="datepicker" data-date-format="dd/mm/yyyy"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="taskRevisionTabChanged()" onkeyup="taskRevisionTabChanged()">
+													<span
+													class="input-group-addon pointer"
+													onclick="$('#rNeededCompletionDate').datepicker('show')"
+													>
+													<i class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="rExpectedCompletionDate">Expected Completion Date</label>
+										<div class="col-md-3">
+											<div class="input-group">
+												<input id="rExpectedCompletionDate" name="rExpectedCompletionDate"
+													class="form-control" placeholder="dd/mm/yyyy"
+													data-provide="datepicker" data-date-format="dd/mm/yyyy"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="taskRevisionTabChanged()" onkeyup="taskRevisionTabChanged()">
+													<span
+													class="input-group-addon pointer"
+													onclick="$('#rExpectedCompletionDate').datepicker('show')"
+													>
+													<i class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>									
+			   					    	
+								</div>
+
+								
+							</fieldset>
+						</form>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default"
+						type="button">Cancel</button>
+					<button class="btn btn-sm btn-primary" type="button" id="blouSaveTaskRevisionTabButton" 
+						onclick="saveTaskRevision()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- taskRevisionDialog: End -->
+
+
+
+	<!-- taskSubmissionDialog: Start -->
+	<div class="modal fade" id="taskSubmissionDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="taskSubmissionDialogLabel" aria-hidden="true">
+		<div  class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Task Submission</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+
+						<form onsubmit="return false" class="form-horizontal">
+
+
+							<fieldset>
+
+								
+								<div class="panel-content">
+								
+								
+									<div class="row" hidden="hidden" id="taskSubmissionAndRevIdDiv"> <!-- wysHiddenGoed-->
+										<label class="col-md-2 col-form-label" for="sTaskSubmissionId">Task Submission ID</label>  <!-- hidden="hidden"-->
+										<div class="col-md-2">
+											<input type="text" id="sTaskSubmissionId" class="form-control"  placeholder="sTaskSubmissionId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+										</div>
+										<label class="col-md-2 col-form-label" for="sTaskRevisionId">Task Revision ID</label>  <!-- hidden="hidden"-->
+										<div class="col-md-2">
+											<input type="text" id="sTaskRevisionId" class="form-control"  placeholder="sTaskRevisionId" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+										</div>
+									</div>									
+
+
+																	
+									
+
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="sSubmissionNumber">Submission Number</label>
+										<div class="col-md-2">
+											<input type="text" id="sSubmissionNumber"
+												class="form-control" placeholder="Submission Number" readonly>
+										</div>
+									</div>																				
+
+
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="sSubmissionDate">Submission Date</label>
+										<div class="col-md-3">
+											<div class="input-group">
+												<input id="sSubmissionDate" name="sSubmissionDate"
+													class="form-control" placeholder="dd/mm/yyyy"
+													data-provide="datepicker" data-date-format="dd/mm/yyyy"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked" readonly>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="sComment">Comment</label>
+										<div class="col-md-6">
+											<input type="text" id="sComment"
+												class="form-control" placeholder="Comment" readonly>
+										</div>
+									</div>	
+									
+									<div class="row">
+										<div class="offset-md-2 col-md-4">
+											<input type="checkbox" id="sAccept" onclick="sAcceptClicked()"> 
+											<label class="col-form-label" for="sAccept">Accept</label>
+										</div>
+										
+										<div hidden="hidden" id="sAcceptedflagLabel"> <!-- wysHiddenGoed-->
+											<label class="col-md-2 col-form-label" for="sAcceptedFlag">Acceptedflag</label>  <!-- hidden="hidden"-->
+											<div class="col-md-4">
+												<input type="text" id="sAcceptedflag" class="form-control" placeholder="sAcceptedflag" readonly style="border-color: black; border: 1px; background-color: #ffff99 !important; color:Black; height: 20px;" height="36">
+											</div>
+
+										</div>	
+									</div>	
+									<div class="row">
+										<div class="offset-md-2 col-md-4">
+											<input type="checkbox" id="sReject" onclick="sRejectClicked()"> 
+											<label class="col-form-label" for="sReject">Reject</label>
+										</div>
+									</div>	
+
+									
+									
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="sFeedback">Feedback</label>
+										<div class="col-md-6">
+											<input type="text" id="sFeedback"
+												class="form-control" placeholder="Feedback" onkeyup="taskSubmissionTabChanged()">
+										</div>
+									</div>										
+								
+								</div>
+
+							</fieldset>
+						</form>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default"
+						type="button">Cancel</button>
+					<button class="btn btn-sm btn-primary" type="button" id="blouSaveTaskSubmissionTabButton" 
+						onclick="saveTaskSubmission()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- taskSubmissionDialog: End -->
+
+
+
+
+
+
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript"
+		th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript"
+		th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+
+	<!-- custom select -->
+	<script type="text/javascript"
+		th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<script type="text/javascript" th:src="@{js/tree.jquery.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/filemanager.js}"></script>
+
+	<!-- Start: temporary Javascript files for charts -->
+	<script type="text/javascript" th:src="@{js/sparkline-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/easy-pie-chart.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-jvectormap-1.2.2.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-jvectormap-world-mill-en.js}"></script>
+	<script type="text/javascript" th:src="@{js/xcharts.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.autosize.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.placeholder.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/gdp-data.js}"></script>
+	<script type="text/javascript" th:src="@{js/morris.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/sparklines.js}"></script>
+	<script type="text/javascript" th:src="@{js/charts.js}"></script>
+	<!-- End: temporary Javascript files for charts -->
+
+	<script type="text/javascript" th:src="@{ignite/js/task-manager/dialogs/assignment.js}"></script>
+
+
+</body>
+
+</html>

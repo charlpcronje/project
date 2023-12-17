@@ -1,0 +1,492 @@
+/* fixes a problem where opening a submenu changes all carets.  So we make it the same regardless of state */
+
+.arrow_carrot-down:before {
+	content: "\35" !important;
+}    
+
+.length-label {
+	font-weight: normal;
+}
+
+.length-select {
+	width: 80px !important;
+}
+
+
+@media (min-width: 992px) {
+  .modal-massive {
+    max-width: 98% !important;
+    width: 98% !important;
+  }
+}
+
+/* Data tables */
+.dt-left {
+	text-align: left;	
+}
+.dt-center {
+	text-align: center;	
+}
+.dt-right {
+	text-align: right;	
+}
+
+.dataTables_scrollBody table tbody tr.selected {
+	background-color: #99acbd;
+}
+
+.dataTables_scrollBody table tbody tr.selected:hover {
+	background-color: #b0c0cf;
+}
+
+.table thead > tr > th {
+	background-color: #dae2e7 !important;
+}
+
+
+.light-yellow {
+    background-color: #FFFF99 !important;
+}
+
+
+table.dataTable tbody tr.selected, table.dataTable tbody th.selected, table.dataTable tbody td.selected  {
+	background-color: red !important;
+	color: inherit !important;
+	vertical-align: top;
+}
+
+.table-striped > tbody > tr.selected:nth-child(odd) > td,
+.table-striped > tbody > tr.selected:nth-child(odd) > th,
+.table-striped > tbody > tr.selected:nth-child(even) > td,
+.table-striped > tbody > tr.selected:nth-child(even) > th {
+	background-color: #9ab0be !important;
+	color: inherit !important;
+	vertical-align: top;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+	background-color: #ffffff;
+	vertical-align: top;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+	background-color: #f9f9f9;
+	vertical-align: top;
+}
+
+.dataTables_length {
+	display: inline !important;
+}
+
+.dt-buttons {
+	display: inline !important;
+}
+
+.dataTables_info {
+	display: inline !important;
+}
+
+.dataTables_paginate {
+	float: right;
+	width: 50%;
+}
+
+.dataTables_length, .dataTables_filter {
+	padding: 0px !important;
+}
+
+.btn {
+	min-height: 34px !important;
+	min-width: 34px !important;
+	margin-right: 1px !important;
+}
+
+.btn:hover {
+	background-color: #cdcdcd !important;
+}
+
+.btn-toolbar {
+	background-color: #fafafa;
+	border: 1px solid #cccccc;
+	border-radius: 4px 4px 4px 4px !important;
+	margin-left: 2px;
+	padding: 6px
+}
+
+.btn-toolbar-slim {
+	padding: 0px	
+}
+
+.btn-spacer {
+	pointer: default !important;
+	
+	min-width: 2px !important;
+	width: 2px !important;
+	background-color: inherit !important;
+	border: 0px solid #ffffff !important;
+	
+	padding-left: 0px;
+	padding-right: 0px;
+	
+	border: 0px solid inherit !important;
+	background-color: transparent !important;
+}
+
+.btn-spacer:hover {
+	pointer: default !important;
+	
+	background-color: inherit !important;
+	border: 0px solid inherit !important;
+}
+
+.panel-body .btn-toolbar {
+	background-color: #fefefe;
+	border: 0px;	
+}
+
+.document-manager {
+	font-size: 18pt;
+	color: #777777;
+}
+
+.modal-lg {
+	max-width:90% !important;
+	width: 60% !important;
+}
+
+.modal-lg90 {
+	max-width:90% !important;
+	width: 90% !important;
+}
+
+.modal-lg80 {
+	max-width:90% !important;
+	width: 80% !important;
+}
+
+.modal-lg70 {
+	max-width:90% !important;
+	width: 70% !important;
+}
+
+
+.modal-med50 {
+	max-width:60% !important;
+	width: 50% !important;
+}
+
+.modal-med40 {
+	max-width:60% !important;
+	width: 40% !important;
+}
+
+.modal-med30 {
+	max-width:60% !important;
+	width: 30% !important;
+}
+
+
+.modal-dialog {
+	position: static;
+	background-image: url="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y29mZmVlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60";
+	background-size: cover;
+}
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+
+.fixed-dialog-body {
+	height: calc(90vh - 160px) !important;
+    max-height: calc(90vh - 160px) !important;
+    overflow-y: auto;
+}
+
+.fixed-dialog-footer {
+	/*position: absolute;*/
+    bottom: 0px;
+	right: 0px;
+	width: 100%;
+}
+
+.tab-pane {
+	height: 100%;
+}
+
+.h4-titlebar {
+	margin-bottom: 0px;
+	padding: 0px;
+}
+
+ul.nav.nav-tabs {
+
+}
+
+ul.nav.nav-tabs li {
+	border-bottom: 1px solid #eeeeee;
+	border-radius: 10px 10px 0px 0px !important;
+	padding-right: 2px;
+}
+
+ul.nav.nav-tabs li.active {
+	color: #eeeeee;
+	background-color: transparent !important;
+}
+
+ul.nav.nav-tabs li.active a {
+	color: #eeeeee;
+	background-color: #2e3b46 !important;
+}
+
+ul.nav.nav-tabs a {
+	color: #eeeeee;
+	background-color: #718aa4 !important;
+}
+	
+ul.nav.nav-tabs a:hover {
+	color: #eeeeee;
+	background-color: #394a59 !important;
+}
+
+.panel {
+	background-color: transparent !important;
+}
+
+.panel-heading {
+	padding: 6px 2px;
+}
+
+.panel-body {
+	background-color: #ffffff;
+	border: 1px #bec8d7 solid;
+	width: 100%;
+}
+
+.open-panel-body {
+	background-color: #ffffff;
+	width: 100%;
+}
+
+.form-horizontal .form-group {
+	margin-bottom: 0px;
+	padding-bottom: 6px;
+}
+
+.notificationBar {
+	display: inline;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: default !important;
+    background-color: #e3e3e3 !important;
+    border: 0px;
+}
+
+div.dataTables_wrapper div.dataTables_processing {
+	background-color: rgb(80, 80, 80);
+	color: #eeeeee;
+}
+
+hr.divider {
+	width: 100%;
+	border-top: 1px solid #ced4da !important;
+	border-bottom: 0px;
+}
+
+.info-success {
+	color: #4cd964;
+}
+
+.info-danger {
+	color: #ff2d55;
+}
+
+.lite-fade {
+	text-transform: none !important;
+	opacity: 0.4 !important;
+	font-size: 12px;
+}
+
+ul.jqtree-tree .jqtree-title {
+	margin-left: 0px;
+}
+
+.jqtree-icon {
+	color: #717176;
+	margin-left: 6px;
+}
+
+.jqtree-title-icon {
+	color: #717176;
+	margin-left: 6px;
+	margin-right: 2px;
+	width:20px;
+	overflow: hidden;
+}
+
+.badge {
+	margin-left: 4px !important;	
+}
+
+.badge-right {
+	position: absolute;
+	right: 6px;
+	top: 3px;
+	font-size: 75%;
+}
+
+.badge-empty {
+	height:10px !important; 
+	width:10px !important; 
+	min-height:10px !important; 
+	min-width:10px !important;
+	
+	margin-left: 4px !important;
+}
+
+.badge-right {
+	float: right !important;
+    position: absolute;
+    right: 10px;	
+}
+
+/* *************************************************************************************** */
+/* Toast                                                                                   */
+/* *************************************************************************************** */
+ 
+ .toast {
+	position: fixed; 
+	top: 70px; 
+	right: 26px;
+	
+	font-size: 9pt;
+	
+	min-height: 80px;
+	min-width: 250px;
+	
+	background-color: #fefefe;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+
+    -moz-box-shadow: 4px 4px 10px 1px #cccccc;
+    -webkit-box-shadow: 4px 4px 10px 1px #cccccc;
+    box-shadow: 4px 4px 10px 1px #cccccc;
+ }
+ 
+ .toast-header {
+	padding: 0px 14px 0px 14px;
+ 	font-weight: bold;
+ 	color: #6c757d;
+    border-bottom: 1px solid #e9ecef;
+ }
+ 
+ .toast-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+
+ .toast-title {
+	margin-bottom: 0;
+    line-height: 2.5;
+}
+ 
+.toast-body {
+ 	color: #6c757d;
+	padding: 14px;
+}
+
+
+/* *************************************************************************************** */
+/* Calendar                                                                                   */
+/* *************************************************************************************** */
+	
+div.publicHolidayBackground {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+div.publicHolidayBackground:before {
+	position: absolute;
+	font-family: 'Font Awesome 5 Free';
+	font-size: 26px;
+	font-weight: 100;
+	color: rgb(104, 138,126, 0.4);
+	bottom: 44px;
+	left: 24px;
+	content: "\f133"; 
+}
+
+
+/* *************************************************************************************** */
+/*  Ingrid het hierdie bygesit vir d3                                                      */
+/* *************************************************************************************** */
+
+path {
+	fill: none;
+	stroke: black;
+}
+
+.node circle {
+  fill: #999;
+}
+
+.node text {
+  font: 10px sans-serif;
+}
+
+.node--internal circle {
+  fill: #555;
+}
+
+.node--internal text {
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+.link {
+  fill: black;
+  stroke: black;
+  stroke-opacity: 0.4;
+  stroke-width: 1.5px;
+}
+
+.disabled {
+	pointer-events: none;
+}
+
+ .input-group-append {
+	display: table-cell !important;
+}
+
+.input-group-text {
+	border-top-right-radius: 4px !important;
+	border-bottom-right-radius: 4px !important;
+	border-left-width: 0px !important;
+}
+
+.thin-row {
+	padding-top:0px;
+	padding-bottom:0px;
+}
+
+.menuLink {
+	height: 100%;
+}
+
+.menuSpan {
+	height: 100%;
+	vertical-align:top;
+}
+
+.menuIcon {
+	padding-top: 3px;
+}
+
+

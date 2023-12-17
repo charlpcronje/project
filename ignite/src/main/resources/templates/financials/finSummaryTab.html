@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="finSummaryTab" th:remove="tag">
+
+		<div id="finSummaryTab" class="tab-pane active">
+			<form id="finSummaryTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+					<div class="panel-content">
+						<div class="row btn-toolbar">
+							<span id="__igdev_finSummaryTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp;--finSummaryTab--</span>
+							</span>							
+						</div>
+						<div class="row">
+							<label class="col-md-2 col-form-label" for="epSystemName">System Name *</label>
+								<div class="col-md-3">
+									<input type="text" id="epSystemName" class="form-control" readonly>
+								</div>
+						
+							<label class="col-md-1 col-form-label">Type *</label>
+							<div class="col-md-2">
+									<input type="text" id="finParticipantType" class="form-control" readonly>
+							</div>
+						</div>
+
+						<!-- finInfoPanel -->
+						<div id="finInfoPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="finInvoicesToIssue">Invoices to be issued</label>
+								<div class="col-md-2">
+									<input type="text" id="finInvoicesToIssue" class="form-control" readonly>
+								</div>
+								<label class="col-md-2 col-form-label" for="finPaymentsReceived">Actual Payments received</label>
+								<div class="col-md-2">
+									<input type="text" id="finPaymentsReceived" class="form-control" readonly>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="finInvoicesReceivable">Invoices receivable</label>
+								<div class="col-md-2">
+									<input type="text" id="finInvoicesReceivable" class="form-control" readonly>
+								</div>
+								<label class="col-md-2 col-form-label" for="finPaymentsReceived">Actual Payments made</label>
+								<div class="col-md-2">
+									<input type="text" id="finPaymentsReceived" class="form-control" readonly>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="finNetIncomeTheory">Net Income (in theory)</label>
+								<div class="col-md-2">
+									<input id="finNetIncomeTheory" type="text" class="form-control" readonly>
+								</div>
+								<label class="col-md-2 col-form-label" for="finNetIncomeActual">Net Income (actual)</label>
+								<div class="col-md-2">
+									<input id="finNetIncomeActual" type="text" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+
+						<!-- epIndividualInfoPanel -->
+						<div id="epIndividualInfoPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="eIndFirstName">First Name</label>
+								<div class="col-md-2">
+									<input type="text" id="eIndFirstName" class="form-control" readonly>
+								</div>
+								<label class="col-md-2 col-form-label" for="eIndLastName">Last Name</label>
+								<div class="col-md-3">
+									<input type="text" id="eIndLastName" class="form-control" readonly>
+								</div>
+								<label class="col-md-1 col-form-label" for="eIndInitials">Initials</label>
+								<div class="col-md-1">
+									<input type="text" id="eIndInitials" class="form-control" readonly>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="eIndIdNumber">ID Number</label>
+								<div class="col-md-3">
+									<input id="eIndIdNumber" type="text" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+
+						<!-- epParticipantInfoPanel -->
+						<div id="epParticipantInfoPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epTradingName">Trading As *</label>
+								<div class="col-md-4">
+									<input id="epTradingName" type="text" class="form-control" readonly>
+								</div>
+
+								<label class="col-md-1 col-form-label"
+									for="epRegistrationNumber">Registration #</label>
+								<div class="col-md-2">
+									<input id="epRegistrationNumber" type="text" class="form-control" readonly>
+								</div>
+								<label class="col-md-1 col-form-label" for="epVATNumber">VAT #</label>
+								<div class="col-md-2">
+									<input id="epVATNumber" type="text" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+
+						<!-- epOverlapInfoPanel -->
+						<div id="epOverlapInfoPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epEmailAddress">Email</label>
+								<div class="col-md-4">
+									<input id="epEmailAddress" type="text" class="form-control" readonly>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epParticipantBankDetailsDefault">Bank Details (default)</label>
+								<div class="col-md-10">
+									<input type="text" id="epParticipantBankDetailsDefault" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
+		<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+		<script type="text/javascript"
+			th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+		<script type="text/javascript" th:src="@{ignite/js/financials/finSummaryTab.js}"></script>
+		
+		
+		 
+	</div>
+
+</body>
+</html>		

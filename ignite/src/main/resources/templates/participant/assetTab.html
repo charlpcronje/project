@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="assetTab" th:remove="tag">
+
+		<div id="assetsTab" class="tab-pane">
+			<form id="epAssetsTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset></fieldset>
+			</form>
+
+			<div class="row">
+			</div>
+			<div class="row">
+
+					<div class="col-md-2">
+						<h5>Date Range:</h5>
+					</div>
+					<div class="col-md-2">
+						<input type="text" id="aAssetStartDate" data-date-format="yyyy-mm-dd"
+							class="form-control" placeholder="yyyy-mm-dd" disabled>
+					</div>
+					<div class="col-md-2">
+							<input type="text" id="aAssetEndDate" data-date-format="yyyy-mm-dd"
+							class="form-control" placeholder="yyyy-mm-dd" disabled>
+					</div>
+					<button id = "selectNewDateRangeAssetButton" type="button" class="btn btn-sm btn-primary" title = "Change Date Range"
+							onclick="selectNewAssetDateRange()"> ...
+					</button>		
+					
+					<span id="__igdev_assetTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+						<span style="font-size: 90%; height: 16px">&nbsp;--assetTab-- &nbsp;&nbsp;&nbsp;table:participantAssetsTable</span>
+					</span>
+
+			</div>
+
+			<!-- Participant Assets Table -- Start -->
+			<div class="row">
+				<div class="col-md-12">
+					<table id="participantAssetsTable"
+						class="table table-striped table-advance table-hover"
+						style="width: 100%">
+						<thead>
+							<tr>
+
+								<th>AssetId</th>      			<!-- 				0		AssetId  --> 
+								<th>AssetTypeId</th>      	<!-- 				1		AssetTypeId  -->
+								<th>Asset Type</th>      		<!-- 				2		AssetTypeId  --> 
+								<th>AssetConditionId</th>      <!-- 				3		AssetConditionId  --> 
+								<th>Condition</th>      		<!-- 				4		AssetConditionId  --> 
+								<th>AssetStatusId</th>     	 <!-- 				5		AssetStatusId  --> 
+								<th>Status</th>     	 		<!-- 				6		AssetStatusId  --> 
+								<th>ParticipantIdOriginalOwner</th>      <!-- 		7		ParticipantIdOriginalOwner  --> 
+								<th>Original Owner</th>      	<!-- 				8		ParticipantId.SystemName  -->
+								<th>ParticipantIdCurrentOwner</th>      <!-- 		9		ParticipantIdCurrentOwner  --> 
+								<th>Current Owner</th>      	<!-- 				10		ParticipantId.SystemName  -->
+								<th>ParticipantIdSponsor</th>      		<!-- 		11		ParticipantIdSponsor  --> 
+								<th>Sponsor</th>      			<!-- 				12		ParticipantId.SystemName  -->
+								<th>ParticipantIdSoldTo</th>      <!-- 				13		ParticipantIdSoldTo  --> 
+								<th>Sold To</th>      			<!-- 				14		ParticipantId.SystemName  -->
+								<th>VehicleId</th>      		<!-- 				15		VehicleId  --> 
+								<th>Vehicle</th>      			<!-- 				16		Vehicle.Name  -->
+								<th>Reg#</th>     				 <!-- 				17		Vehicle.LicenceNumber  -->
+								<th>ParticipantOfficeIdLocation</th>      <!-- 		18		ParticipantOfficeIdLocation  --> 
+								<th>Office</th>      			<!-- 				19		ParticipantOffice.Name  -->
+								<th>AssetNumber</th>      		<!-- 				20		AssetNumber  --> 
+								<th>Description</th>      		<!-- 				21		Description  --> 
+								<th>BrandOrMake</th>      		<!-- 				22		BrandOrMake  --> 
+								<th>Serial Number</th>      		<!-- 				23		SerialNumber  --> 
+								<th>ParticipantRightOfUse</th>      <!--			24		ParticipantRightOfUse  -->
+								
+								<th>Purchase Amount</th>      	<!-- 				25		PurchaseAmount  --> 
+								<th>GuaranteePeriodEnd</th>      <!-- 				26		GuaranteePeriodEnd  --> 
+								
+								<th>Asset Acquired</th>      	<!-- 				27		AssetAquiredDate  --> 
+								<th>OwnershipToSponsorDate</th>      	<!-- 		28		OwnershipToSponsorDate  --> 
+								<th>Asset Removed</th>      	<!-- 				29		AssetRemovedDate  --> 
+								<th>Asset Sold Amount</th>      	<!--				30		AssetSoldAmount  -->
+								
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		
+		<!-- Participant Assets Table -- End -->
+		
+			<div class="row">
+				<div class="col-md-12">
+					<br><br><br><br>
+				</div>
+			</div>	
+			
+			<!-- Asset User Table -- Start -->
+			<div class="row tab-pane">
+				<div class="col-md-12">
+					<div id="emptyAssetUserTablePanel" style="display: block">
+						<p style="text-align: center; color: #777777">
+							<br> <br> <br> <br> Please select an Asset.
+						</p>
+					</div>
+					<div id="assetUserTablePanel" style="display: none">
+						<h4 class="modal-title" style="display: inline-block">Asset Users</h4>
+						<table id="assetUserTable"
+							class="table table-striped table-advance table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+		
+									<th>Asset User ID</th>      					
+									<th>Asset ID</th>
+									<th>Participant ID</th>
+									<th>System Name</th>
+									<th>First Name</th>
+									<th>Initials</th>
+									<th>Last Name</th>
+									<th>Description</th>
+									<th>Last Update Timestamp</th>
+									<th>Last Update Username</th>      					 
+									
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>	
+			<!-- Asset User Table -- End -->	
+			
+			<!-- Asset User Dialog -- Start -->
+			<div class="modal fade" id="assetUserDialog" tabindex="-1"
+				role="dialog" data-backdrop="static"
+				aria-labelledby="parameterDialogLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" style="display: inline-block">Asset User</h4>
+							<span id="__igdev_assetUserDialogFormLabel"
+								style="display: inline-block; background-color: #ffff99 !important; color: Black"
+								hidden="hidden">
+								<span style="font-size: 90%; height: 16px">&nbsp;
+									--assetUserDialog--</span>
+								</span>
+								<button type="button" class="close"
+									onclick="closeAssetUserDialog()" aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">
+							<section class="panel">
+								<form onsubmit="return false" class="form-horizontal">
+									<fieldset>
+										<div id="patDlgErrorDiv" style="display: none"></div>
+										
+										<div class="row col-md-12" id="pvIdRowLabels">
+											<label for="patAssetId" class="col-md-2 col-form-label">Asset ID</label>
+											<label for="patAssetUserId" class="col-md-2 col-form-label">Asset User ID</label>
+											<label for="patParticipantId" class="col-md-2 col-form-label">Participant ID</label>
+										</div>
+										<div id="pvDlgErrorDiv" style="display: none"></div>
+										<div class="row col-md-12" id="pvIdRow">
+											<input id="patAssetId" readonly>
+											<input id="patAssetUserId" readonly>
+											<input id="patParticipantId" readonly>
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="patAssetTypeName">Asset Type *</label><br>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input type="text"  id="patAssetTypeName" readonly class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="patAssetCurrentOwner">Current Owner *</label><br>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input type="text"  id="patAssetCurrentOwner" readonly class="form-control">
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="patAssetUserName">Asset User *</label>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input type="text" id="patAssetUserName" class="form-control" readonly>
+													<span class="input-group-addon pointer"
+														id="patUserAssetDescriptionBinos"
+														onclick="selectAssetUser('patParticipantId', 'patAssetUserName')">
+														<i class="fas fa-binoculars"></i>
+														</span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-md-2 cold-form-label" for="patAssetUserDescription">Description</label>
+											<div class="col-md-9">
+												<div class="input-group">
+													<input type="text" id="patAssetUserDescription" onkeyup="assetUserDialogChanged()" class="form-control">
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							</section>
+						</div>
+						<div class="modal-footer">
+							<button onclick="closeAssetUserDialog()"
+								class="btn btn-sm btn-default" type="button">Cancel</button>
+							<button id="saveAssetUserDialogButton"
+								class="btn btn-sm btn-primary" type="button"
+								onclick="saveAssetUserDialog()">Save</button>
+						</div>
+					</div>
+				</div>
+			</div> 
+					
+
+		<!-- assetDialog: Start -->
+		<div class="modal fade" id="assetDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg80">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Asset</h4>
+						
+						<span id="__igdev_assetDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--assetDialog--</span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aAssetId</span><input readonly id="aAssetId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aVehicleId</span><input readonly id="aVehicleId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aParticipantIdOriginalOwner</span><input readonly id="aParticipantIdOriginalOwner" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>						
+					
+						<button type="button" class="close"
+							onclick="closeAssetDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="aAssetDlgErrorDiv" style="display: none"></div>
+	
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="aAssetTypeId">Asset Type *</label>
+										<div class="col-md-4">
+											<select id="aAssetTypeId" class="form-control"></select>
+										</div>
+										<label class="col-md-2 col-form-label"	for="aParticipantIdOriginalOwnerName">Original Owner *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="aParticipantIdOriginalOwnerName" readonly class="form-control" onchange="assetDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdOriginalOwner()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									
+									</div>	
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="aAssetConditionId">Asset Condition *</label>
+										<div class="col-md-4">
+											<select id="aAssetConditionId" class="form-control"
+												onchange="assetDialogChanged()"></select>
+										</div>
+										<label class="col-md-2 col-form-label"	for="aParticipantIdCurrentOwnerName">Current Owner *</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="aParticipantIdCurrentOwnerName" readonly class="form-control" onchange="assetDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdCurrentOwner()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+										
+									</div>	
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="aAssetStatusId">Asset Status *</label>
+										<div class="col-md-4">
+											<select id="aAssetStatusId" class="form-control"
+												onchange="assetDialogChanged()"></select>
+										</div>
+										<label class="col-md-2 col-form-label"	for="aParticipantIdSponsorName">Sponsor</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="aParticipantIdSponsorName" readonly class="form-control" onchange="assetDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdSponsor()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+										
+									</div>									
+									<div class="row">
+										<label class="col-md-2 col-form-label"	for="aParticipantOfficeIdLocationName">Office Location</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="aParticipantOfficeIdLocationName" readonly class="form-control" onchange="assetDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantOfficeIdLocation()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-md-2 col-form-label"	for="aParticipantIdSoldToName">Sold To</label>
+										<div class="col-md-4">
+											<div class="input-group">
+												<input type="text" id="aParticipantIdSoldToName" readonly class="form-control" onchange="assetDialogChanged()"> 
+												<span class="input-group-addon pointer" onclick="editSelectParticipantIdSoldTo()"> 
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									</div>			
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="aAssetAquiredDate">Asset Acquired Date *</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="aAssetAquiredDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="assetDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#aAssetAquiredDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-md-2 col-form-label" for="aOwnershipToSponsorDate">Ownership To Sponsor</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="aOwnershipToSponsorDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="assetDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#aOwnershipToSponsorDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="aAssetRemovedDate">Asset Removed Date</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="aAssetRemovedDate" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="assetDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#aAssetRemovedDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+	
+								</fieldset>
+											
+								
+								<fieldset id="aAssetDetails">
+								
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="aAssetNumber">Asset Number *</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input type="text"  id="aAssetNumber" readonly
+													class="form-control" onchange="assetDialogChanged()"> 
+												<span class="input-group-addon pointer" id="aAssetNumberButton" onclick="getNextAssetNumber()">
+													<i class="fas fa-hashtag"></i>
+												</span>
+											</div>
+										</div>									
+										<label class="col-md-2 col-form-label" for="aBrandOrMake">Brand/Make</label>
+										<div class="col-md-2">
+											<input type="text" id="aBrandOrMake" maxlength=255
+												class="form-control" placeholder="Brand/Make"
+												onkeyup="assetDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="aSerialNumber">Serial Number</label>
+										<div class="col-md-2">
+											<input type="text" id="aSerialNumber" maxlength=255
+												class="form-control" placeholder="Serial Number"
+												onkeyup="assetDialogChanged()">
+										</div>
+									</div>		
+									
+									<div class="row">
+										<label class="col-md-1 col-form-label" for="aDescription">Description *</label>
+										<div class="col-md-11">
+											<input type="text" id="aDescription" maxlength=255
+												class="form-control" placeholder="Description"
+												onkeyup="assetDialogChanged()">
+										</div>
+									</div>								
+															
+								</fieldset>
+								<fieldset>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="aPurchaseAmount">Purchase Amount</label>
+										<div class="col-md-2">
+											<input type="text" id="aPurchaseAmount" maxlength=15 onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control" placeholder="Purchase Amount"
+												onkeyup="assetDialogChanged()">
+										</div>
+	
+										<label class="col-md-2 col-form-label" for="aAssetSoldAmount">Asset Sold Amount</label>
+										<div class="col-md-2">
+											<input type="text" id="aAssetSoldAmount" maxlength=15 onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control" placeholder="Asset Sold Amount"
+												onkeyup="assetDialogChanged()">
+										</div>
+	
+										<label class="col-md-1 col-form-label" for="aParticipantRightOfUse">Right of Use</label>
+										<div class="col-md-3">
+											<input type="text" id="aParticipantRightOfUse" maxlength=10
+												class="form-control" placeholder="Right of Use"
+												onkeyup="assetDialogChanged()">
+										</div>
+									</div>									
+									
+
+	
+																	
+									</div>																	
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="aGuaranteePeriodEnd">Guarantee Period End</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="aGuaranteePeriodEnd" 
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="assetDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#aGuaranteePeriodEnd').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>	
+
+									<div class="row">
+										<span id="__igdev_assetIdsDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aParticipantIdCurrentOwner</span><input readonly id="aParticipantIdCurrentOwner" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aParticipantIdSponsor</span><input readonly id="aParticipantIdSponsor" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aParticipantIdSoldTo</span><input readonly id="aParticipantIdSoldTo" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;aParticipantOfficeIdLocation</span><input readonly id="aParticipantOfficeIdLocation" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>					
+									</div>
+									
+								</fieldset>
+							</form>
+						</section>
+					</div>
+						
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeAssetDialog()">Cancel</button>
+						<button id="saveAssetButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveAsset()">Save</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<!-- assetDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/participant/assetTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

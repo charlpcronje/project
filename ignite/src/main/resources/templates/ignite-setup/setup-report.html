@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf == null ? '' : _csrf.headerName}"/>
+
+	<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+	<title>Ignite: Setup Reports</title>
+	<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+	
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	
+	<!-- bootstrap datatables -->
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/datatables/bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+	
+	<!-- bootstrap theme -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap-theme.css}">
+	
+	<!-- font icon -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/elegant-icons-style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{font-awesome/6.4.2/css/all.min.css}">
+	
+	<!-- full calendar css-->
+	<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+	
+	<!-- easy pie chart-->
+	<link rel="stylesheet" type="text/css" th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}" media="screen">
+	
+	<!-- owl carousel -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/jquery-jvectormap-1.2.2.css}">
+	
+	<!-- Custom styles -->
+	<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/style-responsive.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/jquery-ui-1.10.4.min.css}">
+	
+	<!-- Ignite -->
+	<link rel="stylesheet" type="text/css" th:href="@{ignite/css/ignite.css}">
+</head>
+<body>
+	
+	<script th:inline="text">
+		var _igModel = {
+			username : "[[${igUsername}]]",
+			avatar : "[[${igUserAvatar}]]"
+		};
+	</script>
+
+	<!-- container section start -->
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav">
+				<div class="icon-reorder tooltips"
+					data-original-title="Toggle Navigation" 
+					data-placement="bottom"
+					onclick="toggleSidebar()">
+					<i class="icon_menu"></i>
+				</div>
+			</div>
+
+			<!--logo start-->
+			<div id="headerLogo" style="display:inline"></div>
+			<!--logo end-->
+
+			<div class="top-nav notification-row">
+				<profile-menu th:replace="fragments/profile-menu :: profile-menu"></profile-menu>
+			</div>
+		</header>
+		<!--header end-->
+
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<sidebar-menu th:replace="fragments/sidebar-menu :: sidebar-menu"></sidebar-menu>
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!--overview start-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h4>
+							<i class="fa fa-book"></i> Setup: Reports
+						</h4>
+
+						<header class="panel-heading tab-bg-info">
+			            	<ul class="nav nav-tabs">
+			                  <li class="active"><a data-toggle="tab" href="#reportTab">Reports</a></li>
+			                  <li><a data-toggle="tab" href="#fileManagerTab">File Manager</a></li>
+			                </ul>
+			            </header>
+						<div class="panel-body">
+							<div class="tab-content">
+								<div id="reportTab" class="tab-pane active">
+									<table id="reportTable" class="table table-striped table-advance table-hover" style="width:100%">
+										<thead>
+											<tr>
+												<th>Id</th>
+												<th>Filename</th>
+												<th>Name</th>
+												<th>Description</th>
+												<th>Required Permission</th>
+												<th>Allow Excel Export</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<div id="fileManagerTab" class="tab-pane">
+									<div id="fileManagerPanel"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+			<div class="text-right"></div>
+		</section>
+		<!--main content end-->
+	</section>
+	<!-- container section end -->
+
+	<!-- Start: reportUploadDialog -->
+	<div id="fileManagerUploadDialog" class="modal fade" role="dialog" data-backdrop="static">
+	
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<h4 class="modal-title">Upload</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>    
+				</div>
+				
+				<iframe name="ruUploadDialogIframe" id="ruUploadDialogIframe" style="display: none"></iframe>
+				
+				<form id="uploadReportForm"
+				      method="POST"
+					  th:action="@{/file-manager/report/upload} + '?' + ${_csrf == null ? '' : _csrf.parameterName} + '=' + ${_csrf == null ? '' : _csrf.token}"				      
+				      enctype="multipart/form-data"
+				      target="ruUploadDialogIframe"
+					  >
+					<fieldset>
+					
+						<input type="hidden" id="ruDlgDirectory" name="ruDlgDirectory">
+						
+						<div class="modal-body">
+							<div class="row">
+								<label class="col-md-3 col-form-label" for="ruDlgUploadFileInput">File</label>
+								<div class="col-md-8" style="padding-left: 0px !important">
+									<div class="input-group">
+										<input id="ruDlgUploadFileInput" type="text" class="form-control input-sm" readonly>
+										<span class="input-group-addon pointer" onclick="fileManagerSelectUploadFile('ruDlgUploadFile')">
+											<i class="fas fa-folder-open"></i>
+											<input id="ruDlgUploadFile" name="ruDlgUploadFile" type="file" style="display:none;">
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button data-dismiss="modal" class="btn btn-sm btn-default" type="button">Cancel</button>
+							<button type="submit" class="btn btn-sm btn-primary">Upload</button>
+						</div>
+
+					</fieldset>
+				</form>						
+					
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- reportUploadDialog -->
+
+	<!-- reportDialog: Start -->
+	<div class="modal fade" id="reportDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="reportDialogLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Report Detail</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+	      		<div class="modal-body fixed-dialog-body">
+
+					<div class="panel-body">
+					
+						<div class="tab-content">
+								            
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="rDlgErrorDiv" style="display: none"></div>
+							    	
+							    	<input type="hidden" id="rDlgReportId">
+							    	<input type="hidden" id="rDlgFileExistsInd">
+							    	
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rDlgReportFilename">Filename</label>
+										<div class="col-md-4">
+											<div class="form-group">
+												<input type="text" id="rDlgReportFilename" class="form-control">
+											</div>
+										</div>
+										<p class="col-md-5">*excluding extension</p>
+							    	</div>
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rDlgReportName">Name</label>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input type="text" id="rDlgReportName" class="form-control">
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rDlgReportDescription">Description</label>
+										<div class="col-md-8">
+											<div class="form-group"> 
+												<input type="text" id="rDlgReportDescription" class="form-control">
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rDlgPermissionCodeRequired">Required Permission</label>
+										<div class="col-md-8">
+											<div class="form-group">
+												<input type="text" id="rDlgPermissionCodeRequired" class="form-control">
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+										<div class="offset-md-3 col-md-5">
+											<div class="form-group">
+												<input type="checkbox" id="rDlgAllowExcelExportInd">
+									    		<label class="col-form-label" for="rDlgAllowExcelExportInd">Allow Export to Excel</label>
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+										<div class="offset-md-3 col-md-5">
+											<div class="form-group">
+												<input type="checkbox" id="rDlgActiveInd">
+									    		<label class="col-form-label" for="rDlgActiveInd">Active</label>
+											</div>
+										</div>
+							    	</div>
+							    </fieldset>
+						  	</form>
+	    				</div>
+	    			</div>
+	    		</div>
+	      		
+	      		<div class="modal-footer fixed-dialog-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default" type="button">Cancel</button>
+			        <button class="btn btn-sm btn-primary" type="button" onclick="saveReport()">Save</button>
+	      		</div>
+	    	</div>
+		</div>
+	</div>
+	<!-- reportDialog: End -->
+
+	<!-- reportParameterDialog: Start -->
+	<div class="modal fade" id="reportParameterDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="reportParameterDialogLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Report Parameters</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+	      		<div class="modal-body fixed-dialog-body">
+
+					<div class="panel-body">
+						<div class="tab-content">
+							<table id="reportParameterTable" class="table table-striped table-advance table-hover" style="width:100%">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>ReportId</th>
+										<th>Name</th>
+										<th>Label</th>
+										<th>Type</th>
+										<th>Select SQL</th>
+										<th>Order No</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>		            
+	    				</div>
+	    			</div>
+	    		</div>
+	      		
+	      		<div class="modal-footer fixed-dialog-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default" type="button">Close</button>
+	      		</div>
+	    	</div>
+		</div>
+	</div>
+	<!-- reportParameterDialog: End -->
+
+	<!-- reportParameterDetailDialog: Start -->
+	<div class="modal fade" id="reportParameterDetailDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="reportParameterDetailDialogLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Report Parameter Detail</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+	      		<div class="modal-body">
+
+					<div class="panel-body">
+					
+						<div class="tab-content">
+								            
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="rpDlgErrorDiv" style="display: none"></div>
+							    	
+							    	<input type="hidden" id="rpDlgReportParameterId">
+							    	<input type="hidden" id="rpDlgReportId">
+
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rpDlgParameterName">Name</label>
+										<div class="col-md-4">
+											<div class="form-group">
+												<input type="text" id="rpDlgParameterName" class="form-control">
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rpDlgParameterLabel">Label</label>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input type="text" id="rpDlgParameterLabel" class="form-control">
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rpDlgParameterType">Type</label>
+										<div class="col-md-4">
+											<div class="form-group">
+												<select id="rpDlgParameterType" class="form-control" onchange="updateParameterType()">
+													<option value="c">Checkbox</option>
+													<option value="d">Date input</option>
+													<option value="i">Text input</option>
+													<option value="n">Numeric input</option>
+													<option value="s">Select/Dropdown</option>
+												</select>
+											</div>
+										</div>
+							    	</div>
+							    	<div id="rpSelectSqlPanel" style="display:none" class="row">
+							    		<label class="col-md-3 col-form-label" for="rpDlgSelectSql">Select SQL</label>
+										<div class="col-md-9">
+											<div class="form-group">
+												<textarea id="rpDlgSelectSql" style="width: 100%; white-space: nowrap; overflow: auto; font-family: monospace;" rows=5 class="form-control"></textarea>
+											</div>
+										</div>
+							    	</div>
+							    	<div class="row">
+							    		<label class="col-md-3 col-form-label" for="rpDlgOrderNo">Order Number</label>
+										<div class="col-md-3">
+											<div class="form-group">
+												<input type="number" id="rpDlgOrderNo" class="form-control">
+											</div>
+										</div>
+							    	</div>
+							    </fieldset>
+						  	</form>
+	    				</div>
+	    			</div>
+	    		</div>
+	      		
+	      		<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-sm btn-default" type="button">Cancel</button>
+			        <button class="btn btn-sm btn-primary" type="button" onclick="saveReportParameter()">Save</button>
+	      		</div>
+	    	</div>
+		</div>
+	</div>
+	<!-- reportParameterDetailDialog: End -->
+
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript" th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript" th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript" th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript" th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript" th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+	
+	<!-- custom select -->
+	<script type="text/javascript" th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/filemanager.js}"></script>
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<script type="text/javascript" th:src="@{ignite/js/ignite-setup/setup-report.js}"></script>
+
+</body>
+</html>

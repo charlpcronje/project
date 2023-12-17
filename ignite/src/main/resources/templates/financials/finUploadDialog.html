@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+ 
+<head>
+</head>
+
+<body>
+	<div th:fragment="finUploadDialog" th:remove="tag">
+
+		<!-- Start: submitSourceFileDialog -->
+		<div id="fileUploadDialog" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+		
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<h4 class="modal-title">Submit</h4>
+						<button type="button" class="close" onclick="closeFileUploadDialog()">&times;</button>	        
+					</div>
+					
+					<iframe name="fileUploadDialogIframe" id="fileUploadDialogIframe" style="display: none"></iframe>
+					
+					<form th:method="POST" 
+						  th:action="@{/upload}"				      
+					      enctype="multipart/form-data" 
+					      target="fileUploadDialogIframe"
+					      id="fileUploadDialogForm"
+						 >
+						
+						<fieldset>
+						
+							<input type="hidden" id="fileDlgUploadType" name="fileDlgUploadType">
+							<input type="hidden" id="fileDlgPrimaryKey" name="fileDlgPrimaryKey">
+							<input type="hidden" id="fileDlgPrimaryKeyValue" name="fileDlgPrimaryKeyValue">
+							
+							<div class="modal-body">
+	
+								<div id="submissionErrorStateDiv" class="alert alert-danger" role="alert" style="display:none">
+									<table>
+										<tr>
+											<td width="50px" valign="top"><i class="fas fa-exclamation-triangle" style="font-size:28pt !important"></i></td>
+											<td valign="top" width="*">
+												<div id="errorMsgDiv"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="fileDlgFileDescription">Description</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<input id="fileDlgFileDescription" name="fileDlgFileDescription" type="text" class="form-control input-md" 
+														placeholder="description">
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="sDlgUploadFile">Upload file</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<input id="sDlgUploadFileInput" type="text" class="form-control input-md" placeholder="file" 
+													readonly onchange="fileUploadDialogChanged()">
+											<span class="input-group-addon input-group-text pointer" onclick="selectFile()">
+												<i class="fas fa-folder-open"></i>
+												
+											</span>
+											<input id="sDlgUploadFile" name="sDlgUploadFile" type="file" style="display:none;">
+										</div>
+									</div>
+								</div>
+							</div>
+	
+							<div class="modal-footer">
+								<button type="button" class="btn btn-sm" onclick="closeFileUploadDialog()">Cancel</button>
+								<button id="fileUploadFileImportButton" type="submit" 
+										class="btn btn-sm btn-primary">Import</button>
+							</div>
+	
+						</fieldset>
+					</form>						
+						
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- submitSourceFileDialog -->
+
+		<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+		<script type="text/javascript"
+			th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+<!-- 
+		<script type="text/javascript" th:src="@{ignite/js/expense/projectExpenseDialog.js}"></script>
+		
+		<script type="text/javascript" th:src="@{ignite/js/financials/finInvoiceInDialog.js}"></script> -->
+
+		<script type="text/javascript" th:src="@{ignite/js/financials/finUploadDialog.js}"></script>
+
+	
+		
+		
+		
+		
+
+	</div>
+
+</body>
+</html>		

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="timesheetTab" th:remove="tag">
+						
+		<div id="timesheetTab" class="tab-pane active">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+				<div class="panel-content">
+					<div class="row">
+						<div class="col-md-1">
+							<h5>Date Range:</h5>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="tStartDate" name="tStartDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#tStartDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="tEndDate" name="tEndDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#tEndDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+									
+								</span>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<button id = "btPurRefresh" class="btn btn-sm btn-primary" type="button"
+											onclick="refreshTimesheetTablesForDateRange()">Refresh</button>
+						</div>
+	
+						
+						
+						<!-- Total hours section -->
+						<div class="col-md-6 text-right" style="float: none !important;">
+						    <div class="input-group">
+								<h5 id="__igdev_tTimesheetTabFormLabel166539" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+									<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp; --timesheetTab-- &nbsp; &nbsp;</span>
+								</h5>    
+						        <span for="tTotalHoursDisplayed" style="margin-right: 10px;">Total hours</span>
+						        <input type="text" id="tTotalHoursDisplayed" class="form-control" readonly style="text-align: right; width: 80px">
+						    </div>
+						</div>
+
+
+							
+					</div>
+					
+				
+
+
+					
+					<!--  
+					<div class="row">
+						<div class="col-md-12">
+							<table id="timesheetSummaryTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%" title= "Timesheet Summary">
+								<thead>
+									<tr>
+										<th>participantIdIndividual</th>
+										<th>Top Level Participant</th>
+										<th>Project</th>
+										<th>Service Discipline and Role</th>
+										<th>Remuneration Type</th>
+										<th>Unit</th>
+										<th>Total Units</th>
+										<th>projectId</th>
+										<th>sdCode</th>
+										<th>sdRoleId</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					-->
+					<div class="row">
+						<div class="col-md-12">
+							<h4 style="display: inline-block">Timesheet entries</h4>
+							<span id="__igdev_timesheetTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp; table:timesheetTable</span>
+							</span>	
+						</div>
+						<!-- 
+						<div class="col-md-4">
+							<h4 id = "tTimesheetRateHeading"  style="display: inline-block">Agreement Rates</h4>
+							<span id="__igdev_tRatesTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp; table:tRatesTable</span>
+							</span>													
+						</div>
+						 -->
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<table id="timesheetTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>
+									
+										<th>timesheetId</th>						<!-- 0 -->           
+										<th>projectParticipantSdRoleId</th>			<!-- 1 -->
+										<th>Activity Date</th>			<!-- 2 -->
+										<th>Project</th>					<!-- 3 -->			
+										<th>Service Discipline and Role</th>    <!-- 4 -->
+										
+										<th>participantIdHost</th>			<!-- 5 -->
+										<th>Description</th> 			<!-- 6 -->
+										<th>roleOnAProjectId</th>			<!-- 7 -->
+										<th>systemNameBeneficiary</th>			<!-- 8 -->
+										<th>Stage</th>					<!-- 9  -->
+
+										<th>Remun Type</th>			<!-- 10 -->
+										<th>Number Of Units</th>			<!-- 11 -->
+										<th>sdName</th>			<!--  -->
+										<th>projectParticipantId</th>			<!--  -->
+										<th>projectSdId</th>			<!--  -->
+										<th>Unitcode</th>			<!--  -->
+										<th>Unit</th>			<!--  -->
+										<th>participantIdHost</th>			<!--  -->
+										<th>timesheetId</th>			<!--  -->
+										<th>projectParticipantSdRoleId</th>			<!--  -->
+										<th>projBasedRemunTypeId</th>			<!-- 20 -->
+										<th>participantIdHost</th>
+										<th>participantNameHost</th>
+										<th>sdRoleId</th> 
+										<th>projBasedRemunTypeId</th>
+										<th>activityDate</th>
+										<th>remunerationTypeName</th>
+										<th>numberOfUnits</th>
+										<th>description</th>
+										<th>projectParticipantId</th>
+										<th>projectId</th>
+										<th>sdCode</th> 
+										<th>participantIdBeneficiary</th>
+										<th>roleOnAProjectId</th>
+										<th>unitTypeCode</th>
+										<th>unitTypeName</th>
+										<th>assignmentId</th>
+										<th>taskId</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<!-- 
+						<div class="col-md-4">
+							<div id="tEmptyRatesPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a	Timesheet Entry.
+								</p>
+							</div>
+							<div id="tRatesPanel" style="display: none">
+								<table id="tRatesTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>RowNumber</th>
+											<th>TimesheetId</th>
+											<th>AgreementBetweenParticipantsId</th>
+											<th>Level</th>
+											<th>Agreement Between</th>
+											<th>Rate</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						 -->
+					</div>
+				</div>
+				</fieldset>
+			</form>
+		</div>
+
+
+		<!-- Dialogs: Start -->
+		<!-- editTimesheetDialog: Start -->
+		<div class="modal fade" id="editTimesheetDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div  class="row">
+							<div class="col-lg-12">
+								<h4 id="editTimesheetDialogHeader" style="display: inline-block">
+									<i class="fa fa-info-circle"></i> Timesheet Entry Detail:
+								</h4>
+								<span  class="input-group" id="__igdev_editTimesheetDialogLabel"  hidden="hidden">
+									<span style="background-color: #ffff99 !important; color:Black; height: 20px;">--editTimesheetDialog--</span>  
+									<span>&nbsp; &nbsp; tTimesheetId</span><input readonly id="tTimesheetId" style="background-color: #ffff99 !important; color:Black; width: 50px; height: 20px;">
+									<span>&nbsp; &nbsp; tProjectParticipantId</span><input readonly id="tProjectParticipantId" style="background-color: #ffff99 !important; color:Black; width: 50px; height: 20px;">
+								</span>					
+							</div>
+						</div>
+						<button type="button"  class="close" onclick="closeEditTimesheetDialog()"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="tDlgErrorDiv" style="display: none"></div>
+									<span  class="input-group" id="__igdev_editTimesheetDialogLabel2"  hidden="hidden">
+										<label class="col-md-3 col-form-label" hidden="hidden" for="tParticipantName">Natural Person *</label>
+											<span class="input-group" hidden="hidden">
+												<input type="text" id="tParticipantName" name="tParticipantName"
+													class="form-control" placeholder="Natural Person" readonly>
+												
+												<span  class="input-group" id="__igdev_ingridSeIds"  hidden="hidden" style="float: right">
+													<span>&nbsp; tProjectParticipantSdRoleId</span><input readonly id="tProjectParticipantSdRoleId" style="background-color: #ffff99 !important; color:Black; width: 50px; height: 20px;">
+												</span>		
+											</span>	
+									</span>					
+									<div class="row">
+										<label class="col-md-2 col-form-label"
+											for="tProjectNameText">Project *</label>
+										<div class="col-md-8">
+											<div class="input-group">
+										<!-- 	<input type = "hidden" id="tProjectParticipantSdRoleId" >  -->
+												<input type="text" id="tProjectNameText"
+													readonly class="form-control"> <span
+													class="input-group-addon pointer"
+													onclick="selectProjectSdAndRoles()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="tSDAndRole">SD and Role</label>
+										<div class="col-md-6">
+											<input type="text" id="tSDAndRole" name="tSDAndRole"
+												class="form-control" placeholder="service discipline and role on project" readonly>
+										</div>
+										<label class="col-md-1 col-form-label"
+											for="tProjectStage">Stage</label>
+										<div class="col-md-2">
+											<select class="form-control" id="tProjectStage"
+											onchange = "" ></select>
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="tActivityDate">Activity Date</label>
+										<div class="col-md-2">
+											<div class="input-group">
+												<input id="tActivityDate" name="tActivityDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange=""> <span
+													class="input-group-addon pointer"
+													onclick="$('#tActivityDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-md-2 col-form-label"
+											for="tProjBasedRemunType">Remuneration Type</label>
+										<div class="col-md-2">
+											<select class="form-control" id="tProjBasedRemunType"
+											onchange = "populateRemunIntervalAndUnitType()" ></select>
+										</div>
+										<input type = "hidden" id="tUnitTypeCode">
+										<label class="col-md-1 col-form-label" for="tUnitTypeName">Unit *</label>
+										<div class="col-md-2">
+											<input type="text" id="tUnitTypeName" name="tUnitTypeName"
+												class="form-control" placeholder="cost unit" readonly >
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="tNumberOfUnits">Number of Units *</label>
+										<div class="col-md-2">
+											<input type="text" id="tNumberOfUnits" name="tNumberOfUnits"  onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control"  placeholder="number of units">
+										</div>
+										<label class="col-md-2 col-form-label" for="tDescription">Description *</label>
+										<div class="col-md-6">
+											<input type="text" id="tDescription" name="tDescription"
+												class="form-control"  placeholder="activity description">
+												<select class="form-control" id="tDescriptionSelect"
+												onchange = "populatetDescription()" ></select>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button data-dismiss="modal" class="btn btn-sm btn-default"
+							type="button">Cancel</button>
+						<button id = "saveTimesheetButton" class="btn btn-sm btn-primary" type="button"
+							onclick="saveTimesheet()" >Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- editTimesheetDialog: End  -->
+			
+		<!-- Dialogs: End -->
+
+
+
+		<!-- custom script for this page -->
+		<script type="text/javascript" th:src="@{ignite/js/timesheet/timesheetTab.js}"></script>
+	</div>
+
+
+</body>
+</html>

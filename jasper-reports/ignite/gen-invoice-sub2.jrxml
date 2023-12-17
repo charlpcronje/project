@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gen-invoice-sub2" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isTitleNewPage="true" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="c8d5765f-88f1-43b3-891e-f543f8450b55">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ig_db"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="INVOICE_ID" class="java.lang.String"/>
+	<parameter name="REPORTS_PATH" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+	ild. InvoiceLineDetailId,
+	ild.ActivityDate,
+	ild.LineType,
+	ild.ProjectName,
+	ild.StageName,
+	ild.PartBookedTimeOrMadePurchase,
+	ild.SdName,
+	ild.SdAndRole,
+	ild.TheType,
+	ild.Description,
+	ild.NumberOfUnits,
+	ild.RateForDate,
+	ild.LineTotal,
+	ild.RatesMissing
+FROM `InvoiceLineDetail` ild
+	join `InvoiceLine` il ON 
+	  ( 	 il.InvoiceLineId = ild.InvoiceLineId) 
+WHERE 
+	 il.InvoiceId =   $P{INVOICE_ID} 
+Order by 
+	ild.ProjectName,
+	ild.PartBookedTimeOrMadePurchase,
+	ild.ActivityDate]]>
+	</queryString>
+	<field name="InvoiceLineDetailId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceLineDetailId"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceLineDetailId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="ActivityDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="ActivityDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="ActivityDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="LineType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LineType"/>
+		<property name="com.jaspersoft.studio.field.label" value="LineType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="ProjectName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ProjectName"/>
+		<property name="com.jaspersoft.studio.field.label" value="ProjectName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="StageName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="StageName"/>
+		<property name="com.jaspersoft.studio.field.label" value="StageName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="PartBookedTimeOrMadePurchase" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PartBookedTimeOrMadePurchase"/>
+		<property name="com.jaspersoft.studio.field.label" value="PartBookedTimeOrMadePurchase"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="SdName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SdName"/>
+		<property name="com.jaspersoft.studio.field.label" value="SdName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="SdAndRole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SdAndRole"/>
+		<property name="com.jaspersoft.studio.field.label" value="SdAndRole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="TheType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TheType"/>
+		<property name="com.jaspersoft.studio.field.label" value="TheType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Description"/>
+		<property name="com.jaspersoft.studio.field.label" value="Description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="NumberOfUnits" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="NumberOfUnits"/>
+		<property name="com.jaspersoft.studio.field.label" value="NumberOfUnits"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="RateForDate" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="RateForDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="RateForDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="LineTotal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="LineTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="LineTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<field name="RatesMissing" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="RatesMissing"/>
+		<property name="com.jaspersoft.studio.field.label" value="RatesMissing"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoicelinedetail"/>
+	</field>
+	<variable name="LineTotal1" class="java.math.BigDecimal" resetType="Group" resetGroup="PerProject" calculation="Sum">
+		<variableExpression><![CDATA[$F{LineTotal}]]></variableExpression>
+	</variable>
+	<variable name="LineTotal2" class="java.math.BigDecimal" resetType="Group" resetGroup="PerProjectParticipant" calculation="Sum">
+		<variableExpression><![CDATA[$F{LineTotal}]]></variableExpression>
+	</variable>
+	<variable name="LineTotal3" class="java.math.BigDecimal" resetType="Group" resetGroup="PerProject" calculation="Sum">
+		<variableExpression><![CDATA[$F{LineTotal}]]></variableExpression>
+	</variable>
+	<group name="PerProject">
+		<groupExpression><![CDATA[$F{ProjectName}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="0" y="0" width="320" height="20" isRemoveLineWhenBlank="true" uuid="39d31dda-2ff4-4156-8f46-054c38f81f44">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ProjectName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField pattern="R#,##0.00;R-#,##0.00">
+					<reportElement x="489" y="0" width="64" height="20" uuid="46a48f73-31db-49f0-91cb-991c0bb22cf5">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25" lineColor="#CFCFCF"/>
+						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#CFCFCF"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#CFCFCF"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#CFCFCF"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#CFCFCF"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{LineTotal3}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="23" width="555" height="1" forecolor="#B5B5B5" uuid="2452c4f1-7f6b-40a9-9fdf-8f54233d4f6f"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="PerProjectParticipant">
+		<groupExpression><![CDATA[$F{PartBookedTimeOrMadePurchase}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="10" y="0" width="258" height="20" uuid="6c07e45f-0c91-46a6-9bd6-4faf9cf597ca"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PartBookedTimeOrMadePurchase}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="3a8b54b2-828c-4e5d-9422-9c8711ef5bea"/>
+				<box>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Line Details]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement x="70" y="0" width="92" height="20" isPrintWhenDetailOverflows="true" uuid="556dff19-53a8-49e5-8594-56dae3bbcda8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TheType}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="162" y="0" width="248" height="20" isPrintWhenDetailOverflows="true" uuid="2fcb41ff-5832-4c04-8e95-3222a0396ab9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="44" height="20" uuid="03e80edc-7c94-4a0b-9fdb-bbb8a72acfed">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NumberOfUnits}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R#,##0.00;R-#,##0.00">
+				<reportElement x="454" y="0" width="44" height="20" uuid="04521f0f-1448-4d79-a37a-4df080be4338">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RateForDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R#,##0.00;R-#,##0.00">
+				<reportElement x="499" y="0" width="54" height="20" uuid="e363b23a-1cea-41c1-8e20-f4e2a7bcbeb4">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LineTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMM  yyyy">
+				<reportElement x="10" y="0" width="60" height="20" uuid="def86026-079d-4635-96ea-0b7bbd85a5a0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ActivityDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

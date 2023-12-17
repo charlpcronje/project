@@ -1,0 +1,5 @@
+--Permission,PermissionCode,,Name,Description,
+"Insert into Permission (PermissionCode, Name, Description, LastUpdateTimestamp, LastUpdateUserName) values ('",menu-ignite,"', '",menu-ignite,"', null,","now(), 'Ingrid');"
+"Insert into Permission (PermissionCode, Name, Description, LastUpdateTimestamp, LastUpdateUserName) values ('",menu-ignite-not,"', '",menu-ignite-not,"', null,","now(), 'Ingrid');"
+"Insert into Permission (PermissionCode, Name, Description, LastUpdateTimestamp, LastUpdateUserName) values ('",menu-task-manager,"', '",menu-task-manager,"', null,","now(), 'Johannes');"
+"Insert into Permission (PermissionCode, Name, Description, LastUpdateTimestamp, LastUpdateUserName) values ('",menu-task-manager-not,"', '",menu-task-manager-not,"', null,","now(), 'Johannes');"

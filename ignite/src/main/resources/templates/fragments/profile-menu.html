@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="profile-menu" th:remove="tag">
+        <!-- notification dropdown start-->
+        <ul class="nav pull-right top-menu">
+	
+			<li id="taskNotificationBar" class="dropdown"></li>
+			<li id="inboxNotificationBar" class="downdown"></li>
+			<li id="alertNotificationBar" class="dropdown"></li>
+			          
+			<li class="dropdown">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+				    <span id="igAvatar" class="profile-ava"></span>
+				    <span id="igUsername" class="username"></span>
+				</a>
+	
+				<!-- Start profile menu -->
+				<ul class="dropdown-menu extended logout">
+				    <!--  <div class="log-arrow-up"></div> -->
+				    <li class="eborder-top">
+				        <a href="profile"><i class="icon_profile"></i> My Profile</a>
+				    </li>
+
+				    <!-- 
+				    <li>
+				      <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+				    </li>
+				    <li>
+			          <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
+					</li>
+					<li>
+					  <a href="#"><i class="icon_chat_alt"></i> Chats</a>
+					</li>
+					-->
+
+				    <li>
+					  <a th:href="@{/logout}"><i class="icon_key_alt"></i> Log Out</a>
+					</li>
+					<li></li>
+				</ul>
+				<!-- End profile menu -->
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

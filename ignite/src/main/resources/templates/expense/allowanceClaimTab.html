@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="allowanceClaimTab" th:remove="tag">
+
+		<div id="allowanceClaimTab" class="tab-pane">
+			<form id="alAllowanceTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+
+					<div class="row">
+						<div class="col-md-1">
+							<h5>Date Range:</h5>
+						</div>
+						
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="alctStartDate" name="alctStartDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#alctStartDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="alctEndDate" name="alctEndDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#alctEndDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-1">
+							<button id = "alRefresh" class="btn btn-sm btn-primary" type="button"
+											onclick="refreshAllowanceClaim()">Refresh</button>
+						</div>
+						<div class="col-md-3">
+							<span id="__igdev_pexDateFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; alctStartDate and alctEndDate </span>
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; alctParticipantId</span>
+										<input readonly id="alctParticipantId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; alctParticipantPayerSystemName</span>
+										<input readonly id="alctParticipantPayerSystemName" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							</span>
+						</div>
+					</div>
+					<!-- 
+					<div class="row">
+						<div class="col-md-12">
+							<h4 style="display: inline-block">Participant Allowance Claim Summary</h4>
+							<span id="__igdev_alctAllowanceSummaryTableFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; --allowanceClaimTab-- &nbsp; &nbsp; &nbsp; 
+										table:alctAllowanceClaimSummaryTable</span>
+							</span>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<table id="alctAllowanceClaimSummaryTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%" title= "Participant Allowance Claim Summary">
+								<thead>
+									<tr>
+									   	<th>ProjectId</th>              
+									   	<th>Project</th>                
+									   	<th>Sub Project</th>                
+									   	<th>ExpenseTypeId</th>          
+									   	<th>ExpenseTypeParentId</th>  
+									   	<th>Expense Type</th>     
+										<th>Expense Type Code</th>      
+									   	<th></th>                	  
+									   	<th>Total</th>                
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>		
+					 -->								
+					<div class="row">
+						<div class="col-md-12">
+							<h4 style="display: inline-block">Participant Allowance Claims</h4>
+							<span id="__igdev_alctParticipantAllowanceTablePanelFormLabel" style="display: inline-block;
+									background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; &nbsp; table:alctAllowanceClaimTable</span>
+							</span>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="alctAllowanceClaimTablePanel" style="display: block">
+								<table id="alctAllowanceClaimTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%" title= "Participant Allowance Claims">
+									<thead>
+										<tr>
+											<th>ProjectExpenseId</th>         <!--0  MySql-TableName: VProjectExpense-->
+											<th>ProjectParticipantIdPayer</th> <!--1  ProjectParticipantIdPayer-->
+											<th>ParticipantIdPayer</th>       <!--2  ParticipantIdPayer-->
+											<th>ParticipantPayerSystemName</th> <!--3  ParticipantPayerSystemName-->
+											<th>ProjectId</th>                <!--4  ProjectId-->
+											<th>Project</th>              <!--5  ProjectName-->
+										   	<th>Sub Project</th>                
+											<th>ParticipantIdMadePurchase</th> <!--6  ParticipantIdMadePurchase-->
+											<th>Buyer</th> 					  <!--7  ParticipantMadePurchaseSystemName-->
+											<th>ParticipantIdVendor</th>      <!--8  ParticipantIdVendor-->
+											<th>Vendor</th> 				  <!--9  ParticipantVendorSystemName-->
+											<th>ExpenseTypeId</th>            <!--10  ExpenseTypeId-->
+											<th>ExpenseTypeId</th>          <!--11  ExpenseTypeId-->
+											<th>Expense Type</th>             <!--12  ExpenseTypeName-->
+											<th>Expense Type</th>   <!--13  ExpenseTypeDescription-->
+											<th>Unit</th>             		  <!--14  UnitTypeCode-->
+											<th>ExpenseTypeParentId</th>    <!--15  ExpenseTypeParentId-->
+											<th>ExpenseTypeParentName</th>    <!--16  ExpenseTypeParentName-->
+											<th>AssetId</th>                  <!--17  AssetId-->
+											<th>VehicleId</th>                <!--18  VehicleId-->
+											<th>Vehicle</th>                  <!--19  VehicleName-->
+											<th>Asset</th>         			  <!--20  AssetDescription-->
+											<th>PaymentMethodCode</th>        <!--21  PaymentMethodCode-->
+											<th>Payment Method</th>           <!--22  PaymentMethodName-->
+											<th>BankCardIdUsed</th>           <!--23  BankCardIdUsed-->
+											<th>BankCardNumber</th>           <!--24  BankCardNumber-->
+											<th>BankCardNameOnCard</th>       <!--25  BankCardNameOnCard-->
+											<th>TaxDeductableCategoryId</th> <!--26  TaxDeductableCategoryId-->
+											<th>TaxDeductableCategoryName</th> <!--27  TaxDeductableCategoryName-->
+											<th>Description</th>       			<!--28  PaymentDescription-->
+											<th>Purchase Date</th>             <!--29  PurchaseDate-->
+											<th>Number Of Units</th>            <!--30  NumberOfUnits-->
+											<th>Amount Per Unit</th>            <!--31  AmountPerUnit-->
+											<th>NoteToAccountant</th>         <!--32  NoteToAccountant-->
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>	
+
+		<!-- projectExpenseDialog: Start -->
+		<dialog th:replace="expense/allowanceClaimDialog :: allowanceClaimDialog"></dialog>         
+		<!-- projectExpenseDialog: End -->
+
+
+		<script type="text/javascript" th:src="@{ignite/js/expense/allowanceClaimTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

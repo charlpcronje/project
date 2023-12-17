@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="generalProjectTab" th:remove="tag">
+
+		<div id="generalProjectTab" class="tab-pane active">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div class="panel-content">
+						<div class="row btn-toolbar">
+							<button type="button" id="saveGeneralTabButton" 
+								class="dt-button ui-button ui-state-default btn btn-sm"
+								title="Save" onclick="saveProjectGeneral()">
+								<i class="fa fa-save"></i>
+							</button>
+							<span id="__igdev_generalProjectTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; --generalProjectTab--</span>
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;gProjectNumberBigInt</span>
+								<input readonly id="gProjectNumberBigInt" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;gParticipantIdHost</span>
+								<input readonly id="gParticipantIdHost" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;gParticipantIdLevel1</span>
+								<input readonly id="gParticipantIdLevel1" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;&nbsp;gProjectParticipantIdLevel1</span>
+								<input readonly id="gProjectParticipantIdLevel1" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							</span>		
+						</div>
+						<!-- 
+						<div class="row">
+							<label class="col-md-2 col-form-label">Industry *</label> 
+							<div class="col-md-3">
+								<div class="input-group">
+									<input type="text" id="gIndustry" readonly
+										class="form-control"> <span id="gHostBinos"	class="input-group-addon pointer"
+										onclick="selectParticipantIdGenProjTab('generalTabHost')"> <i	class="fas fa-binoculars"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						 -->
+						<div class="row">
+							<label class="col-md-1 col-form-label">Project Host *</label> 
+							<div class="col-md-3">
+								<div class="input-group">
+									<input type="text" id="gParticipantNameHost" readonly
+										class="form-control"> <span id="gHostBinos"	class="input-group-addon pointer"
+										onclick="selectParticipantIdGenProjTab('generalTabHost')"> <i	class="fas fa-binoculars"></i>
+									</span>
+								</div>
+							</div>
+							<label class="col-md-1 col-form-label">Level 1 Participant *</label> 
+							<div class="col-md-3">
+								<div class="input-group">
+									<input type="text" id="gParticipantNameLevel1" readonly
+										class="form-control"> <span id="glevel1Binos"	class="input-group-addon pointer"
+										onclick="selectParticipantIdGenProjTab('generalTabLevel1')"> <i	class="fas fa-binoculars"></i>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<input type="checkbox" id="pdSustenanceProject" disabled> 
+								<label class="col-form-label" for="pdSustenanceProject">Sustenance Project</label>
+							</div>
+						</div>
+						<!-- gpProjectPanel -->
+						<div id="gpProjectPanel"  style="display: none">
+						
+							<div class="row">
+								<label class="col-md-1 col-form-label" for="gParticipantIdHostText">Host Id</label>
+								<div class="col-md-1">
+									<input type="text" id="gParticipantIdHostText" class="form-control"
+										onkeyup="generalTabChanged()" readonly>
+								</div>
+								<label class="col-md-1 col-form-label" for="gProjectNumberText">Project Number *</label>
+								<div class="col-md-1">
+									<input type="text" id="gProjectNumberText" class="form-control"
+										onkeyup="generalTabChanged()" >
+								</div>
+								<label class="col-md-1 col-form-label" for="pdProjectTitle">Title *</label>
+								<div class="col-md-2">
+									<input type="text" id="pdProjectTitle" class="form-control"
+										placeholder="Project Title" onkeyup="generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label" for="gSubProjNumber">Sub Project # *</label>
+								<div class="col-md-1">
+									<input type="text" id="gSubProjNumber" class="form-control"
+										placeholder="Sub Project #" onkeyup="generalTabChanged()">
+								</div>
+								<div class="col-md-2">
+									<input type="checkbox" id="pdIsActive" onchange="generalTabChanged()" > 
+									<label class="col-form-label" for="pdIsActive">Active Project</label>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-1 col-form-label"
+									for="pdProjectDescription">Description</label>
+								<div class="col-md-9">
+									<input type="text" id="pdProjectDescription"
+										class="form-control" placeholder="Project Description" onkeyup="generalTabChanged()">
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-1 col-form-label"
+									for="pdIndividualProjectAdminName">Project Admin</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input 	type="hidden" id="pdIndividualIdProjectAdmin"
+												onchange="generalTabChanged()">
+										<input type="text" id="pdIndividualProjectAdminName"
+											readonly class="form-control" onchange="generalTabChanged()"> <span
+											class="input-group-addon pointer"
+											onclick="selectIndividualProjectAdmin()"> <i
+											class="fas fa-binoculars"></i>
+										</span>
+									</div>
+								</div>
+								<label class="col-md-1 col-form-label" for="pdProjectStartDate">Start Date</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input id="pdProjectStartDate" name="pdProjectStartDate"
+											class="form-control" placeholder="yyyy-mm-dd"
+											data-provide="datepicker" data-date-format="yyyy-mm-dd"
+											data-date-autoclose=true data-date-show-on-focus=false
+											data-date-today-btn="linked"
+											onchange="generalTabChanged()">
+											<span
+											class="input-group-addon pointer"
+											onclick="$('#pdProjectStartDate').datepicker('show')"
+											>
+											<i class="fas fa-calendar-alt"></i>
+										</span>
+									</div>
+								</div>
+								<label class="col-md-1 col-form-label"
+									for="pdProjectCompletionDate">Completion Date</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input id="pdProjectCompletionDate"
+											name="pdProjectCompletionDate" class="form-control"
+											placeholder="yyyy-mm-dd" data-provide="datepicker"
+											data-date-format="yyyy-mm-dd" data-date-autoclose=true
+											data-date-show-on-focus=false
+											data-date-today-btn="linked"
+											onchange="generalTabChanged()"> <span
+											class="input-group-addon pointer"
+											onclick="$('#pdProjectCompletionDate').datepicker('show')">
+											<i class="fas fa-calendar-alt"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+			
+		<script src="ignite/js/project/generalProjectTab.js"></script>
+
+		<!-- 
+		<script type="text/javascript" th:src="@{ignite/js/project/generalProjectTab.js}"></script>
+		<script src="myscripts.js?newversion"></script>
+	 	-->
+		 
+	</div>
+
+</body>
+</html>		

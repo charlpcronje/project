@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="soqTemplatePrintDialog" th:remove="tag">
+		
+		<!-- cardTypeDialog: Start -->
+		<div class="modal fade" id="soqTemplatePrintDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="soqTemplatePrintDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" style="display: inline-block">SOQ Template Print</h4>
+						<h5 id="nameFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">--soqTemplatePrintDialog--</span>
+						</h5>
+		        <button type="button" class="close" onclick="closeSoqTemplatePrintDialog()" aria-hidden="true">&times;</button>
+		      </div>
+		      <div class="modal-body">
+	
+				<section class="panel">
+					<form onsubmit="return false" class="form-horizontal">
+						<fieldset>
+						
+							<input type="hidden" id="soqDlgMode">
+							<div id="soqDlgErrorDiv" style="display: none"></div>
+					    					    						    	
+							<div class="row">
+								<span id="__igdev_hiddenFormLabel618889" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;soqPrintDlgId</span><input ReadOnly id="soqDlgId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								</span>											
+							</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgName">Name *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgName" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>														    	
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgDescription">Description *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgDescription" class="form-control" placeholder="">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgPrimary">Report File Name</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgPrimary" class="form-control" readonly>
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgSecondary">Page Size</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgSecondary" class="form-control" readonly>
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgTertiary">Page Orientation</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgTertiary" class="form-control">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="soqDlgNumberColumn">Page Number Position</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="soqDlgNumberColumn" class="form-control" placeholder="" readonly>
+									</div>
+								</div>
+					    	</div>
+					    	
+					    </fieldset>
+				  	</form>
+		    	</section>
+
+		      </div>
+		      <div class="modal-footer">
+				<button onclick="closeSoqTemplatePrintDialog()" class="btn btn-sm btn-default" type="button">Cancel</button>
+		        <button id="saveSoqTemplatePrintButton" class="btn btn-sm btn-primary" type="button">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<script type="text/javascript" th:src="@{ignite/js/soq/soqTemplatePrintDialog.js}"></script>
+	</div>
+
+</body>
+</html>		

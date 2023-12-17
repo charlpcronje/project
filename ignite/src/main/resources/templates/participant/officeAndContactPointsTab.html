@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="officeAndContactPointsTab" th:remove="tag">
+
+		<div id="officeAndContactPointsTab" class="tab-pane">
+			<form onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div class="row">
+						<div class="col-md-12">
+							<h4 style="display: inline-block">Offices</h4>
+							<span id="__igdev_officeAndContactPointsTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp;--officeAndContactPointsTab-- &nbsp;&nbsp;&nbsp;table:participantOfficeTable</span>
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<table id="participantOfficeTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<th>Participant Office Id</th>
+										<th>Participant Id</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Cost Per Seat</th>
+										<th>Date From</th>
+										<th>CP Default Id</th>
+										<th>Default Contact Point</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h4 id="contactPointHeader" style="display: inline-block">Contact Points</h4>
+							<span id="__igdev_contactPointHeaderFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp;&nbsp;table:contactPointTable</span>
+							</span>							
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="contactPointEmptyPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select an
+									Office.
+								</p>
+							</div>
+
+							<div id="contactPointPanel" style="display: none">
+								<table id="contactPointTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+												<th>ContactPointId</th>
+												<th>ParticipantOfficeId</th>         
+												<th>Participant Office Name</th>     
+												<th>Contact Point Name</th>          
+												<th>Email Address</th>               
+												<th>Phone Number</th>                
+												<th>Address Line1</th>               
+												<th>Address Line2</th>               
+												<th>Address Line3</th>               
+												<th>CityId</th>                      
+												<th>City</th>                   
+												<th>SuburbId</th>               
+												<th>Suburb</th>                 
+												<th>Province</th>               
+												<th>Country</th>    
+												            
+												<th>ProvinceId</th>               
+												<th>CountryId</th>                
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
+				<!-- participantOfficeDialog: Start -->
+		<div class="modal fade" id="participantOfficeDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Participant Office</h4>
+						<span class="col-md-3" id="__igdev_participantOfficeDialogLabel" hidden="hidden" style="display: inline-block">
+							<label style="background-color: #ffff99 !important; color:Black; height: 20px;">--participantOfficeDialog--</label>  
+						</span>
+						<button type="button" class="close"
+							onclick="closeParticipantOfficeDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="epoDlgErrorDiv" style="display: none"></div>
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="epoName">Name *</label>
+										<div class="col-md-6">
+											<input type="text" id="epoName" name="epoName"
+												class="form-control" placeholder="office name"
+												onkeyup="participantOfficeDialogChanged()">
+										</div>
+										<span class="col-md-2" id="__igdev_epoParticipantOfficeIdLabel"  hidden="hidden" style="display: inline-block">
+											<input readonly id="epoParticipantOfficeId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>
+										
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="epoDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="epoDescription" name="epoDescription"
+												class="form-control" placeholder="description"
+												onkeyup="participantOfficeDialogChanged()">
+										</div>
+									</div>
+									<!--
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="epoStartDate">Start
+											Date</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<input id="epoStartDate" name="epoStartDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="participantOfficeDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="$('#epoStartDate').datepicker('show')"> <i
+													class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									-->
+									<!-- 
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="epoEndDate">End Date</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<input id="epoEndDate" name="epoEndDate"
+													class="form-control" placeholder="yyyy-mm-dd"
+													data-provide="datepicker" data-date-format="yyyy-mm-dd"
+													data-date-autoclose=true data-date-show-on-focus=false
+													data-date-today-btn="linked"
+													onchange="participantOfficeDialogChanged()"> 
+													<span
+													class="input-group-addon pointer"
+													onclick="$('#epoEndDate').datepicker('show')">
+													<i class="fas fa-calendar-alt"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									-->
+									<!--
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="epoCostPerSeat">Cost per Seat</label>
+										<div class="col-md-9">
+											<input type="text" id="epoCostPerSeat"  onkeypress="return onlyNumberAndDotKey(event)"
+												class="form-control" placeholder="cost per seat" maxlength=8
+												onkeyup="participantOfficeDialogChanged()">
+										</div>
+									</div>
+									-->
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="epoContactPointIdDefault">Default Office</label>
+										<div class="col-md-9">
+											<select id="epoContactPointIdDefault" class="form-control"
+												onchange="participantOfficeDialogChanged()"></select>
+										</div>
+									</div>
+
+
+									
+								</fieldset>
+							</form>
+						</section>
+	
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeParticipantOfficeDialog()">Cancel</button>
+						<button id="saveParticipantOfficeButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveParticipantOffice()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- participantOfficeDialog: End -->
+		
+				<!-- contactPointDialog: Start -->
+		<div class="modal fade" id="contactPointDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Contact Point</h4>
+						
+						<span id="__igdev_contactPointDialogLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--contactPointDialog--(officeAndContactPointsTab)-- </span>
+						</span>						
+						
+						<button type="button" class="close" onclick="closeCPDialog()"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="eCPDlgErrorDiv" style="display: none"></div>
+											
+									<div class="row">
+										<span id="__igdev_hiddenFormLabel777112" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;eCPContactPointId</span><input id="eCPContactPointId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>	
+									</div>
+									<div class="row">
+										<span id="__igdev_hiddenFormLabel1112" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;eCPParticipantOfficeId</span><input id="eCPParticipantOfficeId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+										</span>	
+									</div>									
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="eCPContactPointName">Name *</label>
+										<div class="col-md-9">
+											<input type="text" id="eCPContactPointName" maxlength=50
+												name="eCPContactPointName" class="form-control" onkeyup="cpDialogChanged()">
+										</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPEmailAddress">Email Address *</label>
+										<div class="col-md-5">
+											<input type="text" id="eCPEmailAddress" class="form-control" maxlength=255
+												placeholder="aaa@aaa.aa" onkeyup="cpDialogChanged()">
+										</div>
+									</div>							
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPPhoneNumber">Phone Number *</label>
+										<div class="col-md-5">
+											<input type="text" id="eCPPhoneNumber"  onkeypress="return onlyTelephoneNumberKey(event)"
+												class="form-control" placeholder="### ### ####" maxlength=12
+												onkeyup="cpDialogChanged()">
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPAddressLine1">Address Line 1</label>
+										<div class="col-md-6">
+											<input id="eCPAddressLine1" type="text"
+												class="form-control" placeholder="" maxlength=50
+												onkeyup="cpDialogChanged()">
+										</div>								
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPAddressLine2">Address Line 2</label>
+										<div class="col-md-6">
+											<input id="eCPAddressLine2" type="text"
+												class="form-control" placeholder="" maxlength=50
+												onkeyup="cpDialogChanged()">
+										</div>								
+									</div>
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPAddressLine3">Address Line 3</label>
+										<div class="col-md-6">
+											<input id="eCPAddressLine3" type="text"
+												class="form-control" placeholder="" maxlength=50
+												onkeyup="cpDialogChanged()">
+										</div>								
+									</div>			
+			
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPCountryName">Country</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<input type="text"class="form-control" readonly id="eCPCountryName">
+												<span class="input-group-addon pointer" onclick="editSelectCountryForContactPointDialog()">
+													<i class="fas fa-binoculars"></i>
+												</span>
+												<span id="__igdev_hiddenFormLabel322112" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;eCPCountryId</span><input id="eCPCountryId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>												
+											</div>
+										</div>
+									</div>									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPProvinceName">Province/State</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<input type="text"class="form-control" readonly id="eCPProvinceName">
+												<span class="input-group-addon pointer" onclick="editSelectProvinceForContactPointDialog()">
+													<i class="fas fa-binoculars"></i>
+												</span>
+												<span id="__igdev_hiddenFormLabel3v0012" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;eCPProvinceId</span><input id="eCPProvinceId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>	
+											</div>
+										</div>
+									</div>				
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPCityName">City</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<input type="text"class="form-control" readonly id="eCPCityName">
+												<span class="input-group-addon pointer" onclick="editSelectCityForContactPointDialog()">
+													<i class="fas fa-binoculars"></i>
+												</span>
+												<span id="__igdev_hiddenFormLabel6s3w332" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;eCPCityId</span><input id="eCPCityId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>
+											</div>
+										</div>
+									</div>
+																											
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="eCPSuburbName">Suburb</label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<input type="text"class="form-control" readonly id="eCPSuburbName">
+												<span class="input-group-addon pointer" onclick="editSelectSuburbForContactPointDialog()">
+													<i class="fas fa-binoculars"></i>
+												</span>
+												<span id="__igdev_hiddenFormLabel6rres32332" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+													<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;eCPSuburbId</span><input id="eCPSuburbId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+												</span>
+											</div>
+										</div>
+									</div>
+
+
+
+								</fieldset>
+							</form>
+						</section>
+	
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" onclick="closeCPDialog()"
+							type="button">Cancel</button>
+						<button id="saveOfficeContactPointBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveOfficeContactPoint()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- contactPointDialog: End -->
+
+		<!-- js referenced Start -->
+		<script type="text/javascript" th:src="@{ignite/js/participant/officeAndContactPointsTab.js}"></script>
+		<!-- js referenced Start -->
+		 
+	</div>
+
+</body>
+</html>		

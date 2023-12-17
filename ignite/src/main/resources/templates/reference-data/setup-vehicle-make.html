@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}" />
+<meta name="_csrf_header"
+	th:content="${_csrf == null ? '' : _csrf.headerName}" />
+
+<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+<title>Ignite: Setup Vehicle Makes and Models</title>
+<!-- Based on: https://bootstrapmade.com/demo/NiceAdmin/ -->
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}">
+
+<!-- bootstrap datatables -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Select-1.2.6/css/select.bootstrap4.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/Buttons-1.5.2/css/buttons.bootstrap4.min.css}">
+
+<!-- bootstrap theme -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap-theme.css}">
+
+<!-- font icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/elegant-icons-style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{font-awesome/6.4.2/css/all.min.css}">
+
+<!-- full calendar css-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/fullcalendar/fullcalendar/fullcalendar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/datepicker/1.8.0/css/bootstrap-datepicker.css}">
+
+<!-- easy pie chart-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css}"
+	media="screen">
+
+<!-- owl carousel -->
+<link rel="stylesheet" type="text/css" th:href="@{css/owl.carousel.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-jvectormap-1.2.2.css}">
+
+<!-- Custom styles -->
+<link rel="stylesheet" type="text/css" th:href="@{css/fullcalendar.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/widgets.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/style-responsive.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/xcharts.min.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jquery-ui-1.10.4.min.css}">
+
+<!-- Ignite -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{ignite/css/ignite.css}">
+
+</head>
+
+<body>
+	<div class="row" style="padding: 10px">
+		<div class="col-md-12">			
+			<span id="__igdev_vehicleMakeTableLabel5554443" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+				<span style=" font-size: 85%">&nbsp;table:vehicleMakeTable</span>
+				<span style="font-size: 90%; height: 16px;background-color: #ffffff">&nbsp;&nbsp;selectedVehicleMakeId</span><input readonly id="selectedVehicleMakeId"   style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+				<span style="font-size: 90%; height: 16px;background-color: #ffffff">&nbsp;&nbsp;selectedVehicleMakeName</span><input readonly id="selectedVehicleMakeName" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+			</span>								
+		</div>
+	</div>	
+						
+	<div class="row" style="padding: 10px">
+		<div class="col-lg-6">
+			<h4 id="pageHeaderVehicleMake">
+				<i class="fas fa-car"></i> Setup: Vehicle Make
+			</h4>
+
+			<section class="panel">
+				<div class="panel-body">
+					<table id="vehicleMakeTable"
+						class="table table-striped table-advance table-hover"
+						style="width: 100%">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</div>
+
+		<div class="col-lg-6">
+		
+			<div id="emptyVehicleModelPanel" style="display: block">
+				<p style="text-align: center; color: #777777">
+					<br> <br> <br> <br> Please select a	Vehicle Make.
+				</p>
+			</div>
+			
+			<div id="vehicleModelPanel" style="display: none">		
+				<h4 id="pageHeaderVehicleModel">
+					<i class="fas fa-car-side"></i> Setup: Vehicle Model
+				</h4>
+				<section class="panel">
+					<div class="panel-body">
+						<table id="vehicleModelTable"
+							class="table table-striped table-advance table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</div>
+			
+		</div> <!-- <div class="col-lg-6"> -->
+		
+	</div>
+
+	<!-- vehicleMakeDialog: Start -->
+	<div class="modal fade" id="vehicleMakeDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="parameterDialogLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Vehicle Make</h4>
+					<button type="button" class="close"
+						onclick="closeVehicleMakeDialog()" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+
+						<form onsubmit="return false" class="form-horizontal">
+							<fieldset>
+									<div class="row" style="float: right">
+										<span class="input-group" id="__igdev_editVehicleMakeDialog13Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<label style="font-size: 90%; background-color: #ffff99 !important; color: Black; height: 20px;">&nbsp;&nbsp;--vehicleMake-edit--</label>
+											<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;vvmVehicleMakeId</span><input readonly id="vvmVehicleMakeId" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+										</span>
+									</div>
+	
+									<div id="vvmVehicleMakeDlgErrorDiv" style="display: none"></div>
+
+
+									<div class="row">    <!-- Name       -->
+										<label class="col-md-3 col-form-label" for="Name">Name</label>
+										<div class="col-md-6">
+											<input type="text"class="form-control" maxlength=100 id="vvmName"
+												placeholder="" onkeyup="vehicleMakeDialogChanged()">
+										</div>
+									</div>
+
+
+
+									<div class="row">    <!-- Description       -->
+										<label class="col-md-3 col-form-label" for="Description">Description</label>
+										<div class="col-md-9">
+											<input type="text"class="form-control" maxlength=255 id="vvmDescription"
+												placeholder="" onkeyup="vehicleMakeDialogChanged()">
+										</div>
+									</div>
+							</fieldset>
+						</form>
+					</section>
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-sm btn-default" type="button"
+						onclick="closeVehicleMakeDialog()">Cancel</button>
+					<button id="saveVehicleMakeButton"
+						class="btn btn-sm btn-primary" type="button"
+						onclick="saveVehicleMake()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- vehicleMakeDialog: End -->
+	
+	
+	<!-- vehicleModelDialog: Start -->
+	<div class="modal fade" id="vehicleModelDialog" tabindex="-1"
+		role="dialog" data-backdrop="static"
+		aria-labelledby="parameterDialogLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="vehicleModelDialogHeader" class="modal-title">Vehicle Model</h4>
+					<button type="button" class="close"
+						onclick="closeVehicleModelDialog()" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<section class="panel">
+
+						<form onsubmit="return false" class="form-horizontal">
+							<fieldset>
+									<div class="row" style="float: right">
+										<span class="input-group" id="__igdev_editVehicleModelDialog13Label" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+											<label style="font-size: 90%; background-color: #ffff99 !important; color: Black; height: 20px;">&nbsp;&nbsp;--vehicleModel-edit--</label>
+											<span  style="font-size: 80%">&nbsp;&nbsp;&nbsp;vmVehicleModelId</span><input readonly id="vmVehicleModelId" style="background-color: #ffff99 !important; color: Black; width: 60px; height: 20px;">
+										</span>
+									</div>
+	
+									<div id="vvmVehicleModelDlgErrorDiv" style="display: none"></div>
+
+
+									<div class="row">    <!-- Name       -->
+										<label class="col-md-3 col-form-label" for="Name">Name</label>
+										<div class="col-md-6">
+											<input type="text"class="form-control" maxlength=100 id="vmName"
+												placeholder="" onkeyup="vehicleModelDialogChanged()">
+										</div>
+									</div>
+
+
+
+									<div class="row">    <!-- Description       -->
+										<label class="col-md-3 col-form-label" for="Description">Description</label>
+										<div class="col-md-9">
+											<input type="text"class="form-control" maxlength=255 id="vmDescription"
+												placeholder="" onkeyup="vehicleModelDialogChanged()">
+										</div>
+									</div>
+							</fieldset>
+						</form>
+					</section>
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-sm btn-default" type="button"
+						onclick="closeVehicleModelDialog()">Cancel</button>
+					<button id="saveVehicleModelButton"
+						class="btn btn-sm btn-primary" type="button"
+						onclick="saveVehicleModel()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- vehicleModelDialog: End -->	
+	
+	
+
+	<!-- javascript -->
+	<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+
+	<!-- bootstrap -->
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap datatables -->
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/datatables/dataTables.bootstrap4.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Select-1.2.6/js/dataTables.select.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/dataTables.buttons.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/assets/Buttons-1.5.2/js/buttons.jqueryui.min.js}"></script>
+
+	<!-- nice scroll -->
+	<script type="text/javascript" th:src="@{js/jquery.scrollTo.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.nicescroll.js}"></script>
+
+	<!-- charts scripts -->
+	<script type="text/javascript"
+		th:src="@{assets/jquery-knob/js/jquery.knob.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.sparkline.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js}"></script>
+	<script type="text/javascript" th:src="@{js/owl.carousel.js}"></script>
+
+	<!-- jQuery full calendar -->
+	<script type="text/javascript" th:src="@{js/fullcalendar.min.js}"></script>
+
+	<!-- Full Google Calendar - Calendar -->
+	<script type="text/javascript"
+		th:src="@{assets/fullcalendar/fullcalendar/fullcalendar.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/datepicker/1.8.0/js/bootstrap-datepicker.js}"></script>
+
+	<!-- custom select -->
+	<script type="text/javascript"
+		th:src="@{js/jquery.customSelect.min.js}"></script>
+	<script type="text/javascript" th:src="@{assets/chart-master/Chart.js}"></script>
+
+	<!--custom script for all page-->
+	<script type="text/javascript" th:src="@{js/scripts.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{ignite/js/dirtyforms.js}"></script> -->
+	<script type="text/javascript" th:src="@{ignite/js/ignite.js}"></script>
+
+	<!-- custom script for this page -->
+	<!-- Tony: 09/05: I do not agree with this, it hsould not be in tabs, but either in /reference-data -->
+	<script type="text/javascript"
+		th:src="@{ignite/js/reference-data/setup-vehicle-make.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="projectSdTab" th:remove="tag">
+
+		<div id="projectSdTab" class="tab-pane">
+			<form id="pdSdTabForm"
+				onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div class="row">
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Project Service Disciplines</h4>
+							<span id="__igdev_projectSdTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; --projectSdTab-- &nbsp; table:projectSdTabTable</span>
+								<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; &nbsp; psdProjectId</span><input readonly id="psdsProjectId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							</span>		
+						</div>
+						<div class="col-md-2">
+							<h4 style="display: inline-block">Project Stage</h4>
+							<h5 id="projectSdTab3FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; table:projectSdStageTable</span>
+							</h5>
+						</div>
+						<div class="col-md-5">
+							<h4 style="display: inline-block">Resources assigned to Service Discipline</h4>
+							<h5 id="projectSdTab2FormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; table:sdAssignedResourcesTable</span>
+							</h5>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-5">
+							<table id="projectSdTabTable"
+								class="table table-striped table-advance table-hover"
+								style="width: 100%">
+								<thead>
+									<tr>	
+										<th>RowNumber</th>
+										<th>projectSdId</th>
+										<th>IndustryCode</th>
+										<th>Industry</th>
+										<th>Parent</th>
+										<th>Level</th>
+										<th>Code</th>
+										<th>Name</th>
+										<th>ServiceDisciplineId</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="col-md-2">
+							<div id="emptyProjectSdStagePanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a	Service Discipline.
+								</p>
+							</div>
+							<div id="projectSdStagePanel" style="display: none">
+								<table id="projectSdStageTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>ProjectSdStageId</th>
+											<th>ProjectId</th>
+											<th>Project</th>
+											<th>ProjectSdId</th>
+											<th>ServiceDisciplineCode</th>
+											<th>SdName</th>
+											<th>Order</th>
+											<th>Stage</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div id="emptySdAssignedResourcesPanel" style="display: block">
+								<p style="text-align: center; color: #777777">
+									<br> <br> <br> <br> Please select a	Service Discipline.
+								</p>
+							</div>
+						
+							<div id="sdAssignedResourcesPanel" style="display: none">
+								<table id="sdAssignedResourcesTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>ProjectParticipantId</th>
+											<th>ProjectParticipantSdRoleId</th>
+											<th>ParticipantIdBeneficiary</th>
+											<th>Participant</th>
+											<th>SdCode</th>
+											<th>Service Discipline</th>
+											<th>RoleOnAProjectId</th>
+											<th>Role</th>
+											<th>ProjectSdId</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+		<!-- projectSdDialog: Start -->
+		<div class="modal fade" id="projectSdDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg90">
+				<div class="modal-content" style="height: 80dvh">
+					<div class="modal-header">
+						<span id="__igdev_projectSdDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">--projectSdDialog--</span>
+						</span>
+						<button type="button" class="close" onclick="closeProjectSdDialog()"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div class="row">
+										<div class="col-md-6">
+											<h4>Project Service Disciplines</h4>
+										</div>
+										<div class="col-md-6">
+											<h4>Service Disciplines not selected</h4>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<table id="projectSdTable"
+												class="table table-striped table-advance table-hover"
+												style="width: 100%">
+												<thead>
+													<tr>	
+														<th>RowNumber</th>
+														<th>projectSdId</th>
+														<th>IndustryCode</th>
+														<th>Industry</th>
+														<th>Parent</th>
+														<th>Level</th>
+														<th>Code</th>
+														<th>Name</th>
+														<th>ServiceDisciplineId</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div class="col-md-6">
+											<table id="sdsNotSelectedTable"
+												class="table table-striped table-advance table-hover"
+												style="width: 100%">
+												<thead>
+													<tr>
+														<th>IndustryCode</th>
+														<th>Industry</th>
+														<th>Parent</th>
+														<th>Level</th>
+														<th>Code</th>
+														<th>Name</th>
+														<th>RowOrderNo</th>
+														<th>ServiceDisciplineId</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-primary" type="button"
+							onclick="closeProjectSdDialog()">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- projectSdDialog: End -->
+		
+		
+		
+		
+		<!-- projectSdStageDialog: Start -->
+		<div class="modal fade" id="projectSdStageDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Service Discipline Stages</h4>
+								
+						<span id="__igdev_projectSdStageDialogFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">&nbsp; &nbsp; --projectSdStageDialog-- </span>
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; &nbsp; psdsProjectSdStageId</span><input readonly id="psdsProjectSdStageId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+							<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; &nbsp; psdsProjectId</span><input readonly id="psdsProjectId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+						</span>								
+
+						<button type="button" class="close"
+							onclick="closeProjectSdStageDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="psdsDlgErrorDiv" style="display: none"></div>
+
+									<div class="row">
+										<label class="col-md-2 col-form-label" for="psdsSdName">Service Discipline</label>
+										<div class="col-md-5">		
+											<input type="text" id="psdsSdName" class="form-control" readonly>
+										</div>
+										<div  class="col-md-3">
+											<span id="__igdev_projectSdStageServiceDisciplineLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; psdsProjectSdId</span><input readonly id="psdsProjectSdId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+											</span>					
+										</div>	
+									</div>
+									<div class="row">
+										<label class="col-md-2 col-form-label">Project Stage *</label>						
+										<div class="col-md-5">
+											<div class="input-group">
+												<input
+													type="text" id="psdsStageName" readonly
+													class="form-control" onchange="psdsDialogChanged()">
+												<span class="input-group-addon pointer"
+													id="psdsBinos"
+													onclick="editSelectProjectStage()">
+													<i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>
+										
+										<div  class="col-md-3">
+											<h5 id="projectSdStageLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+												<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp; psdsProjectStageId</span><input readonly id="psdsProjectStageId" style="background-color: #ffff99 !important; color:Black; width: 40px; height: 20px;">
+											</h5>					
+										</div>										
+										
+										
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button onclick="closeProjectSdStageDialog()"
+							class="btn btn-sm btn-default" type="button">Cancel</button>
+						<button id="saveProjectSdStageDialogButton"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveProjectSdStageDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- projectSdStageDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/project/projectSdTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

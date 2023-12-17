@@ -1,0 +1,3 @@
+,RolePermissionId,,RoleCode,,PermissionCode,,,
+"Insert into RolePermission (RolePermissionId, RoleCode, PermissionCode, LastUpdateTimestamp, LastUpdateUserName) values (",1,", '",ROLE_ADMIN,"', '",menu-task-manager,"', now(), 'Johannes');",,
+"Insert into RolePermission (RolePermissionId, RoleCode, PermissionCode, LastUpdateTimestamp, LastUpdateUserName) values (",2,", '",ROLE_ADMIN,"', '",menu-ignite,"', now(), 'Ingrid');",,

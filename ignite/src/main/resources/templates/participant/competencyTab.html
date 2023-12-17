@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="competencyTab" th:remove="tag">
+
+		<div id="competencyTab" class="tab-pane">
+			<form id="epCompetencyTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+				
+					<div class="row">
+						<div class="col-md-4">
+							<h4 style="display: inline-block">Competency</h4>					
+							<span id="__igdev_individualCompetencyTableLabela4" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style=" font-size: 85%">&nbsp;&nbsp;--competencyTab-- &nbsp;&nbsp;&nbsp;table: individualCompetencyTable</span>
+							</span>											
+						</div>	
+						<div class="col-md-4">
+							<h4 style="display: inline-block">Qualifications</h4>					
+							<span id="__igdev_individualQualificationsTableLabel44090" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style=" font-size: 85%">&nbsp;&nbsp;table: individualQualificationTable</span>
+							</span>											
+						</div>			
+						<div class="col-md-4">
+							<h4 style="display: inline-block">Professional Registration</h4>					
+							<span id="__igdev_individualProfessionalRegistrationLabel5455555" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style=" font-size: 85%">&nbsp;&nbsp;table: individualProfRegistrationTable</span>
+							</span>											
+						</div>	
+					</div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<div id="individualCompetencyPanel" >
+								<table id="individualCompetencyTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>individualSdRoleId</th>          <!--  0 -->
+											<th>individualId</th>                <!--  1 -->
+											<th>sdRoleId</th>                    <!--  2 -->
+											<th>competencyLevelId</th>         <!--  3 -->
+											<th>participantId</th>               <!--  4 -->
+											<th>Service Discipline and Role</th> <!--  5 -->
+											<th>Competency</th>         		 <!--  6 -->
+											<th>Years</th>         		 		<!--  7 -->
+																															
+												<th>ServiceDisciplineId</th>         <!--8  ServiceDisciplineId-->
+												<th>ServiceDisciplineCode</th>       <!--9  ServiceDisciplineCode-->
+												<th>Service Discipline Name</th>     <!--10  ServiceDisciplineName-->
+												<th>Role On A Project Name</th>      <!--11  RoleOnAProjectName-->
+												<th>sd Parent Name</th>              <!--12  sdParentName-->
+												<th>sd Grand Parent Name</th>        <!--13  sdGrandParentName-->
+												<th>sd Industry Name</th>            <!--14  sdIndustryName-->
+																						
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<div id="individualQualificationPanel" >
+								<table id="individualQualificationTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+
+												<th>IndividualQualificationId</th>   <!--0  MySql-TableName: VIndividualQualification-->
+												<th>IndividualId</th>                <!--1  IndividualId-->
+												<th>Individual First Name</th>       <!--2  IndividualId_FirstName-->
+												<th>Individual Last Name</th>        <!--3  IndividualId_LastName-->
+												<th>ParticipantId</th>               <!--4  ParticipantId-->
+												<th>InstituteQualificationId</th>    <!--5  InstituteQualificationId-->
+												<th>Institute Qualification Name</th> <!--6  InstituteQualificationId_Name-->
+												<th>Study Institute Name</th>        <!--7  StudyInstituteId_Name-->
+												<th>Year</th>              <!--8  YearCompleted-->
+												<th>Qualification</th>      <!--9  CombinedQualification-->
+												<th>Description</th>                 <!--10  Description-->
+
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						
+												
+						<div class="col-md-4">
+							<div id="individualProfRegistrationPanel" >
+								<table id="individualProfRegistrationTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+												<th>IndividualProfRegistrationId</th> <!--0  MySql-TableName: VIndividualProfRegistration-->
+												<th>IndividualId</th>                <!--1  IndividualId-->
+												<th>Individual First Name</th>       <!--2  IndividualId_FirstName-->
+												<th>Individual Last Name</th>        <!--3  IndividualId_LastName-->
+												<th>ParticipantId</th>               <!--4  ParticipantId-->
+												<th>ProfessionalInstituteId</th>     <!--5  ProfessionalInstituteId-->
+												<th>Institute</th> <!--6  ProfessionalInstituteId_Name-->
+												<th>Year</th>               <!--7  YearAccepted-->
+												<th>Number</th>                 <!--8  ProfNumber-->
+												<th>Description</th>                 <!--9  Description-->
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>						
+						
+						
+					</div> <!-- <div class="row"> -->
+								
+				</fieldset>
+			</form>
+		</div>
+		
+		
+<!-- individualCompetencyDialog: Start -->
+		<div class="modal fade" id="individualCompetencyDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Individual Competency</h4>
+						<span id="__igdev_individualCompetencyDialogLabel6" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--individualCompetencyDialog--</span>
+						</span>
+						<button type="button" class="close"
+							onclick="closeIndividualCompetencyDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="icDlgErrorDiv" style="display: none"></div>
+												
+												
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdriSdIndustryName">Industry</label> <!-- GrandParent -->
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input type="text" id="isdriSdIndustryName" readonly class="form-control" > 
+											</div>
+										</div>		
+									</div>															
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdriSdGrandParentName"></label> <!-- GrandParent -->
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input type="text" id="isdriSdGrandParentName" readonly class="form-control" > 
+											</div>
+										</div>		
+									</div>	
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdriSdParentName"></label> <!-- Parent -->
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input type="text" id="isdriSdParentName" readonly class="form-control" > 
+											</div>
+										</div>		
+									</div>	
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="isdriSdRoleId">Service Discipline *</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input
+													type="text" id="isdriSdRoleName" readonly
+													class="form-control" onchange="individualCompetencyDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="editSelectSdRolei()"> <i
+													class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>		
+									</div>							
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="isdriCompetencyLevel">Competency Level *</label>
+										<div class="col-md-5">
+											<select id="isdriCompetencyLevel" class="form-control"
+												onchange="individualCompetencyDialogChanged()"></select>
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="isdriYearExperience">Years Experience</label>
+										<div class="col-md-3">
+											<input type="text" id="isdriYearExperience"  onkeypress="return onlyNumberKey(event)"
+												class="form-control" 
+												onkeyup="individualCompetencyDialogChanged()">
+										</div>
+									</div>
+									
+									<span id="__igdev_individualCompetencyIdsLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> isdriIndividualSdRoleId</span><input readonly id="isdriIndividualSdRoleId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;isdriIndividualId</span><input readonly id="isdriIndividualId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;isdriSdRoleId</span><input readonly id="isdriSdRoleId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+									</span>		
+									
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeIndividualCompetencyDialog()">Cancel</button>
+						<button id="saveIndividualCompetencyBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveIndividualCompetencyDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- individualCompetencyDialog: End -->
+		
+		
+<!-- individualQualificationDialog: Start -->
+		<div class="modal fade" id="individualQualificationDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Individual Qualification</h4>
+						<span id="__igdev_individualQualificationDialogLabel381" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--individualQualificationDialog--</span>
+						</span>
+						<button type="button" class="close"
+							onclick="closeIndividualQualificationDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="iqDlgErrorDiv" style="display: none"></div>
+														
+
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="iqInstituteQualificationName">Qualification *</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input
+													type="text" id="iqInstituteQualificationName" readonly
+													class="form-control" > <span
+													class="input-group-addon pointer"
+													onclick="editSelectInstituteQualification(); individualQualificationDialogChanged()"> <i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>		
+									</div>							
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="iqYearCompleted">Year Completed *</label>
+										<div class="col-md-3">
+											<input type="text" id="iqYearCompleted"  onkeypress="return onlyNumberKey(event)" maxlength=4
+												class="form-control" onchange="individualQualificationDialogChanged()">
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="iqDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="iqDescription" maxlength=255
+												class="form-control" onchange="individualQualificationDialogChanged()">
+										</div>
+									</div>									
+									
+									
+									<span id="__igdev_individualQualificationIdsLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> iqIndividualQualificationId</span><input readonly id="iqIndividualQualificationId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> iqInstituteQualificationId</span><input readonly id="iqInstituteQualificationId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;iqIndividualId</span><input readonly id="iqIndividualId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+									</span>		
+									
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeIndividualQualificationDialog()">Cancel</button>
+						<button id="saveIndividualQualificationBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveIndividualQualificationDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- individualQualificationDialog: End -->		
+		
+		
+
+
+<!-- individualProfRegistrationDialog: Start -->
+		<div class="modal fade" id="individualProfRegistrationDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med40">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Individual Qualification</h4>
+						<span id="__igdev_individualProfRegistrationDialogLabel3833" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="display: inline-block;font-size: 90%; height: 16px">&nbsp;--individualProfRegistrationDialog--</span>
+						</span>
+						<button type="button" class="close"
+							onclick="closeIndividualProfRegistrationDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+	
+						<section class="panel">
+	
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="iprDlgErrorDiv" style="display: none"></div>
+														
+
+									<div class="row">
+										<label class="col-md-3 col-form-label"
+											for="iprProfessionalInstituteName">Professional Institute *</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												 <input
+													type="text" id="iprProfessionalInstituteName" readonly
+													class="form-control" onchange="individualProfRegistrationDialogChanged()"> <span
+													class="input-group-addon pointer"
+													onclick="editSelectProfessionalInstitute()"> <i class="fas fa-binoculars"></i>
+												</span>
+											</div>
+										</div>		
+									</div>							
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="iprYearAccepted">Year Accepted *</label>
+										<div class="col-md-3">
+											<input type="text" id="iprYearAccepted"  onkeypress="return onlyNumberKey(event)" maxlength=4
+												class="form-control" onchange="individualProfRegistrationDialogChanged()">
+										</div>
+									</div>
+
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="iprProfNumber">Number</label>
+										<div class="col-md-6">
+											<input type="text" id="iprProfNumber"  maxlength=50
+												class="form-control" onchange="individualProfRegistrationDialogChanged()">
+										</div>
+									</div>
+									
+									<div class="row">
+										<label class="col-md-3 col-form-label" for="iprDescription">Description</label>
+										<div class="col-md-9">
+											<input type="text" id="iprDescription" maxlength=255
+												class="form-control" onchange="individualProfRegistrationDialogChanged()">
+										</div>
+									</div>									
+									
+									
+									<span id="__igdev_individualProfRegistrationIdsLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> iprIndividualProfRegistrationId</span><input readonly id="iprIndividualProfRegistrationId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;"> 
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> iprProfessionalInstituteId</span><input readonly id="iprProfessionalInstituteId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+										<span style="font-size: 90%; height: 16px; background-color: #ffffff"> &nbsp;iprIndividualId</span><input readonly id="iprIndividualId" style="background-color: #ffff99 !important; color:Black; width: 45px; height: 16px;">
+									</span>		
+									
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeIndividualProfRegistrationDialog()">Cancel</button>
+						<button id="saveIndividualProfRegistrationBtn"
+							class="btn btn-sm btn-primary" type="button"
+							onclick="saveIndividualProfRegistrationDialog()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- individualProfRegistrationDialog: End -->	
+		
+		
+		
+		
+		<script type="text/javascript" th:src="@{ignite/js/participant/competencyTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

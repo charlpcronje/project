@@ -1,0 +1,11 @@
+SELECT CHARACTER_SET_NAME, COLLATION_NAME FROM information_schema.`COLUMNS` 
+WHERE table_schema = "ig_db"    		-- <Sit jou DB naam hier in
+  AND table_name = "roleonaproject"          	-- <Sit jou Table naam hier in    
+  AND column_name = "roleonaprojectcode";   	-- <Sit jou Kolom naam hier in
+  
+
+
+  CREATE TABLE IF NOT EXISTS `ig_db`.`PersonResponsible` (
+  `PersonResponsibleId` BIGINT NOT NULL AUTO_INCREMENT,
+  `GenProcedureId` BIGINT NULL,
+  `RoleOnAProjectCode` VARCHAR(50) CHARACTER SET `utf8mb3` COLLATE `utf8_bin` NULL,    -- <Stel die Character set en Collation hier.

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head></head>
+
+<body>
+	<div th:fragment="systemDetailsTab" th:remove="tag">
+
+		<div id="systemDetailsTab" class="tab-pane">
+			<form id="epSystemDetailsForm" onsubmit="return false" class="form-horizontal">
+				<fieldset>
+					<div class="panel-content">
+						<div class="row btn-toolbar">
+							<button type="button" id="saveSystemDetailsTabButton"
+								class="dt-button ui-button ui-state-default btn btn-sm" title="Save"
+								onclick="saveSystemDetailsTab()" disabled style="display: inline-block">
+								<i class="fa fa-save"></i>
+							</button>
+
+							<span id="__igdev_generalParticipant1TabFormLabel43112"
+								style="display: inline-block; background-color: #ffff99 !important; color:Black"
+								hidden="hidden">
+								<span style="font-size: 90%; height: 16px">&nbsp;--systemDetailsTab--</span>
+							</span>
+						</div>
+
+						<!--  						<input type="hidden" id="epProjectParticipantId"> 			-->
+						<!--						<input type="hidden" id="eIndSystemMemberId">				-->
+						<!--						<input type="hidden" id="epParticipantOfficeIdDefault">		-->
+						<!--						<input type="hidden" id="epParticipantOfficeName">			-->
+						<!--						<input type="hidden" id="epParticipantOfficeDescription">	-->
+						<!--						<input type="hidden" id="epContactPointName"> 				-->
+						<!--						<input type="hidden" id="epContactPointDescription"> 		-->
+						<!--						<input type="hidden" id="epIsIndividual">					-->
+
+
+
+
+
+
+
+
+
+						<!-- epOverlapInfoPanel -->
+						<div id="epOverlapInfoSystemPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epSystemName">System Name</label>
+								<div class="col-md-3">
+									<input id="epSystemName" type="text" class="form-control" placeholder="System Name"
+										onkeyup="systemDetailsTabChanged()">
+								</div>
+							</div>
+
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epProjectPrefix">Project Number
+									Prefix</label>
+								<div class="col-md-1">
+									<input id="epProjectPrefix" type="text" class="form-control" placeholder="pre"
+										onkeyup="systemDetailsTabChanged()">
+								</div>
+								<label class="col-md-2 col-form-label" for="epLatestProjectNumber">Last Project
+									Number</label>
+								<div class="col-md-1">
+									<input id="epLatestProjectNumber" type="text" class="form-control"
+										placeholder="latest project number" onkeyup="systemDetailsTabChanged()">
+								</div>
+								<label class="col-md-2 col-form-label" for="epProjectPostfix">Project Number
+									Postfix</label>
+								<div class="col-md-1">
+									<input id="epProjectPostfix" type="text" class="form-control" placeholder="post"
+										onkeyup="systemDetailsTabChanged()">
+								</div>
+							</div>
+
+							<div class="row">
+
+								<label class="col-md-2 col-form-label" for="epInvoicePrefix">Invoice Prefix</label>
+								<div class="col-md-1">
+									<input type="text" id="epInvoicePrefix" class="form-control"
+										onkeyup="systemDetailsTabChanged()" maxlength=5>
+								</div>
+
+								<label class="col-md-2 col-form-label" for="epLatestInvoiceNumber">Last Invoice
+									Number</label>
+								<div class="col-md-1">
+									<input type="text" id="epLatestInvoiceNumber" class="form-control"
+										onkeyup="systemDetailsTabChanged()" onkeypress="return onlyNumberKey(event)">
+								</div>
+
+								<label class="col-md-2 col-form-label" for="epInvoiceNumberFormat">Invoice Number
+									Format</label>
+								<div class="col-md-2">
+									<select class="form-control" id="epInvoiceNumberFormat"
+										onchange="systemDetailsTabChanged()">
+										<option disabled selected value=""> -- select an option -- </option>
+										<option value="YY-MM-###">YY-MM-###</option>
+										<option value="YY-MM-####">YY-MM-####</option>
+										<option value="YYYY-MM-###">YYYY-MM-###</option>
+										<option value="YYYY-MM-####">YYYY-MM-####</option>
+										<option value="YYYY-###">YYYY-###</option>
+										<option value="YYYY-####">YYYY-####</option>
+										<option value="YYYY-#####">YYYY-#####</option>
+										<option value="YY-###">YY-###</option>
+										<option value="YY-####">YY-####</option>
+										<option value="YY-#####">YY-#####</option>
+										<option value="#####">#####</option>
+										<option value="######">######</option>
+										<option value="#######">#######</option>
+										<option value="########">########</option>
+									</select>
+								</div>
+
+							</div>
+
+
+							<div class="row" hidden="hidden">
+								<label class="col-md-2 col-form-label" for="epDefaultInvoiceDay">Default Invoice
+									Day</label>
+								<div class="col-md-2">
+									<input id="epDefaultInvoiceDay" type="number" onchange="systemDetailsTabChanged()"
+										onkeypress="return event.charCode >= 30" min="1" max="31"
+										onkeyup="systemDetailsTabChanged()">
+								</div>
+								<div class="col-md-2">
+									<input type="checkbox" id="epLastDayOfTheMonth" onchange="setInvDateToLastDay()">
+									<label class="col-form-label" for="epLastDayOfTheMonth">Last Day of the
+										Month</label>
+								</div>
+								<label class="col-md-2 col-form-label" for="epProjectIdSustenance">Financial Admin
+									Project</label>
+								<div class="col-md-4">
+									<input type="text" id="epProjectIdSustenance" class="form-control">
+								</div>
+							</div>
+
+							<div class="row">
+							</div>
+						</div>
+						
+						
+						<div class="row">
+							<div class="col-md-2">
+								<input type="checkbox" id="epTapAdministered" onchange="showHideTapSubscription()">
+								<label class="col-form-label" for="epTapAdministered">TAP Administered</label>
+							</div>
+						</div>
+						
+						
+						<div id="epTapSubscriptionDiv">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epTapSubscriptionCode">IG Subscription *</label>
+								<div class="col-md-3">
+
+									<select class="form-control" id="epTapSubscriptionCode"
+										onchange="systemDetailsTabChanged()">
+									</select>
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+						</div>
+						<div id="epAllowLoginFlagPanel">
+							<div class="row">
+								<div class="col-md-2">
+									<input type="checkbox" id="eIndAllowLoginFlag" onchange="eIndUpdateAllowLogin(); systemDetailsTabChanged()">
+									<label class="col-form-label" for="eIndAllowLoginFlag">Allow Login</label>
+								</div>
+								
+								<span id="__igdev_hiddenFormLabelyy9m" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;epOriginalAllowLoginFlag</span><input id="epOriginalAllowLoginFlag" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+									
+								</span>										
+							</div>
+						</div>
+
+
+						<div id="epIndividualInfoSystemPanel">
+							<div id="eIndLoginInfoPanel" style="display: none">
+								<div class="row">
+									
+									<label class="col-md-1 col-form-label" for="eIndRoleCode">Role</label>
+									<div class="col-md-2">
+										<select id="eIndRoleCode" class="form-control"
+											onkeyup="systemDetailsTabChanged()"></select>
+									</div>									
+
+									<label class="col-md-1 col-form-label" for="sdUserName2">User Name *</label>
+									<div class="col-md-2">
+										<input type="text" id="sdUserName2" class="form-control"  autocomplete="off" onkeypress="checkUsernameUniquenessIndividual(); systemDetailsTabChanged()"> <!--  onchange="checkUsernameUniquenessIndividual(); systemDetailsTabChanged()" -->
+									</div>
+									
+									<label class="col-md-1 col-form-label" for="eIndPassword">Password *</label>
+									<div class="col-md-2">
+										<input type="text" id="eIndPassword"  onfocus="this.select();" class="form-control" autocomplete="off" onkeypress="passwordChanged()">
+									</div>
+
+									<div class="col-md-1">
+										<button type="button" id="editPasswordButton" 
+											class="dt-button ui-button ui-state-default btn btn-sm" onclick="passwordChanged(); editPassword()" 
+											title="Change password" style="display: inline-block">
+											<i class="fa fa-key"></i>
+										</button>
+									</div>
+									
+								</div>
+							</div>
+						</div> <!-- epIndividualInfoSystemPanel -->
+
+
+						<div id="participantLogoDiv" class="row">
+							<label class="col-md-2 col-form-label">Logo (.jpg only)</label>
+							<div class="col-md-5" style="position:relative; top:0px; right:0px">
+								<div id="participantLogoImage">
+									<img id="participantLogo" width="150px">
+								</div>
+								<button type="button" id="editParticipantLogoButton"
+									class="dt-button ui-button ui-state-default btn btn-sm"
+									onclick="editParticipantLogo()" title="Edit" style="display: inline-block">
+									<i class="fa fa-pen"></i>
+								</button>
+								<button type="button" id="deleteParticicantLogoButton"
+									class="dt-button ui-button ui-state-default btn btn-sm" title="Remove" disabled
+									onclick="promptDeleteParticipantLogo()" style="display: inline-block">
+									<i class="fa fa-trash"></i>
+								</button>
+							</div>
+						</div>
+
+
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+
+
+
+		<!-- participantChangePasswordDialog: Start -->
+		<div class="modal fade" id="participantChangePasswordDialog" tabindex="-1" role="dialog" data-backdrop="static"
+			aria-labelledby="parameterDialogLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Change Password</h4>
+						<span class="col-md-3" id="__igdev_participantChangePasswordDialogLabel" hidden="hidden"
+							style="display: inline-block">
+							<label
+								style="background-color: #ffff99 !important; color:Black; height: 20px;">--participantChangePasswordDialog--</label>
+						</span>
+						<button type="button" class="close" onclick="closeParticipantChangePasswordDialog()"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+
+						<section class="panel">
+
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="pcpDlgErrorDiv" style="display: none"></div>
+									<div class="row">
+										<label class="col-md-4 col-form-label" for="pcpNewPassword">New Password</label>
+										<div class="col-md-8">
+											<input type="password" id="pcpNewPassword" name="pcpNewPassword"
+												class="form-control" placeholder="new password"
+												onkeyup="participantChangePasswordChanged()">
+										</div>
+									</div>
+
+								</fieldset>
+							</form>
+						</section>
+
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default" type="button"
+							onclick="closeParticipantChangePasswordDialog()">Cancel</button>
+						<button id="saveParticipantChangePasswordButton" class="btn btn-sm btn-primary" type="button"
+							onclick="saveParticipantChangePassword()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- participantChangePasswordDialog: End -->
+
+
+
+		
+
+		<script type="text/javascript" th:src="@{ignite/js/participant/systemDetailsTab.js}"></script>
+	</div>
+</body>
+
+</html>

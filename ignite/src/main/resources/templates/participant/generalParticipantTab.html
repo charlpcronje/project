@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="generalParticipantTab" th:remove="tag">
+
+		<div id="generalParticipantTab" class="tab-pane active">
+			<form id="epGeneralTabForm" onsubmit="return false"	class="form-horizontal">
+				<fieldset>
+					<div class="panel-content">
+						<div class="row btn-toolbar">
+							<button type="button" id="saveGeneralTabButton"
+								class="dt-button ui-button ui-state-default btn btn-sm"
+								title="Save" onclick="saveGeneralTab()" disabled style="display: inline-block">
+								<i class="fa fa-save"></i>
+							</button>
+							<span id="__igdev_generalParticipantTabFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp;--generalParticipantTab--</span>
+							</span>						
+						</div>
+						<input type="hidden" id="epProjectParticipantId"> 
+						<input type="hidden" id="eIndSystemMemberId">
+						<input type="hidden" id="epParticipantOfficeIdDefault">
+						<input type="hidden" id="epParticipantOfficeName">
+						<input type="hidden" id="epParticipantOfficeDescription">
+						<input type="hidden" id="epContactPointName"> 
+						<input type="hidden" id="epContactPointDescription"> 
+						<input type="hidden" id="epIsIndividual">
+
+						<div class="row">
+							<label class="col-md-2 col-form-label"
+								for="epParticipantTypeCode">Participant Type *</label>
+							<div class="col-md-3">
+									<select class="form-control" id="epParticipantTypeCode"
+										onchange="participantTypeCodeSelected()">
+									</select> <input type="text" id="epParticipantType"
+										class="form-control">
+							</div>
+						</div>
+						<!-- epIndividualInfoPanel -->
+						<div id="epIndividualInfoPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="eIndFirstName" >Names as on ID:   First Name *</label>
+								<div class="col-md-2">
+									<input type="text" id="eIndFirstName" class="form-control" 
+										placeholder="First Name" onkeyup="getInitials(); copyToNickName(); copyToTradingAs(); generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label" for="eIndSecondName">Second Name</label>
+								<div class="col-md-2">
+									<input type="text" id="eIndSecondName" class="form-control"
+										placeholder="Second Name" onkeyup="getInitials(); generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label" for="eIndThirdName" >Third Name</label>
+								<div class="col-md-2">
+									<input type="text" id="eIndThirdName" class="form-control"
+										placeholder="Third Name" onkeyup="getInitials(); generalTabChanged()">
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="eIndLastName">Last Name *</label>
+								<div class="col-md-2">
+									<input type="text" id="eIndLastName" class="form-control"
+										placeholder="Last Name" onkeyup="generalTabChanged(); copyToTradingAs();">
+								</div>
+								<label class="col-md-1 col-form-label" for="eIndNickName">Nickname *</label>
+								<div class="col-md-2">
+									<input type="text" id="eIndNickName" class="form-control"
+										placeholder="Nickname" onkeyup="generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label" for="eIndInitials">Initials</label>
+								<div class="col-md-1">
+									<input type="text" id="eIndInitials" class="form-control" readonly
+										placeholder="Initials">
+								</div>
+							</div>							
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="indTradingName">Trading As</label>
+								<div class="col-md-3">
+									<input id="indTradingName" type="text" class="form-control" maxlength=45
+										placeholder="Trading Name" onkeyup="generalTabChanged()">
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="eIndIdNumber">ID Number</label>
+								<div class="col-md-2">
+									<input id="eIndIdNumber" type="text" class="form-control"  onkeypress="return onlyNumberAndSpaceKey(event)"
+										placeholder="yymmdd #### ###" maxlength=15
+										onkeyup="generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label"
+									for="eIndIncomeTaxNumber">Income Tax Number</label>
+								<div class="col-md-2">
+									<input id="eIndIncomeTaxNumber" type="text"
+										class="form-control" placeholder="Income Tax Number"
+										onkeyup="generalTabChanged()">
+								</div>
+								<div class="col-md-2">
+									<input type="checkbox" id="eIndIsActiveMember"
+										onchange="generalTabChanged()"> <label
+										class="col-form-label" for="eIndIsActiveMember">
+										Active Member</label>
+								</div>
+							</div>
+							<div class="row">
+
+								<label class="col-md-2 col-form-label"
+									for="eIndPassportNumber">Passport Number</label>
+								<div class="col-md-2">
+									<input id="eIndPassportNumber" type="text"
+										class="form-control" placeholder="Passport Number"
+										onkeyup="generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label"
+									for="eIndCountryId">Country Of Issue</label>
+								<div class="col-md-2">
+									<select class="form-control" id="eIndCountryId"
+										onchange="generalTabChanged()">
+									</select>
+								</div>
+
+							</div>
+
+
+						</div>
+
+						<!-- epParticipantInfoPanel -->
+						<div id="epParticipantInfoPanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label"
+									for="epRegisteredName">Registered Name *</label>
+								<div class="col-md-3">
+									<input id="epRegisteredName" type="text"
+										class="form-control" placeholder="Registered Name"
+										onkeyup="generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label"
+									for="epRegistrationNumber">Registration Number</label>
+								<div class="col-md-2">
+									<input id="epRegistrationNumber" type="text"
+										class="form-control" placeholder="Registration Number"
+										onkeyup="generalTabChanged()">
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epTradingName">Trading As</label>
+								<div class="col-md-3">
+									<input id="epTradingName" type="text" class="form-control"
+										placeholder="Trading Name" onkeyup="generalTabChanged()">
+								</div>
+								<label class="col-md-1 col-form-label" for="epVATNumber">VAT Number</label>
+								<div class="col-md-2">
+									<input id="epVATNumber" type="text" class="form-control"
+										placeholder="VAT Number" onkeyup="generalTabChanged()">
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-md-2 col-form-label"
+									for="epRepresentativeIndividualName">Representative</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input type="hidden" id="epRepresentativeIndividualId"
+											onkeyup="generalTabChanged()"> <input
+											type="text" id="epRepresentativeIndividualName" readonly
+											class="form-control"> <span
+											class="input-group-addon pointer"
+											onclick="editSelectRepresentativeIndividual()"> <i
+											class="fas fa-binoculars"></i>
+										</span>
+									</div>
+								</div>
+								<label class="col-md-1 col-form-label"
+									for="epMarketingIndividualName">Marketing</label>
+								<div class="col-md-3">
+									<div class="input-group">
+										<input type="hidden" id="epMarketingIndividualId"
+											onkeyup="generalTabChanged()"> <input
+											type="text" id="epMarketingIndividualName" readonly
+											class="form-control"> <span
+											class="input-group-addon pointer"
+											onclick="editSelectMarketingIndividual()"> <i
+											class="fas fa-binoculars"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div id="epDatePanel">
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epStartDate">Start Date</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input id="epStartDate" name="epStartDate"
+											class="form-control" placeholder="yyyy-mm-dd"
+											data-provide="datepicker" data-date-format="yyyy-mm-dd"
+											data-date-autoclose=true data-date-show-on-focus=false
+											data-date-today-btn="linked"
+											onchange="generalTabChanged()"> <span
+											class="input-group-addon pointer"
+											onclick="$('#epStartDate').datepicker('show')">
+											<i class="fas fa-calendar-alt"></i>
+										</span>
+									</div>
+								</div>
+								<label class="col-md-1 col-form-label" for="epEndDate">End Date</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input id="epEndDate" name="epEndDate"
+											class="form-control" placeholder="yyyy-mm-dd"
+											data-provide="datepicker" data-date-format="yyyy-mm-dd"
+											data-date-autoclose=true data-date-show-on-focus=false
+											data-date-today-btn="linked"
+											onchange="generalTabChanged()"> <span
+											class="input-group-addon pointer"
+											onclick="$('#epEndDate').datepicker('show')"> <i
+											class="fas fa-calendar-alt"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div> <!-- epDatePanel -->
+
+
+
+						<!-- epOverlapInfoPanel -->
+						<div id="epOverlapInfoPanel">
+					
+							<div class="row">
+								<label class="col-md-2 col-form-label"
+									for="epPhoneNumber">Phone Number *</label>
+								<div class="col-md-2">
+									<input id="epPhoneNumber" type="text"  onkeypress="return onlyTelephoneNumberKey(event)"
+										class="form-control" placeholder="(+##) ## ### ####"
+										onkeyup="generalTabChanged()">
+								</div>
+
+								<label class="col-md-1 col-form-label" for="gptEmailAddress">Email *</label>
+								<div class="col-md-2">
+									<input id="gptEmailAddress" type="text"
+										class="form-control" placeholder="aaa@aaa.aa"
+										onkeyup="generalTabChanged()">
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epAddressLine1">Address Line 1</label>
+								<div class="col-md-3">
+									<input id="epAddressLine1" type="text"
+										class="form-control" placeholder="" maxlength=50
+										onkeyup="generalTabChanged()">
+								</div>			
+								<label class="col-md-1 col-form-label" for="epCountryName">Country</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input type="text"class="form-control" readonly id="epCountryName">
+										<span class="input-group-addon pointer" onclick="editSelectCountryForContactPoint(); generalTabChanged()">
+											<i class="fas fa-binoculars"></i>
+										</span>
+									</div>
+								</div>	
+								<label class="col-md-1 col-form-label" for="epProvinceName">Province/State</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input type="text"class="form-control" readonly id="epProvinceName">
+										<span class="input-group-addon pointer" onclick="editSelectProvinceForContactPoint(); generalTabChanged()">
+											<i class="fas fa-binoculars"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epAddressLine2">Address Line 2</label>
+								<div class="col-md-3">
+									<input id="epAddressLine2" type="text"
+										class="form-control" placeholder="" maxlength=50
+										onkeyup="generalTabChanged()">
+								</div>								
+								<label class="col-md-1 col-form-label" for="epCityName">City/Town</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input type="text"class="form-control" readonly id="epCityName">
+										<span class="input-group-addon pointer" onclick="editSelectCityForContactPoint(); generalTabChanged()">
+											<i class="fas fa-binoculars"></i>
+										</span>
+									</div>
+								</div>
+
+								<label class="col-md-1 col-form-label" for="epSuburbName">Suburb</label>
+								<div class="col-md-2">
+									<div class="input-group">
+										<input type="text"class="form-control" readonly id="epSuburbName">
+										<span class="input-group-addon pointer" onclick="editSelectSuburbForContactPoint(); generalTabChanged()">
+											<i class="fas fa-binoculars"></i>
+										</span>
+
+									</div>
+								</div>
+
+							</div>
+							<div class="row">
+								<label class="col-md-2 col-form-label" for="epAddressLine3">Address Line 3</label>
+								<div class="col-md-3">
+									<input id="epAddressLine3" type="text"
+										class="form-control" placeholder="" maxlength=50
+										onkeyup="generalTabChanged()">
+								</div>			
+								
+								<span id="__igdev_hiddenFormLabel48a" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;epCountryId</span><input id="epCountryId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;epProvinceId</span><input id="epProvinceId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;epCityId</span><input id="epCityId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;epSuburbId</span><input id="epSuburbId" ReadOnly style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								</span>									
+
+							</div>
+						</div> <!-- epOverlapInfoPanel -->
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
+		<!-- Logo Upload Dialog Start -->
+			<div id="logoUploadDialog" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static"
+					aria-hidden="true">
+			
+				<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<h4 class="modal-title">Upload</h4>
+						<button type="button" class="close" onclick="closeLogoUploadDialog()">&times;</button>	        
+					</div>
+					
+					<iframe name="fileUploadDialogIframe" id="fileUploadDialogIframe" style="display: none"></iframe>
+					
+					<form method="post"
+							id="participantLogoForm" 
+		                	th:action="@{/upload}" 
+	               			enctype="multipart/form-data"
+	               			target="fileUploadDialogIframe">
+						
+							<input name="fileDlgUploadType" id="fileDlgUploadType" type="hidden" value="participant-logo">
+							<input name="fileDlgPrimaryKey" id="fileDlgPrimaryKey" type="hidden" value="participantId">
+							<input name="fileDlgPrimaryKeyValue" id="fileDlgPrimaryKeyValue" type="hidden">
+							
+							<div class="modal-body">
+	
+								<div id="submissionErrorStateDiv" class="alert alert-danger" role="alert" style="display:none">
+									<table>
+										<tr>
+											<td width="50px" valign="top"><i class="fas fa-exclamation-triangle" style="font-size:28pt !important"></i></td>
+											<td valign="top" width="*">
+												<div id="errorMsgDiv"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								
+								<!-- <div class="form-group row">
+									<label class="col-md-3 col-form-label" for="fileDlgFileDescription">Description</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<input id="fileDlgFileDescription" name="fileDlgFileDescription" type="text" class="form-control input-md" 
+														placeholder="description">
+										</div>
+									</div>
+								</div> -->
+								
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="sDlgUploadFile">Upload file</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<input id="sDlgUploadFileInput" name="sDlgUploadFileInput" type="text" 
+													class="form-control input-md" placeholder="file" 
+													readonly onchange="logoUploadDialogChanged()">
+											<span class="input-group-addon input-group-text pointer" onclick="selectFile()">
+												<i class="fas fa-folder-open"></i>
+												
+											</span>
+											<input id="sDlgUploadFile" name="sDlgUploadFile" type="file" style="display:none;">
+										</div>
+									</div>
+								</div>
+							</div>
+	
+							<div class="modal-footer">
+								<button type="button" class="btn btn-sm" onclick="closeLogoUploadDialog()">Cancel</button>
+								<button id="fileUploadFileImportButton" type="submit" 
+										class="btn btn-sm btn-primary" disabled>Upload</button>
+							</div>
+						</form>
+		            </div>
+		        </div>
+		    </div>
+			
+			<!--  Logo Upload Dialog End -->
+		<script type="text/javascript" th:src="@{ignite/js/participant/generalParticipantTab.js}"></script>
+	</div>
+</body>
+</html>		

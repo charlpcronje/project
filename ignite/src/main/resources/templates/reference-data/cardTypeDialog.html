@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="cardTypeDialog" th:remove="tag">
+		
+		<!-- cardTypeDialog: Start -->
+		<div class="modal fade" id="cardTypeDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="cardTypeDialogLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" style="display: inline-block">Card Type Detail</h4>
+						<h5 id="nameFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+							<span style="font-size: 90%; height: 16px">--cardTypeDialog--</span>
+						</h5>
+		        <button type="button" class="close" onclick="closeCardTypeDialog()" aria-hidden="true">&times;</button>
+		      </div>
+		      <div class="modal-body">
+	
+				<section class="panel">
+					<form onsubmit="return false" class="form-horizontal">
+						<fieldset>
+						
+							<input type="hidden" id="cDlgMode">
+							<div id="cDlgErrorDiv" style="display: none"></div>
+					    					    						    	
+							<div class="row">
+								<span id="__igdev_hiddenFormLabel618889" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden">
+									<span style="display: inline-block;font-size: 90%;background-color: #ffffff">&nbsp;cDlgCardTypeId</span><input ReadOnly id="cDlgCardTypeId" style="background-color: #ffff99 !important; color:Black; width: 60px; height: 20px;">
+								</span>											
+							</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="cDlgCardTypeCode">Code *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="cDlgCardTypeCode" style="text-transform: uppercase" class="form-control" placeholder="Name" onkeyup="cardTypeChanged()">
+									</div>
+								</div>
+					    	</div>														    	
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="cDlgName">Name *</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="cDlgName" class="form-control" placeholder="Name" onkeyup="cardTypeChanged()">
+									</div>
+								</div>
+					    	</div>
+					    	<div class="row">
+					    		<label class="col-md-3 col-form-label" for="cDlgDescription">Description</label>
+								<div class="col-md-9">
+									<div class="form-group">
+										<input type="text" id="cDlgDescription" class="form-control" placeholder="Description" onkeyup="cardTypeChanged()">
+									</div>
+								</div>
+					    	</div>
+					    </fieldset>
+				  	</form>
+		    	</section>
+
+		      </div>
+		      <div class="modal-footer">
+				<button onclick="closeCardTypeDialog()" class="btn btn-sm btn-default" type="button">Cancel</button>
+		        <button id="saveCardTypeButton" class="btn btn-sm btn-primary" type="button" onclick="saveCardType('cardTypeTable')">Save</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<script type="text/javascript" th:src="@{ignite/js/reference-data/cardTypeDialog.js}"></script>
+		<script type="text/javascript" th:src="@{ignite/js/reference-data/setup-card-type.js}"></script>
+
+		<!-- cardTypeDialog: End -->
+	</div>
+
+</body>
+</html>		

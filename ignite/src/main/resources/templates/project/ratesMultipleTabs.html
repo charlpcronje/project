@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="ratesMultipleTabs" th:remove="tag">
+
+		<div id="ratesMultipleTabs" class="tab-pane">
+				
+			<div id="prDlgErrorDiv" style="display: none"></div>
+			<header class="panel-heading tab-bg-info">
+				<ul class="nav nav-tabs">
+					<li class="active" id="subTabTimeRateLink"><a
+						id="subTabTimeRateAnchor" data-toggle="tab" href="#subTabTimeRate">Time Related</a></li>
+					<li id="subTabExpenseRateLink"><a data-toggle="tab"
+						href="#subTabExpenseRate">Recoverable Expense Rates</a></li>
+					<li id="prFixedFeeTabLink"><a data-toggle="tab" 
+						href="#prFixedFeeTab">Fixed Fee</a></li>
+					<li id="prFeeSplitTabLink"><a data-toggle="tab"
+						href="#prFeeSplitTab">Fee Split</a></li>
+				</ul>
+			</header>
+			<div class="panel-body">						
+				<div class="tab-content">
+				
+					<!-- subTabTimeRate: Start -->
+					<tab th:replace="project/subTabTimeRate :: subTabTimeRate"></tab>
+					<!-- subTabTimeRate: End -->
+		
+					<!-- subTabExpenseRate: Start -->
+					<tab th:replace="project/subTabExpenseRate :: subTabExpenseRate"></tab>
+					<!-- subTabExpenseRate: End -->
+				</div>					
+			</div>					
+		</div>					
+		<script type="text/javascript" th:src="@{ignite/js/project/ratesMultipleTabs.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

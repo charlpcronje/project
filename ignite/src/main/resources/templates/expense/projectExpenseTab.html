@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="projectExpenseTab" th:remove="tag">
+
+		<div id="projectExpenseTab" class="tab-pane active">
+			<form id="peProjectExpenseTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+
+
+
+ 
+  				
+					<div class="row">
+					</div>
+
+					<div class="row">
+						<div class="col-md-1">
+							<h5>Date Range:</h5>
+						</div>
+						
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="pexStartDate" name="pexStartDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#pexStartDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+								</span>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input id="pexEndDate" name="pexEndDate"
+									class="form-control" placeholder="yyyy-mm-dd"
+									data-provide="datepicker" data-date-format="yyyy-mm-dd"
+									data-date-autoclose=true data-date-show-on-focus=false
+									data-date-today-btn="linked"
+									onchange=""> 
+									<span
+									class="input-group-addon pointer"
+									onclick="$('#pexEndDate').datepicker('show')">
+									<i class="fas fa-calendar-alt"></i>
+									
+								</span>
+								
+	
+							</div>
+						</div>
+						<div class="col-md-1">
+							<button id = "btRefresh" class="btn btn-sm btn-primary" type="button"
+											onclick="refreshParticipantExpense()">Refresh</button>
+						</div>
+						<div class="col-md-3">
+							<span id="__igdev_pexDateFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px">&nbsp; pexStartDate and pexEndDate </span>
+								
+							</span>
+						</div>
+						
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h4 style="display: inline-block">Participant Expense</h4>
+							<span id="__igdev_pexParticipantExpenseTablePanelFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; &nbsp; --projectExpenseTab.html-- &nbsp; &nbsp;table:pexParticipantExpenseTable</span>
+							</span>	
+						</div>
+					</div>
+				
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div id="pexParticipantExpenseTablePanel" style="display: block">
+								<table id="pexParticipantExpenseTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>ProjectExpenseId</th>           <!-- 0  -->
+											<th>Purchase Date</th>               <!-- 1  -->
+											<th>ProjectParticipantIdPayer</th>    <!-- 2  -->
+											<th>ParticipantIdPayr</th>            <!-- 3  -->
+											<th>ParticipantPayerSystemName</th>  <!-- 4  -->
+											<th>ProjectId</th>                  <!-- 5  -->
+											<th>Project Name</th>              <!-- 6  -->
+											<th>ExpenseTypeId</th>            <!-- 7  -->
+											<th>Expense Type</th>            <!-- 8  -->
+											<th>UnitTypeCode</th>           <!-- 9  -->
+											<th>Unit</th>                  <!-- 10  -->
+											<th>AssetId</th>              <!-- 11 -->
+											<th>VehicleId</th>           <!-- 12  -->
+											<th>VehicleName</th>          <!-- 13  -->
+											<th>Asset Description</th>     <!-- 14  -->
+											<th>Payment Description</th>   <!-- 15  -->
+											<th>Number Of Units</th>       <!-- 16  -->
+											<th>Amount Per Unit</th>       <!-- 17  -->
+											<th>Total</th>                 <!-- 18  -->
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+
+				
+					
+					
+				</fieldset>
+			</form>
+		</div>	
+
+		<!-- projectExpenseDialog: Start -->
+		<dialog th:replace="expense/projectExpenseDialog :: projectExpenseDialog"></dialog>         
+
+		<script type="text/javascript" th:src="@{ignite/js/expense/projectExpenseTab.js}"></script>
+		
+		<!--<script type="text/javascript" th:src="@{ignite/js/expense/projectExpenseDialog.js}"></script>-->
+		 
+	</div>
+
+</body>
+</html>		

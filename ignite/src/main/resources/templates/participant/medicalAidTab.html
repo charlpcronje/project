@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+ 
+<body>
+	<div th:fragment="medicalAidTab" th:remove="tag">
+
+		<div id="medicalAidTab" class="tab-pane">
+			<form id="formMediclAidTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>
+					
+					<input type="hidden" id="maIndividualId">
+					<input type="hidden" id="maMainMemberMedicalInsuranceId">
+									
+					<div class="row btn-toolbar">
+						<button type="button" id="saveMedicalTabButton"
+							class="dt-button ui-button ui-state-default btn btn-sm"
+							title="Save" onclick="saveMedicalTab()" disabled style="display: inline-block">
+							<i class="fa fa-save"></i>
+						</button>		
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group">
+								<h4 style="display: inline-block">Medical Insurance Details</h4>
+							</div>
+						</div>
+					</div>		
+					<div class="row">
+						<label class="col-md-2 col-form-label" for="maMedicalInsuranceCompany">Medical Insurance Company *</label>
+						<div class="col-md-4">
+							<div class="input-group">
+								<select class="form-control" id="maMedicalInsuranceCompany"
+									onchange="refreshMedicalInsurancePlans(); formChanged()">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-md-2 col-form-label" for="maMedicalInsurancePlan">Plan *</label>
+						<div class="col-md-2">
+							<div class="input-group">
+								<select class="form-control" id="maMedicalInsurancePlan"
+									onchange="formChanged()">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-md-2 col-form-label" for="maInsuranceNumber">Insurance Number *</label>
+						<div class="col-md-3">
+							<div class="input-group">
+								<input type="text" id="maInsuranceNumber" class="form-control" onchange="formChanged()">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-md-2 col-form-label" for="maDescription">Description</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<input type="text" id="maDescription" class="form-control" onchange="formChanged()">
+							</div>
+						</div>
+					</div>
+					<div class="row" id="dependantsPanel" style="display:block">
+						<label class="col-md-2 col-form-label">Dependants</label>
+						<div class="col-md-10">
+							<table id="medicalDependantTable" 
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>MedicalDependantId</th>
+											<th>MainMemberMedicalInsuranceId</th>
+											<th>IndividualDependent</th>
+											<th>Name</th>
+											<th>Description</th>
+											<th>Last Updated By</th>
+											<th>Last Update</th>
+										</tr>
+									</thead>
+								</table>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
+		<!-- Start: medicalDependantDialog -->
+		<div class="modal fade" id="medicalDependantDialog" tabindex="-1"
+			role="dialog" data-backdrop="static"
+			aria-labelledby="medicalDependantDialogLabel" aria-hidden="true">
+			<div class="modal-dialog modal-med50">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" style="display: inline-block">Medical Dependant</h4>
+						
+						<button type="button" class="close"
+							onclick="closeMedicalDependantDialog()" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<section class="panel">
+							<form onsubmit="return false" class="form-horizontal">
+								<fieldset>
+									<div id="mdDlgErrorDiv" style="display: none"></div>
+									<div class="panel-content">
+			
+										<input type="hidden" id="maDlgMedicalDependantId">
+										
+										<div class="row">
+											<label class="col-md-2 col-form-label"
+												for="mdDlgDependantIndividualId">Dependant</label>
+											<div class="col-md-5">
+												<div class="input-group">
+													<input type="hidden" id="mdDlgDependantIndividualId"
+														onkeyup="formChanged()"> <input
+														type="text" id="mdDlgDependantIndividualName" readonly
+														class="form-control"> <span
+														class="input-group-addon pointer"
+														onclick="editDependantIndividualId()"> <i
+														class="fas fa-binoculars"></i>
+													</span>
+												</div>
+											</div>
+										</div>
+				
+										<div class="row">
+											<label class="col-md-2 col-form-label" for="mdDlgDescription">Description</label>
+											<div class="col-md-10">
+												<input type="text" id="mdDlgDescription"  maxlength=255 
+													class="form-control"
+													placeholder="Description"
+													onkeyup="formChanged()">
+											</div>
+										</div>
+	
+									</div>
+								</fieldset>
+							</form>
+						</section>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-default"
+							onclick="closeMedicalDependantDialog()" type="button">Cancel</button>
+						<button id="saveMedicalDependantButton" class="btn btn-sm btn-primary"
+							type="button" onclick="saveMedicalDependant()">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End: medicalDependantDialog -->
+		
+		<script type="text/javascript" th:src="@{ignite/js/participant/medicalAidTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gen-invoice-sub1" pageWidth="555" pageHeight="842" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0158f59d-7072-41d4-8a20-496c75cbce56">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ig_db"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="INVOICE_ID" class="java.lang.String"/>
+	<parameter name="REPORTS_PATH" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select *
+from vInvoiceLine
+where InvoiceId =  $P{INVOICE_ID}]]>
+	</queryString>
+	<field name="InvoiceLineId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceLineId"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceLineId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="InvoiceId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceId"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ParticipantIdFrom" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ParticipantIdFrom"/>
+		<property name="com.jaspersoft.studio.field.label" value="ParticipantIdFrom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ParticipantFrom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ParticipantFrom"/>
+		<property name="com.jaspersoft.studio.field.label" value="ParticipantFrom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ParticipantIdTo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ParticipantIdTo"/>
+		<property name="com.jaspersoft.studio.field.label" value="ParticipantIdTo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ParticipantTo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ParticipantTo"/>
+		<property name="com.jaspersoft.studio.field.label" value="ParticipantTo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="InvoiceNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="InvoiceAmount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceAmount"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceAmount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="InvoiceDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ProjectId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ProjectId"/>
+		<property name="com.jaspersoft.studio.field.label" value="ProjectId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ProjectNameText" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ProjectNameText"/>
+		<property name="com.jaspersoft.studio.field.label" value="ProjectNameText"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="LineType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LineType"/>
+		<property name="com.jaspersoft.studio.field.label" value="LineType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="RatesMissing" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="RatesMissing"/>
+		<property name="com.jaspersoft.studio.field.label" value="RatesMissing"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="TotalUnits" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TotalUnits"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalUnits"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="LineAmount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="LineAmount"/>
+		<property name="com.jaspersoft.studio.field.label" value="LineAmount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="AgreementBetweenParticipantsId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="AgreementBetweenParticipantsId"/>
+		<property name="com.jaspersoft.studio.field.label" value="AgreementBetweenParticipantsId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ProjectNumberOnly" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ProjectNumberOnly"/>
+		<property name="com.jaspersoft.studio.field.label" value="ProjectNumberOnly"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<field name="ProjectTitleOnly" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ProjectTitleOnly"/>
+		<property name="com.jaspersoft.studio.field.label" value="ProjectTitleOnly"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vinvoiceline"/>
+	</field>
+	<variable name="LineAmount1" class="java.math.BigDecimal" resetType="Group" resetGroup="PerProject" calculation="Sum">
+		<variableExpression><![CDATA[$F{LineAmount}]]></variableExpression>
+	</variable>
+	<variable name="LineAmount2" class="java.math.BigDecimal" resetType="Group" resetGroup="PerProject" calculation="Sum">
+		<variableExpression><![CDATA[$F{LineAmount}]]></variableExpression>
+	</variable>
+	<variable name="TotalUnits1" class="java.math.BigDecimal" resetType="Group" resetGroup="PerProject" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalUnits}]]></variableExpression>
+	</variable>
+	<group name="PerProject">
+		<groupExpression><![CDATA[$F{ProjectNumberOnly}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField>
+					<reportElement x="0" y="3" width="428" height="20" isPrintWhenDetailOverflows="true" printWhenGroupChanges="PerProject" uuid="6fab9ef0-0659-4978-ac72-77a8acce8cb4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ProjectNameText}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="bd417854-f326-4baf-ad11-8d1fca80e0c8"/>
+					<graphicElement>
+						<pen lineColor="#CFCACA"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="R#,##0.00;R-#,##0.00">
+					<reportElement mode="Opaque" x="473" y="0" width="80" height="20" backcolor="#E3E3E3" uuid="0bbf16c8-4d00-44fc-b4ef-7a7f27e16ecb">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.25" lineColor="#E0E0E0"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{LineAmount2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="403" y="0" width="70" height="20" backcolor="#E3E3E3" uuid="5292043e-9768-43fc-8a50-708585d4b040"/>
+					<box>
+						<pen lineWidth="0.25" lineColor="#E0E0E0"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalUnits1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="403" height="20" backcolor="#E3E3E3" uuid="276ff22d-88ab-4c87-af90-9724ef0e198e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+						<paragraph rightIndent="10"/>
+					</textElement>
+					<text><![CDATA[Current Invoice:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group1"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="390" y="0" width="82" height="20" uuid="35cd0b7f-a05a-4b9c-b52e-24fc345f0830">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Quantity/Hours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="0" width="80" height="20" uuid="05f3ac24-5a02-4a85-9a23-e57b85783067">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="10"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="62eccd3e-1188-4e6c-86c0-83faa47aa4f4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Project]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="1" width="250" height="20" uuid="aa70b573-ebef-44d4-862c-309b0512d31a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LineType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="1" width="70" height="20" uuid="655749e1-f151-4369-998c-f3d92bfd39a2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalUnits}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R#,##0.00;R-#,##0.00">
+				<reportElement x="473" y="1" width="80" height="20" uuid="d774b1e2-cc06-4ebe-a5fe-ddd837454573">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LineAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

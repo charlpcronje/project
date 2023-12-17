@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head></head>
+
+<body>
+	<div th:fragment="assetExpenseTab" th:remove="tag">
+
+		<div id="assetExpenseTab" class="tab-pane">
+			<form id="axAssetExpenseTabForm" onsubmit="return false"
+				class="form-horizontal">
+				<fieldset>							
+					<div class="row">
+						<div class="col-md-12">
+							<h4 style="display: inline-block">Asset Expense</h4>
+							<span id="__igdev_axAssetExpenseTablePanelFormLabel" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="font-size: 90%; height: 16px"> &nbsp; &nbsp; table:assetExpenseTab.html &nbsp; &nbsp; table:axAssetExpenseTable</span>
+							</span>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="axAssetExpenseTablePanel" style="display: block">
+								<table id="axAssetExpenseTable"
+									class="table table-striped table-advance table-hover"
+									style="width: 100%">
+									<thead>
+										<tr>
+											<th>ProjectExpenseId</th>         <!--0  MySql-TableName: VProjectExpense-->
+											<th>ProjectParticipantIdPayer</th> <!--1  ProjectParticipantIdPayer-->
+											<th>ParticipantIdPayer</th>       <!--2  ParticipantIdPayer-->
+											<th>ParticipantPayerSystemName</th> <!--3  ParticipantPayerSystemName-->
+											<th>ProjectId</th>                <!--4  ProjectId-->
+											<th>Project</th>              <!--5  ProjectName-->
+										   	<th>Sub Project</th>                
+											<th>ParticipantIdMadePurchase</th> <!--7  ParticipantIdMadePurchase-->
+											<th>Buyer</th> 					  <!--8  ParticipantMadePurchaseSystemName-->
+											<th>ParticipantIdVendor</th>      <!--9  ParticipantIdVendor-->
+											<th>Vendor</th> 				  <!--10  ParticipantVendorSystemName-->
+											<th>ExpenseTypeId</th>            <!--11  ExpenseTypeId-->
+											<th>ExpenseTypeId</th>          <!--12  ExpenseTypeId-->
+											<th>Expense Type</th>             <!--13  ExpenseTypeName-->
+											<th>Expense Type</th>   <!--14  ExpenseTypeDescription-->
+											<th>Unit</th>             		  <!--15  UnitTypeCode-->
+											<th>ExpenseTypeParentId</th>    <!--16  ExpenseTypeParentId-->
+											<th>ExpenseTypeParentName</th>    <!--17  ExpenseTypeParentName-->
+											<th>AssetId</th>                  <!--18  AssetId-->
+											<th>VehicleId</th>                <!--19  VehicleId-->
+											<th>Vehicle</th>                  <!--20  VehicleName-->
+											<th>Asset</th>         			  <!--21  AssetDescription-->
+											<th>PaymentMethodCode</th>        <!--22  PaymentMethodCode-->
+											<th>Payment Method</th>           <!--23  PaymentMethodName-->
+											<th>BankCardIdUsed</th>           <!--24  BankCardIdUsed-->
+											<th>BankCardNumber</th>           <!--25  BankCardNumber-->
+											<th>BankCardNameOnCard</th>       <!--26  BankCardNameOnCard-->
+											<th>TaxDeductableCategoryId</th> <!--27  TaxDeductableCategoryId-->
+											<th>TaxDeductableCategoryName</th> <!--28  TaxDeductableCategoryName-->
+											<th>Description</th>       			<!--29  PaymentDescription-->
+											<th>Purchase Date</th>             <!--30  PurchaseDate-->
+											<th>Number Of Units</th>            <!--31  NumberOfUnits-->
+											<th>Amount Per Unit</th>            <!--32  AmountPerUnit-->
+											<th>NoteToAccountant</th>         <!--33  NoteToAccountant-->
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>	
+
+		<!-- assetPurchaseDialog: Start -->
+		<dialog th:replace="expense/assetPurchaseDialog :: assetPurchaseDialog"></dialog>         
+		<!-- projectExpenseDialog: End -->
+
+		<script type="text/javascript" th:src="@{ignite/js/expense/assetExpenseTab.js}"></script>
+		 
+	</div>
+
+</body>
+</html>		

@@ -1,0 +1,45 @@
+UiComponentId,UiComponentTitle,UiComponentLink,OrderNo,ParentUiComponentId,ActiveInd,PermissionCodeRequired,IconClassName,LastUpdateTimestamp,LastUpdateUserName
+3,IGNITE,,3,NULL,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+5,About,/about,5,3,Y,menu-ignite,"fas fa-info-circle","2021-03-18 12:50:17",admin
+10,Individuals,/individual,10,3,Y,menu-ignite,"fas fa-user","2021-03-18 12:50:17",admin
+15,Participants,/participant,15,3,Y,menu-ignite,"fas fa-users","2021-03-18 12:50:17",admin
+18,Projects,/project,18,3,Y,menu-ignite,"fas fa-project-diagram","2021-03-18 12:50:17",admin
+19,"Project Tree",/project-tree,19,3,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+20,Timesheet,/timesheet,20,3,Y,menu-ignite,"fas fa-clock","2021-03-18 12:50:17",admin
+90,Reports,/report,90,3,Y,menu-ignite,,"2021-03-19 13:01:28",admin
+95,Setup,,95,3,Y,menu-ignite,"fas fa-cog","2021-03-18 12:50:17",admin
+105,General,/setup-general,105,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+110,APIs,/setup-api,110,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+115,Calendar,/setup-calendar,115,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+116,"Report Setup",/setup-report,116,95,Y,menu-ignite,,"2021-03-23 08:30:26",admin
+117,"Roles & Permissions",/setup-role,117,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+120,"SD Tree",/sd-tree,120,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+125,"Service Discipline",/setup-service,125,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+130,"Reference Data",,130,95,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+200,"Banks & Branches",/setup-bank,200,130,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+205,"Card Types",/setup-card-type,205,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+207,"Competency Level",/setup-competency-level,210,130,Y,menu-ignite,,"2021-03-30 15:55:27",admin
+210,Countries,/setup-country,210,130,Y,menu-ignite,,"2021-03-30 15:55:27",admin
+215,"Bank Account Types",/setup-bank-account-type,215,130,Y,menu-ignite,,"2021-03-31 12:11:27",admin
+220,"Expense Types",/setup-expense-type,220,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+230,"Participant Status",/setup-participant-status,230,130,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+235,"Payment Types",/setup-payment-type,235,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+240,"Project Remun Type",/setup-proj-based-remun-type,240,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+245,"Project Stage Type",/setup-project-stage-type,245,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+247,RemunerationModel,/setup-remuneration-model,247,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+250,"Resource Remun Type",/setup-resource-remun-type,250,130,Y,menu-ignite,,"2021-08-11 15:16:59",admin
+255,"Resource Status",/setup-resource-status,255,130,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+260,"Role on a Project",/setup-role-on-a-project,260,130,Y,menu-ignite,,"2021-03-18 12:50:17",admin
+265,"Unit Type",/setup-unit-type,265,130,Y,menu-ignite,,"2021-07-28 11:40:03",admin
+300,"Task Mngmt",,300,NULL,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+350,"Task Manager",,350,300,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+355,Assignments,/assignment,355,350,Y,menu-task-manager,,"2021-03-18 12:50:17",admin
+357,"My Assignments",/my-assignment,357,350,Y,menu-task-manager,,"2022-09-18 13:43:55",admin
+360,"Procedure Mngr",,360,300,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+365,"Proc Gen",/procedure-generator,365,360,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+370,"Ref Data Ass",,370,300,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+650,"Assign Gr",/setup-assignment-group,650,370,Y,menu-task-manager,,"2022-09-06 09:41:36",admin
+700,"Assign Type",/setup-assignment-type,700,370,Y,menu-task-manager,,"2022-08-16 13:30:34",admin
+750,Definitions,/setup-definition-view,750,370,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+800,"Proc Status",/procedure-status-view,800,370,Y,menu-task-manager,,"2021-07-28 11:40:03",admin
+850,"Task Imp Type",/setup-task-importance-type,850,370,Y,menu-task-manager,,"2022-09-14 15:08:46",admin

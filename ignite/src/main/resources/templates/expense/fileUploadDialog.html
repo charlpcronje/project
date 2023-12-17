@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+ 
+<head>
+</head>
+
+<body>
+	<div th:fragment="fileUploadDialog" th:remove="tag">
+
+		<!-- Start: submitSourceFileDialog -->
+		<div id="fileUploadDialog" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+		
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<h4 class="modal-title">Submit</h4>
+						<button type="button" class="close" onclick="closeFileUploadDialog()">&times;</button>	        
+					</div>
+					
+					<iframe name="fileUploadDialogIframe" id="fileUploadDialogIframe" style="display: none"></iframe>
+					
+					<form th:method="POST" 
+						  th:action="@{/upload}"				      
+					      enctype="multipart/form-data" 
+					      target="fileUploadDialogIframe"
+					      id="fileUploadDialogForm"
+						 >
+						
+						<fieldset>
+
+							<span id="__igdev_purDialogFormLabel3244113" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+								<span style="display: inline-block;font-size: 75%; height: 16px">&nbsp; --fileUploadDialog.html-- </span>
+								<span style="display: inline-block;font-size: 75%;background-color: #ffffff"> &nbsp; fileDlgUploadType</span>
+										<input id="fileDlgUploadType" name="fileDlgUploadType" readonly style="background-color: #ffff99 !important; color:Black; width: 105px; height: 16px;font-size: 75%;">
+							</span>							
+							
+							<div class="modal-body">
+	
+								<div id="submissionErrorStateDiv" class="alert alert-danger" role="alert" style="display:none">
+									<table >
+										<tr>
+											<td width="50px" valign="top"><i class="fas fa-exclamation-triangle" style="font-size:28pt !important"></i></td>
+											<td valign="top" width="*">
+												<div id="errorMsgDiv"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								 
+								<div class="form-group row">
+									<span id="__igdev_purDialogFormLabel32441" style="display: inline-block; background-color: #ffff99 !important; color:Black" hidden="hidden"> 
+										<span style="display: inline-block;font-size: 85%;background-color: #ffffff">&nbsp; &nbsp; fileDlgPrimaryKey &nbsp;</span>
+												<input id="fileDlgPrimaryKey" name="fileDlgPrimaryKey" readonly style="background-color: #ffff99 !important; color:Black; width: 164px; height: 16px;font-size: 85%;">
+										<span style="display: inline-block;font-size: 85%;background-color: #ffffff">&nbsp; &nbsp; fileDlgPrimaryKeyValue</span>
+												<input id="fileDlgPrimaryKeyValue" name="fileDlgPrimaryKeyValue" readonly style="background-color: #ffff99 !important; color:Black; width: 50px; height: 16px;font-size: 85%;">
+									</span>	
+								</div>
+																
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="fileDlgFileDescription">Description</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<input id="fileDlgFileDescription" name="fileDlgFileDescription" type="text" class="form-control input-md" 
+														placeholder="description">
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="sDlgUploadFile">Upload file</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<input id="sDlgUploadFileInput" type="text" class="form-control input-md" placeholder="file" 
+													readonly onchange="fileUploadDialogChanged()">
+											<span class="input-group-addon input-group-text pointer" onclick="selectFile()">
+												<i class="fas fa-folder-open"></i>
+												
+											</span>
+											<input id="sDlgUploadFile" name="sDlgUploadFile" type="file" style="display:none;">
+										</div>
+									</div>
+								</div>
+								
+							</div>
+	
+							<div class="modal-footer">
+								<button type="button" class="btn btn-sm" onclick="closeFileUploadDialog()">Cancel</button>
+								<button id="fileUploadFileImportButton" type="submit" 
+										class="btn btn-sm btn-primary">Import</button>
+							</div>
+	
+						</fieldset>
+					</form>						
+						
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- submitSourceFileDialog -->
+
+		<script type="text/javascript" th:src="@{js/jquery.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-ui-1.10.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+			
+		<script type="text/javascript" th:src="@{ignite/js/expense/fileUploadDialog.js}"></script>
+
+	</div>
+
+</body>
+</html>		

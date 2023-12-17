@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rInvoiceLines" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3245fabd-3d4f-41ab-bb41-cb5770c1c6d3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ig_db"/>
+	<queryString language="SQL">
+		<![CDATA[select * 
+from 
+DraftInvoiceDetail did
+join InvoiceLIne il on (did.InvoiceLineId = il.InvoiceLineId)
+where il.InvoiceId = 35]]>
+	</queryString>
+	<field name="ActivityDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="ActivityDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="ActivityDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="ProjectName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ProjectName"/>
+		<property name="com.jaspersoft.studio.field.label" value="ProjectName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="StageName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="StageName"/>
+		<property name="com.jaspersoft.studio.field.label" value="StageName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="PartBookedTimeOrMadePurchase" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PartBookedTimeOrMadePurchase"/>
+		<property name="com.jaspersoft.studio.field.label" value="PartBookedTimeOrMadePurchase"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="SdAndRole" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SdAndRole"/>
+		<property name="com.jaspersoft.studio.field.label" value="SdAndRole"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="TheType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TheType"/>
+		<property name="com.jaspersoft.studio.field.label" value="TheType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Description"/>
+		<property name="com.jaspersoft.studio.field.label" value="Description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="NumberOfUnits" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="NumberOfUnits"/>
+		<property name="com.jaspersoft.studio.field.label" value="NumberOfUnits"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="RateForDate" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="RateForDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="RateForDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<field name="LineTotal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="LineTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="LineTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="draftinvoicedetail"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{ActivityDate}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="aece5b44-41dc-415f-81eb-805f026f9be0"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ActivityDate}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="fd4b8430-1c87-4ba8-81a4-9c6260ab090b"/>
+				</line>
+				<textField>
+					<reportElement x="100" y="0" width="200" height="20" forecolor="#006699" uuid="a9568063-83f0-4d98-8833-1e3b290c36b5"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ProjectName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="300" y="-5" width="100" height="20" forecolor="#006699" uuid="ebd0fc20-6332-41bb-913b-7fce476122a3"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{StageName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="390" y="-5" width="190" height="20" forecolor="#006699" uuid="a5d0e689-5cdb-4501-bf7b-cdfb39982703"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PartBookedTimeOrMadePurchase}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{ProjectName}]]></groupExpression>
+		<groupHeader>
+			<band height="32"/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupExpression><![CDATA[$F{StageName}]]></groupExpression>
+		<groupHeader>
+			<band height="32"/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupExpression><![CDATA[$F{PartBookedTimeOrMadePurchase}]]></groupExpression>
+		<groupHeader>
+			<band height="32"/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="SdAndRole">
+		<groupExpression><![CDATA[$F{SdAndRole}]]></groupExpression>
+	</group>
+	<group name="TheType">
+		<groupExpression><![CDATA[$F{TheType}]]></groupExpression>
+	</group>
+	<group name="Description">
+		<groupExpression><![CDATA[$F{Description}]]></groupExpression>
+	</group>
+	<group name="NumberOfUnits">
+		<groupExpression><![CDATA[$F{NumberOfUnits}]]></groupExpression>
+	</group>
+	<group name="RateForDate">
+		<groupExpression><![CDATA[$F{RateForDate}]]></groupExpression>
+	</group>
+	<group name="LineTotal">
+		<groupExpression><![CDATA[$F{LineTotal}]]></groupExpression>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="d6570d5c-de9a-47a7-aad8-dd945e0221ba"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="37c9fafa-8311-4c23-9200-34703cedcf75"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TITLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="f61ba6d0-c8a5-4854-a671-dd37d8dcb92c"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="e0075af4-c9d5-44cd-bcb9-427f17e85f1c"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="-6" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="6dde3cee-9ef4-4694-925e-37dcc515a943"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ActivityDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="-1" width="100" height="20" forecolor="#666666" uuid="f60e7953-b8d7-4d73-943f-ff0bf5bac3d0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ProjectName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="1" width="100" height="20" forecolor="#666666" uuid="8e4541b3-f959-4729-a63f-e458ac4aed76"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[StageName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="1" width="100" height="20" forecolor="#666666" uuid="83b26f0e-ca5e-40b8-b194-88ba3355e9d4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[PartBookedTimeOrMadePurchase]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="01cd2389-3b36-4ed9-aa6a-f891bb9731cf"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="b14abc65-5068-4259-b5a6-a3c85d8a45d5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="b4a5c190-142e-403d-89ec-e52de0f7e435"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="de346dde-d7d1-444f-b80b-9344c942e062"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceHeader" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a1887f4-e3e2-444b-a996-a7f708711d5a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ig_db"/>
+	<parameter name="INVOICE_ID" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * 
+from Invoice 
+where InvoiceId = 42]]>
+	</queryString>
+	<field name="InvoiceId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceId"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ParticipantIdTo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ParticipantIdTo"/>
+		<property name="com.jaspersoft.studio.field.label" value="ParticipantIdTo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ParticipantIdFrom" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ParticipantIdFrom"/>
+		<property name="com.jaspersoft.studio.field.label" value="ParticipantIdFrom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FlagDraft" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FlagDraft"/>
+		<property name="com.jaspersoft.studio.field.label" value="FlagDraft"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="UpUntilGenerateDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="UpUntilGenerateDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="UpUntilGenerateDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="InvoiceHeading" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceHeading"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceHeading"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="InvoiceDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="InvoiceNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="InvoiceAmount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="InvoiceAmount"/>
+		<property name="com.jaspersoft.studio.field.label" value="InvoiceAmount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Description"/>
+		<property name="com.jaspersoft.studio.field.label" value="Description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="DateSentOrReceived" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DateSentOrReceived"/>
+		<property name="com.jaspersoft.studio.field.label" value="DateSentOrReceived"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromParticipantName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromParticipantName"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromParticipantName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromAddress" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromAddress"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromAddress"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromVatNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromVatNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromVatNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromEmailAddress" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromEmailAddress"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromEmailAddress"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromPhoneNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromPhoneNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromPhoneNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromBankDetails" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromBankDetails"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromBankDetails"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="FromThankYouMsg" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FromThankYouMsg"/>
+		<property name="com.jaspersoft.studio.field.label" value="FromThankYouMsg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ToParticipantName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ToParticipantName"/>
+		<property name="com.jaspersoft.studio.field.label" value="ToParticipantName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ToAddress" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ToAddress"/>
+		<property name="com.jaspersoft.studio.field.label" value="ToAddress"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ToVatNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ToVatNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="ToVatNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ToEmailAddress" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ToEmailAddress"/>
+		<property name="com.jaspersoft.studio.field.label" value="ToEmailAddress"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ToPhoneNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ToPhoneNumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="ToPhoneNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="ToAttention" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ToAttention"/>
+		<property name="com.jaspersoft.studio.field.label" value="ToAttention"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="LastUpdateTimestamp" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="LastUpdateTimestamp"/>
+		<property name="com.jaspersoft.studio.field.label" value="LastUpdateTimestamp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="LastUpdateUserName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LastUpdateUserName"/>
+		<property name="com.jaspersoft.studio.field.label" value="LastUpdateUserName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="253" splitType="Stretch">
+			<textField>
+				<reportElement x="468" y="20" width="100" height="30" uuid="271270e2-0ccb-4a1c-941a-92a8844b61e5"/>
+				<textFieldExpression><![CDATA[$F{InvoiceNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="368" y="20" width="100" height="30" uuid="27c375c4-b50b-4888-a57d-2091f013ddf9"/>
+				<text><![CDATA[InvoiceNumber]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="499" y="65" width="100" height="30" uuid="cb162110-f98f-41b8-80e8-7ebd38ce25a0"/>
+				<textFieldExpression><![CDATA[$F{InvoiceAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="399" y="65" width="100" height="30" uuid="60f353fb-020e-4163-b661-821925032514"/>
+				<text><![CDATA[InvoiceAmount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="501" y="115" width="100" height="30" uuid="d8a1f84f-524d-43c8-8537-1985aacf97fa"/>
+				<textFieldExpression><![CDATA[$F{DateSentOrReceived}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="401" y="115" width="100" height="30" uuid="c71d8cdf-f0f6-4865-be5b-767c0729d49f"/>
+				<text><![CDATA[DateSentOrReceived]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="140" height="20" uuid="2267b70b-ab39-4b84-a2e7-b9fda8106a07"/>
+				<textFieldExpression><![CDATA[$F{FromParticipantName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="20" width="200" height="60" uuid="08c663f5-9ba4-4bbc-8868-195ad25c7edd"/>
+				<textFieldExpression><![CDATA[$F{FromAddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="90" width="100" height="30" uuid="0ffaac3d-922d-4dec-b9d0-23b88749fd4d"/>
+				<textFieldExpression><![CDATA[$F{FromVatNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="90" width="80" height="30" uuid="f0d65ae3-29ea-4dcc-a1e1-232832fcfdb6"/>
+				<text><![CDATA[VAT Number:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="120" width="100" height="30" uuid="c398bbdf-0fc3-4edd-baee-f19c458111fa"/>
+				<textFieldExpression><![CDATA[$F{FromEmailAddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="80" height="30" uuid="5e602f19-d21d-4bcc-b949-f08fa6f74f3f"/>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="150" width="100" height="30" uuid="de628b4a-68e3-4f2e-9379-a5232efc0150"/>
+				<textFieldExpression><![CDATA[$F{FromPhoneNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="150" width="80" height="30" uuid="c9126b4a-3393-47ae-9b18-37173f941b9b"/>
+				<text><![CDATA[Phone Number:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
